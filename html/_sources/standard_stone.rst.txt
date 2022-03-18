@@ -1,0 +1,5 @@
+Documentation of the standard stone location algorithm
+======================================================
+
+.. automodule:: image_processing_scripts.standard_stone
+   :members:

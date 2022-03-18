@@ -1,0 +1,5 @@
+Documentation of the fitting stone location algorithm
+=====================================================
+
+.. automodule:: image_processing_scripts.fitting_stone
+   :members:
