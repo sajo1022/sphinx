@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROS action modules &mdash; Image Processing 03/2022 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Utils function description (docstrings)" href="utils.html" />
+    <link rel="prev" title="Image acquisition module" href="image_aquisition.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_operations.html">Image processing operations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_aquisition.html">Image acquisition module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ROS action modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#action-server">Action server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#action-client">Action client</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>ROS action modules</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/04_image_processing_walkthrough/ros.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ros-action-modules">
+<h1>ROS action modules<a class="headerlink" href="#ros-action-modules" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>The communication between the different docker containers within the entire system of the “MauRob40” project is based on ROS actions.
+ROS actions are a form of asynchronous communication, where  <code class="docutils literal notranslate"><span class="pre">action</span> <span class="pre">clients</span></code> send goal requests to <code class="docutils literal notranslate"><span class="pre">action</span> <span class="pre">servers</span></code>.
+The action servers will then send a goal feedback and the results to the action clients.</p>
+<section id="action-server">
+<h2>Action server<a class="headerlink" href="#action-server" title="Permalink to this headline"></a></h2>
+<p>To create an action server, you first need to define a class. Here we define the class <code class="docutils literal notranslate"><span class="pre">LocateStonesServer</span></code> as a subclass of <code class="docutils literal notranslate"><span class="pre">Node</span></code>.
+In order to initialize the class, the <code class="docutils literal notranslate"><span class="pre">Node</span> <span class="pre">constructor</span></code> is called, naming our node <code class="docutils literal notranslate"><span class="pre">locate_stone_server</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LocateStonesServer</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;locate_stone_server&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Within the constructor, we also instantiate a new action server with the following 4 arguments:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>A ROS 2 node to add the action client to: <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p></li>
+<li><p>The type of the action: <code class="docutils literal notranslate"><span class="pre">LocateStones</span></code>.</p></li>
+<li><p>The action name: <code class="docutils literal notranslate"><span class="pre">'locate_stones'</span></code>.</p></li>
+<li><p>A callback function for executing accepted goals: self.execute_callback. This callback must return a result message for the action type.</p></li>
+</ol>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">_action_server</span> <span class="o">=</span> <span class="n">ActionServer</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">LocateStones</span><span class="p">,</span>
+        <span class="s1">&#39;locate_stones&#39;</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execute_callback</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we also need an <code class="docutils literal notranslate"><span class="pre">execute_callback</span></code> method in our class to call the image processing procedure and return the corresponding result.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">execute_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal_handle</span><span class="p">):</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Executing goal...&#39;</span><span class="p">)</span>
+<span class="n">goal_handle</span><span class="o">.</span><span class="n">succeed</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">LocateStones</span><span class="o">.</span><span class="n">Result</span><span class="p">()</span>
+<span class="n">config_dict</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">create_config_dict</span><span class="p">(</span><span class="n">goal_handle</span><span class="o">.</span><span class="n">_goal_request</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">stone_location</span> <span class="o">=</span> <span class="n">main_image_processing</span><span class="p">(</span><span class="n">config_dict</span><span class="p">)</span>
+<span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>Note that we create a <code class="docutils literal notranslate"><span class="pre">config_dict</span></code> using the given parameters when calling the action server, utilising the
+<a class="reference internal" href="utils.html#image_processing_scripts.utils.create_config_dict" title="image_processing_scripts.utils.create_config_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_config_dict</span> <span class="pre">method</span></code></a>.
+The <code class="docutils literal notranslate"><span class="pre">config_dict</span></code> is than handed over to the <code class="docutils literal notranslate"><span class="pre">main_image_processing</span></code> setting the global parameters described in the
+<a class="reference internal" href="main.html#main-script"><span class="std std-ref">main module</span></a>.</p>
+<p>The main function initializes the <code class="docutils literal notranslate"><span class="pre">rclpy</span></code> (ROS Client Library for Python) and starts the action server using the <code class="docutils literal notranslate"><span class="pre">.spin</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+<span class="n">locate_stone_server</span> <span class="o">=</span> <span class="n">LocateStonesServer</span><span class="p">()</span>
+<span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">locate_stone_server</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="action-client">
+<h2>Action client<a class="headerlink" href="#action-client" title="Permalink to this headline"></a></h2>
+<p>Creating an action client also requires to define a class <code class="docutils literal notranslate"><span class="pre">LocateStonesClient</span></code>, which is initialized calling the <code class="docutils literal notranslate"><span class="pre">Node</span></code>
+constructor again.
+Within the constructor we define an action client, passing three arguments:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>A ROS 2 node to add the action client to: <code class="docutils literal notranslate"><span class="pre">self</span></code></p></li>
+<li><p>The type of the action: <code class="docutils literal notranslate"><span class="pre">LocateStones</span></code></p></li>
+<li><p>The action name: <code class="docutils literal notranslate"><span class="pre">'locate_stones'</span></code></p></li>
+</ol>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LocateStonesClient</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;locate_stone_client&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_action_client</span> <span class="o">=</span> <span class="n">ActionClient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">LocateStones</span><span class="p">,</span> <span class="s1">&#39;locate_stones&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We now need a <code class="docutils literal notranslate"><span class="pre">send_goal</span></code> method which waits for the server to be available, sends a goal and waits for the response.
+The response is than handed to and evaluated in the <code class="docutils literal notranslate"><span class="pre">goal_response_callback</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">send_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">):</span>
+
+<span class="n">goal_msg</span> <span class="o">=</span> <span class="n">LocateStones</span><span class="o">.</span><span class="n">Goal</span><span class="p">()</span>
+<span class="n">goal_msg</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">goal</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">_action_client</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">()</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">_send_goal_future</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action_client</span><span class="o">.</span><span class="n">send_goal_async</span><span class="p">(</span><span class="n">goal_msg</span><span class="p">)</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">_send_goal_future</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goal_response_callback</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">goal_response_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">future</span><span class="p">):</span>
+    <span class="n">goal_handle</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">goal_handle</span><span class="o">.</span><span class="n">accepted</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Goal rejected :(&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Goal accepted :)&#39;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_future</span> <span class="o">=</span> <span class="n">goal_handle</span><span class="o">.</span><span class="n">get_result_async</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_future</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_result_callback</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the goal was accepted, the response it than handed over to the <code class="docutils literal notranslate"><span class="pre">get_result_callback</span></code> method, to display the results
+of the image processing consisting of the requested stone pose.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_result_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">future</span><span class="p">):</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">result</span>
+
+<span class="n">stone_location_decoded</span> <span class="o">=</span> <span class="n">decode_stone_location</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stone_location</span><span class="p">)</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Result: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stone_location_decoded</span><span class="p">))</span>
+<span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that the <a class="reference internal" href="utils.html#image_processing_scripts.utils.decode_stone_location" title="image_processing_scripts.utils.decode_stone_location"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decode_stone_location</span> <span class="pre">method</span></code></a> method is called,
+in case the response contains multiple stone poses.</p>
+<p>The main function initializes and starts the action client.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+
+<span class="n">action_client</span> <span class="o">=</span> <span class="n">LocateStonesClient</span><span class="p">()</span>
+
+<span class="n">config_string</span> <span class="o">=</span> <span class="n">read_config_string_from_main</span><span class="p">()</span>
+
+<span class="n">action_client</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span><span class="n">config_string</span><span class="p">)</span>
+
+<span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">action_client</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For development purposes, the <code class="docutils literal notranslate"><span class="pre">config_string</span></code> is created by
+<a class="reference internal" href="utils.html#image_processing_scripts.utils.read_config_string_from_main" title="image_processing_scripts.utils.read_config_string_from_main"><code class="xref py py-meth docutils literal notranslate"><span class="pre">read_config_string_from_main</span> <span class="pre">method</span></code></a>
+using the globally set parameters from the main method.
+Later on, this <code class="docutils literal notranslate"><span class="pre">config_string</span></code> has to be dynamically created and passed by the coordinator as a string array.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="image_aquisition.html" class="btn btn-neutral float-left" title="Image acquisition module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="Utils function description (docstrings)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Max Körner, Jonathan Sautter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image processing operations &mdash; Image Processing 03/2022 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="GitLab" href="../03_getting_started/getting_started.html" />
+    <link rel="prev" title="Image processing “objects”" href="image_processing_objects.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Image processing operations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-create-a-binary-image-mask">How to create a binary image (mask)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#threshold">Threshold</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#region-growing-methods">Region growing methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-work-with-binary-images-masks-regions">How to work with binary images / masks / regions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#morphology">Morphology</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#erosion-and-dilation">Erosion and Dilation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#feature-extraction-with-regions">Feature extraction with regions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#edge-detection-example-for-3d-data-by-utilizing-masks">Edge detection example for 3d data by utilizing masks</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/image_aquisition.html">Image acquisition module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Image processing operations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/02_image_processing_basics/image_processing_operations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="image-processing-operations">
+<span id="id1"></span><h1>Image processing operations<a class="headerlink" href="#image-processing-operations" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>In this section some operations will be described that might be helpful in order to understand this projects image processing.
+In addition to the theory, it will be shown how to perform them with halcons python api. This documentation only shows a fraction
+of halcons possibilities and functions. For a comprehensive documentation of halcon, please refer to the
+official documentation <a class="reference internal" href="../05_supplemental_material/supplemental_material.html#halcon-documentation"><span class="std std-ref">here</span></a>.</p>
+<section id="how-to-create-a-binary-image-mask">
+<h2>How to create a binary image (mask)<a class="headerlink" href="#how-to-create-a-binary-image-mask" title="Permalink to this headline"></a></h2>
+<p>After reading the previous section on <a class="reference internal" href="image_processing_objects.html#binary-masks"><span class="std std-ref">binary images and masks</span></a>, it should be already clear what they are used for.
+This part of the documentation shows different ways to generate said mask or region.</p>
+<section id="threshold">
+<span id="id2"></span><h3>Threshold<a class="headerlink" href="#threshold" title="Permalink to this headline"></a></h3>
+<p>One of the most common ways to get a mask for your image would be a simple <strong>threshold</strong>. The way a threshold works is
+easy to understand. You define a value, where every pixel below this value will then be marked as 0 and every pixel above will
+be marked as 1 (or vice versa). In an intensity image, this can be used to separate a dark object from a bright background. Just use
+a threshold value somewhere in between the dark object and the bright background and you would get some useful mask to “cut” your object.</p>
+<p>But often things are a little more tricky than separating a dark object from a bright background. What if the backgrounds intensity
+isn’t even or has dark spots to it? Or the object itself contains white areas, that are actually part of the object but would be
+filtered out by a simple threshold?</p>
+<p>There are many other more advanced types of thresholds like <strong>dynamic threshold</strong>, that takes the difference
+of two versions of an image into account. For instance an image and a smoothed version of it. Another example
+would be an <strong>automatic threshold</strong>, that automatically determines the maximum and minimum values of an image and
+then applies a suitable threshold to it.</p>
+<p>Thresholds are of existential importance to the project. Since we are not working with intensity images in this project, but
+with pointclouds, a simple threshold gives us a very strong tool for image segmentation.</p>
+<p>As already mentioned in the paragraph <a class="reference internal" href="image_processing_objects.html#point-clouds"><span class="std std-ref">Pointclouds</span></a>, the third channel holds the points z-coordinate, which
+is the distance of the point orthogonal to the cameras view. When separating this channel and viewing it on its own, our scene of the
+previous section would look like this, with different gray values representing different <em>height levels</em>.</p>
+<figure class="align-center" id="id4">
+<img alt="z image fitting stone pallet" src="../_images/z_image_fitting_stone_pallet.png" />
+<figcaption>
+<p><span class="caption-text">Isolated 3rd channel of fitting stone scene (<em>source:</em> own image)</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>One of the big advantages when working with 3d data of the Helios2 camera (or any 3d camera in general) is,
+that you can work with images containing “real world data”. The shown images gray values actually correspond to millimeters, meaning
+a gray value of 2000 equals a distance of this pixel (or point if all 3 coordinates are used) of 2000 millimeters.
+Pixels closer to the camera thus appear darker, because they have a lower gray value.</p>
+<p>With this knowledge in mind, we can easily create a useful mask using only a simple threshold, without any preprocessing
+necessary. Assuming the distance of the camera to the floor is known, we can apply a simple threshold, keeping all
+values lower than the distance of the floor. This provides us with a mask separating all objects on the ground from the
+ground itself. With some cleanup that doesn’t belong in this chapter, we get exactly the mask or region shown previously
+<a class="reference internal" href="image_processing_objects.html#pallet-region"><span class="std std-ref">here</span></a>.</p>
+<p>Applying a threshold in halcon is really simple. In addition to just one value, halcon allows to set an upper and
+lower limit in which between all pixel will be selected.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">output_region</span> <span class="o">=</span> <span class="n">threshold</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">min_gray</span><span class="p">,</span> <span class="n">max_gray</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Many functions in halcon also allow passing of multiple values in form of a list.
+For a threshold, the min and max gray values would look like this: [min1, min2], [max1, max2].
+The conditions are connected by a logical <strong>or</strong>.</p>
+</div>
+</section>
+<section id="region-growing-methods">
+<span id="id3"></span><h3>Region growing methods<a class="headerlink" href="#region-growing-methods" title="Permalink to this headline"></a></h3>
+<p>Another method of generating masks are region growing methods. Here several “seeds” are placed in the image.
+This can happen randomly or at predefined locations. From this seed, the mask then “grows”, depending on different conditions.
+This condition can depend on the gray values of the surrounding pixels. If a adjacent pixel to the mask has a similar gray value,
+the pixel is added to the mask and so on. This can be useful if a object is always in the same location, but depending on
+the lighting changes gray values from image to image.</p>
+<p>A further option that can be useful is to find regions in the image of similar gray values. The output of a region growing method than would
+be several masks, each mask corresponding to a (range of) gray value(s).
+In our example it can be used to determine different height levels that can be found on a pallet.
+Halcon offers multiple region growing methods. One of them is region_growing_mean, that works like described above. To perform this operation
+the following code would be used:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">output_regions</span> <span class="o">=</span> <span class="n">region_growing_mean</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">start_points_rows</span><span class="p">,</span> <span class="n">start_points_columns</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">,</span> <span class="n">minimum_mask_size</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The function takes a single channel image as input, as well as the seeds start locations as lists. It is also possible
+to not add any start position by passing empty lists. The function will than start in the upper left corner of the image
+and makes its way through the image. The input tolerance determines when a pixel is considered as part of the mask.
+Masks smaller than the set minimum_mask_size will be removed from the output.</p>
+</section>
+</section>
+<section id="how-to-work-with-binary-images-masks-regions">
+<h2>How to work with binary images / masks / regions<a class="headerlink" href="#how-to-work-with-binary-images-masks-regions" title="Permalink to this headline"></a></h2>
+<p>In the previous section, we talked about how to create masks. This section focuses on the processing of masks,
+to either adapt them to your needs or to use them to extract information from an image.</p>
+<section id="morphology">
+<h3>Morphology<a class="headerlink" href="#morphology" title="Permalink to this headline"></a></h3>
+<p>Morphology deals with the expansion and reduction of a mask. The two most basic operations are called
+<strong>erosion</strong> and <strong>dilation</strong>.</p>
+<section id="erosion-and-dilation">
+<h4>Erosion and Dilation<a class="headerlink" href="#erosion-and-dilation" title="Permalink to this headline"></a></h4>
+<p>For both operations, a “morphology structure” has to be defined. This can be a circle, a rectangle or more advanced shapes like a hexagonal.
+In addition to its shape, the size must be defined. Now imagine this morphology structure being pulled around the masks outline pixels.
+When performing a dilation, the structure would be pulled around the border of the mask, expanding the region according
+to the structures shape and size. All pixels touched by the morphology structure will be added to the mask.
+Erosion works the other way around. The structure will be also moved around the masks border.
+All pixel touched by the structure will be unselected and the mask shrinks. Morphology is easily understandable when seeing examples.
+Lets start with an unprocessed mask of the top of 3 KS-Quadro stones. The holes drilled in the stone are not part of the object
+since they have different gray values. Also notice, that the mask is not complete and has some pixels, that are displayed black.
+This happens if a non optimal threshold is selected. Also there is some “noise” in the upper right corner.</p>
+<figure class="align-center" id="id5">
+<span id="ks-quadro-mask"></span><img alt="KS-Quadro mask" src="../_images/ks_quadro_mask.png" />
+<figcaption>
+<p><span class="caption-text">Incomplete mask of KS-Quadro stones. (<em>source:</em> own image)</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Lets perform a dilation and a erosion operation with a structural element with the shape of a circle and a diameter of 5 pixels.</p>
+<figure class="align-center" id="id6">
+<span id="example-erosion-dilation"></span><img alt="Dilation and erosion applied to region." src="../_images/example_erosion_dilation.png" />
+<figcaption>
+<p><span class="caption-text">Applied dilation and erosion (<em>source:</em> own image)</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>As you can see, dilation expands the white areas in the image, erosion shrinks them (or expands the black areas). Also pay attention
+to what happened to the noise. While dilation expanded the noise to bigger circles, erosion got completely rid of it.
+Also the small gaps between the stones vanish when dilating the mask, while erosion makes them more dominant.</p>
+<p>In halcon, dilation and erosion can be performed with the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">region_eroded</span> <span class="o">/</span> <span class="n">region_dilated</span>  <span class="o">=</span> <span class="n">dilation_circle</span><span class="p">(</span><span class="n">input_region</span><span class="p">,</span> <span class="n">circle_radius</span><span class="p">)</span> <span class="o">/</span> <span class="n">dilation_circle</span><span class="p">(</span><span class="n">input_region</span><span class="p">,</span> <span class="n">circle_radius</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition hint" id="hint-opening-closing">
+<p class="admonition-title">Hint</p>
+<p>In addition to dilation_circle, which uses a circle, there is also dilation_rectangle1, which uses a rectangular
+morphology structure. When simply calling erosion or dilation without any extras, an arbitrary shape can be passed.</p>
+</div>
+<p>Though erosion and dilation makes it very easy to reduce noise or fill holes in the region, they have fundamental flaws.
+Using them will also result in a loss in information, since the region won’t accurately represent the input region.
+A better choice for removing noise or expanding gaps would be the operations <strong>opening</strong> and <strong>closing</strong>.</p>
+<section id="opening-and-closing">
+<h5>Opening and Closing<a class="headerlink" href="#opening-and-closing" title="Permalink to this headline"></a></h5>
+<p>Opening and closing are working in a similar way to erosion and dilation. In fact, they start with the basic operations
+erosion and dilation but are followed by a subtraction (for closing) or a addition (for opening) of both the resulting
+mask and the input mask. This results in two different effects.</p>
+<p>When performing an opening operation, small objects (white pixels) will be removed from the image, while bigger areas stay mostly intact.
+The edges of the remaining objects are slightly smoothed, orientated inwards. No pixels will be added to the image.</p>
+<p>When performing an closing operation, small holes (black pixels) will be removed. Also the remaining objects borders
+will be smoothed, this time directed outwards of the region.</p>
+<p>Use theses operations in halcon by calling the function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">region_opened</span> <span class="o">/</span> <span class="n">region_closed</span> <span class="o">=</span> <span class="n">opening</span><span class="p">(</span><span class="n">input_mask</span><span class="p">,</span> <span class="n">structural_element</span><span class="p">)</span> <span class="o">/</span> <span class="n">closing</span><span class="p">(</span><span class="n">input_mask</span><span class="p">,</span> <span class="n">structural_element</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The same rules mentioned <a class="reference internal" href="#hint-opening-closing"><span class="std std-ref">above</span></a> apply.</p>
+</section>
+</section>
+</section>
+<section id="feature-extraction-with-regions">
+<h3>Feature extraction with regions<a class="headerlink" href="#feature-extraction-with-regions" title="Permalink to this headline"></a></h3>
+<p>Most of the time, the goal in image processing is, to extract certain features of an image. In most of the cases the features
+we are looking for are only interesting in parts of the image. If we want to check the color of a certain part,
+we first need to extract the part from the image (with a mask) and then check within this region what color is dominant,
+which would then be the color of our part. This can be done by accessing the values of all pixels within the selected region.</p>
+<p>To make use of the already introduced example from <a class="reference internal" href="#ks-quadro-mask"><span class="std std-ref">above</span></a>, we can check the gray values contained in this
+region. In halcon, this is done by using the function gray_features. The function requires an input image, an input region as well as
+the feature you want to extract.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gray_value</span> <span class="o">=</span> <span class="n">gray_features</span><span class="p">(</span><span class="n">input_region</span><span class="p">,</span> <span class="n">input_image</span><span class="p">,</span> <span class="n">feature</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Examples for possible features are the minimum gray value (‘min’), the maximum gray value (‘max’) or the mean.
+For our example, we get a minimum value of <strong>*1300</strong>, a maximum value of <strong>1385</strong> and a mean value of <strong>1376</strong>. This tells
+us, that the mean distance of the stones to the camera is 1376 mm. Depending on the used mask, this values
+can be more or less meaningful.</p>
+<p>If we perform the same operation on the <a class="reference internal" href="#example-erosion-dilation"><span class="std std-ref">dilated mask</span></a> from earlier, we get the same minimum value
+of <strong>1300</strong> but now have a maximum gray value of <strong>2010</strong> and a mean of <strong>1420</strong>. This example shows the importance of using
+a accurate mask when extracting features from an image.</p>
+<p>Other than using a mask for extracting gray values of certain image regions, the mask itself holds information that can be
+interesting. If we want to examine a objects shape, there is no need to access the images gray values, since the shape of the mask
+itself remains the same if the segmentation is done correctly. Same is true when comparing objects in size.
+Halcon provides a function to extract features of regions like its area, a score for a predefined shape (like circularity) and many more thing.
+It can be called by:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">region_feature</span> <span class="o">=</span> <span class="n">region_features</span><span class="p">(</span><span class="n">input_region</span><span class="p">,</span> <span class="n">feature</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the next paragraph a method to detect edges in pointclouds utilizing masks will be shown.</p>
+</section>
+</section>
+<section id="edge-detection-example-for-3d-data-by-utilizing-masks">
+<h2>Edge detection example for 3d data by utilizing masks<a class="headerlink" href="#edge-detection-example-for-3d-data-by-utilizing-masks" title="Permalink to this headline"></a></h2>
+<p>This simple example shows how masks can be used to find the contours of an object from 3d data.
+Lets start by showing the scene we are working with:</p>
+<figure class="align-center" id="id7">
+<img alt="Intensity image edges example" src="../_images/intensity_image_pointcloud_edges_example.png" />
+<figcaption>
+<p><span class="caption-text">Intensity image of KS-Quadro stones on a pallet (<em>source</em>: own image)</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>We want to extract the edges of the single stone on top with methods introduced in this section.
+First we use a simple threshold on the z-image to generate a mask, that clearly shows the top site of the stone.
+For this, we select a suitable distance like described in paragraph <a class="reference internal" href="#threshold"><span class="std std-ref">Threshold</span></a>.
+This gives us the following mask:</p>
+<figure class="align-center" id="id8">
+<img alt="Mask of top layer stone" src="../_images/mask_pointcloud_edges_example.png" />
+<figcaption>
+<p><span class="caption-text">Mask of the upper stone (<em>source:</em> own image)</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>On this mask, we apply an erosion morphology using a circle of the size 2 as structuring element.
+We than subtract the eroded mask from the original mask by calling:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">difference_region</span> <span class="o">=</span> <span class="n">difference</span><span class="p">(</span><span class="n">original_mask</span><span class="p">,</span> <span class="n">eroded_mask</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This results in a region looking like this:</p>
+<figure class="align-center" id="id9">
+<img alt="Egdes of KS-Quadro stone" src="../_images/result_pointcloud_edges_example.png" />
+<figcaption>
+<p><span class="caption-text">Extracted edges of the KS-Quadro stone (<em>source:</em> own image)</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>As you can see, with only a view steps we were able to successfully extract the stones edges only using 3d data and basic
+image processing operations. Obviously this is a very simple example where all thresholds and operations are hard coded and
+dont leave room for any error. Also, this method is only possible if the object is isolated from any other objects with the same height.
+Nonetheless, the idea behind using masks to extract edges is clear. This will be of importance later in the
+<a class="reference internal" href="../04_image_processing_walkthrough/fitting_stone.html#basic-idea-fitting-stones"><span class="std std-ref">basic idea</span></a> of location fitting stones.</p>
+<p>You now should have some basic understanding of the image processing world, that will help to understand the developed application and
+what some of the problems in this project are.
+The next part will get you started on what is necessary to use the application and how to contribute to it.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="image_processing_objects.html" class="btn btn-neutral float-left" title="Image processing “objects”" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../03_getting_started/getting_started.html" class="btn btn-neutral float-right" title="GitLab" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Max Körner, Jonathan Sautter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

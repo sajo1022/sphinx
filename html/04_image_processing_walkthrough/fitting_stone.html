@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitting stone localization module &mdash; Image Processing 03/2022 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Image acquisition module" href="image_aquisition.html" />
+    <link rel="prev" title="Standard stone localization module" href="standard_stone.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_operations.html">Image processing operations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fitting stone localization module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-idea-fitting-stones">Basic idea fitting stones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fitting-stone-module-walkthrough">Fitting stone module walkthrough</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-isolate-pallet">Step 1 - Isolate pallet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-get-stone-contours">Step 2 - Get stone contours</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-find-corner-contour">Step 3 - Find corner contour</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-calculate-fitting-stone-center">Step 4 - Calculate fitting stone center</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-image_processing_scripts.fitting_stone">Fitting stone function description (docstrings)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="image_aquisition.html">Image acquisition module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Fitting stone localization module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/04_image_processing_walkthrough/fitting_stone.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fitting-stone-localization-module">
+<span id="fitting-stone-module"></span><h1>Fitting stone localization module<a class="headerlink" href="#fitting-stone-localization-module" title="Permalink to this headline"></a></h1>
+<p>This section will give the same overview over the modules contents as the <a class="reference internal" href="standard_stone.html#standard-stone-module"><span class="std std-ref">previous section</span></a>.
+It will start with a brief summary of the basic idea followed by a more detailed walkthrough.</p>
+<hr class="docutils" />
+<section id="basic-idea-fitting-stones">
+<span id="id1"></span><h2>Basic idea fitting stones<a class="headerlink" href="#basic-idea-fitting-stones" title="Permalink to this headline"></a></h2>
+<p>The starting situation when localizing fitting stones is different from dealing with standard stones.
+We have stones of different shapes and sizes on one pallet. In addition, the stones also don’t have strong
+features like holes that can be used for localization. A different approach is needed.</p>
+<p>This approach starts in a similar way. We first need to isolate the pallet of interest from the background.
+We then use the xml file to read a stones geometry and apply a threshold to “cut” all stones that
+have a different height. It may be the case, that two stones of the same height are next to each other which would
+mean, we can distinguish them using only 3d data.</p>
+<p>Presuming the stones on a pallet are already in the right order they are needed, we dont need to be able to find the
+whole stone, it is enough to find the stones corner. It will always be visible as soon as the robot has taken the stone
+next to it. If the corner is successfully identified, we can calculate the stones orientation and also its center by using
+its dimensions from the xml file and the already calculated dimension.</p>
+<p>This method does not return multiple stones, just the next stone in the “lower left corner”, close to the robot.</p>
+</section>
+<section id="fitting-stone-module-walkthrough">
+<h2>Fitting stone module walkthrough<a class="headerlink" href="#fitting-stone-module-walkthrough" title="Permalink to this headline"></a></h2>
+<p>As already described in the <a class="reference internal" href="standard_stone.html#standard-stone-walkthrough"><span class="std std-ref">standard stone walkthrough</span></a>,
+the entrypoint is the method <code class="xref py py-meth docutils literal notranslate"><span class="pre">locate_fitting_stone</span></code>
+which also requires a 3-channel image with the pointcloud data and the users <em>config dict</em>.
+In addition to that, the intensity image of the scene is needed for visualization.</p>
+<p>The located stones pose will be returned in the same two formats as the standard stones.
+The example scene used for this walkthrough will look like the intensity image below.
+The goal is to locate the stone in the lower left corner which is the next stone required by the robot.</p>
+<figure class="align-center" id="id2">
+<img alt="Intensity image fitting stones" src="../_images/intensity_image_fs.png" />
+<figcaption>
+<p><span class="caption-text">Intensity image of the example scene for fitting stones (source: own image)</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="step-1-isolate-pallet">
+<h3>Step 1 - Isolate pallet<a class="headerlink" href="#step-1-isolate-pallet" title="Permalink to this headline"></a></h3>
+<p>The isolation of the pallet region works exactly the same as described in the <a class="reference internal" href="standard_stone.html#isolate-pallet"><span class="std std-ref">standard stone module</span></a>.
+We will again receive a mask that looks like this:</p>
+<figure class="align-center" id="id3">
+<img alt="Regions above ground and pallet region." src="../_images/regions_above_ground_fs.png" />
+<figcaption>
+<p><span class="caption-text">Regions above the ground (left) and pallet region after selecting the biggest region (right)
+(source:own image)</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="step-2-get-stone-contours">
+<h3>Step 2 - Get stone contours<a class="headerlink" href="#step-2-get-stone-contours" title="Permalink to this headline"></a></h3>
+<p>Now that the pallet mask was successfully generated, we need to use the stone height from the xml file to find the top side
+of our stone of interest. To read the stones dimensions from the xml file, the function
+py:meth:<cite>get_stone_dimension_from_xml &lt;image_processing_scripts.fitting_stones.get_stone_dimension_from_xml&gt;</cite> was used.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stone_geometry</span><span class="p">,</span> <span class="n">stone_position</span> <span class="o">=</span> <span class="n">get_stone_dimensions_from_xml</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In addition to its geometry, also its position on the pallet is returned. The position on the pallet can’t be used directly,
+since its very likely that the stones have moved during the transport.</p>
+<p>Using a simple threshold with the <code class="docutils literal notranslate"><span class="pre">camera_height</span></code>, subtracting the <code class="docutils literal notranslate"><span class="pre">pallet_height</span></code> and the <code class="docutils literal notranslate"><span class="pre">stone_dimension</span></code> in
+z-direction, we should be able to exactly mask the stones top side. Since the hard coded pallet height of 150 mm might
+not be accurate enough and also tolerances in the <code class="docutils literal notranslate"><span class="pre">stone_dimension</span></code> and the <code class="docutils literal notranslate"><span class="pre">camera_height</span></code> add up, we use a threshold
+tolerance of +- 30 mm for segmentation. This found mask can then be converted to only its contours using halcon.
+The resulting contours will be a halcon object of type <code class="docutils literal notranslate"><span class="pre">xld</span></code> which stands for “eXtended Line Description”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate pallet distance from camera</span>
+<span class="n">pallet_height</span> <span class="o">=</span> <span class="mi">150</span>
+<span class="n">pallet_distance</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;camera_height&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">pallet_height</span>
+
+<span class="c1"># calculate and apply threshold</span>
+<span class="n">stone_threshold</span> <span class="o">=</span> <span class="p">[</span><span class="n">pallet_distance</span> <span class="o">-</span> <span class="n">stone_geometry</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="n">pallet_distance</span> <span class="o">-</span> <span class="n">stone_geometry</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">stone_region</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">z_image_pallet_reduced</span><span class="p">,</span> <span class="n">stone_threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stone_threshold</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># generate contours of stone region and smooth contours</span>
+<span class="n">contours</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">gen_contour_region_xld</span><span class="p">(</span><span class="n">stone_region</span><span class="p">,</span> <span class="s2">&quot;border&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The resulting stone region and its contours are shown in the figure below.</p>
+<figure class="align-center" id="id4">
+<img alt="Stone region and contour" src="../_images/stone_height_region_fs.png" />
+<figcaption>
+<p><span class="caption-text">Stone region and its contours (source: own image)</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="step-3-find-corner-contour">
+<h3>Step 3 - Find corner contour<a class="headerlink" href="#step-3-find-corner-contour" title="Permalink to this headline"></a></h3>
+<p>In the resulting contours, we now need to identify the corner contour of our stone. The contours are only
+one long connected line yet. For this reason we first need to split those lines at <em>dominant</em> points like corners or intersections.
+Since we are looking for exactly <strong>1 horizontal</strong> and <strong>1 vertical line</strong> we fit a regression line to the split contours
+and determine its orientation. Depending on this orientation the split contours are put into groups.
+These operations are performed by the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate polygon string from contours and split at dominat points (corners)</span>
+<span class="n">_contour_polygon</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">gen_polygons_xld</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="s1">&#39;ramer&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">splitted_contours</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">split_contours_xld</span><span class="p">(</span><span class="n">_contour_polygon</span><span class="p">,</span> <span class="s1">&#39;dominant&#39;</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># fit line to calculate orientation</span>
+<span class="n">regression_lines</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">fit_line_contour_xld</span><span class="p">(</span><span class="n">splitted_contours</span><span class="p">,</span> <span class="s2">&quot;regression&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">orientation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">ha</span><span class="o">.</span><span class="n">line_orientation</span><span class="p">(</span><span class="n">regression_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">regression_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">regression_lines</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">regression_lines</span><span class="p">[</span><span class="mi">3</span><span class="p">])])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">index_horizontal_lines</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">((</span><span class="n">orientation</span><span class="o">&gt;-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">orientation</span><span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">index_vertical_lines</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">orientation</span><span class="p">)))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">index_horizontal_lines</span><span class="p">)))</span>
+
+<span class="n">horizontal_contours</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">gen_empty_obj</span><span class="p">()</span>
+<span class="n">vertical_contours</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">gen_empty_obj</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">index_horizontal_lines</span><span class="p">:</span>
+    <span class="n">horizontal_contours</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">concat_obj</span><span class="p">(</span><span class="n">horizontal_contours</span><span class="p">,</span> <span class="n">ha</span><span class="o">.</span><span class="n">select_obj</span><span class="p">(</span><span class="n">splitted_contours</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">index_vertical_lines</span><span class="p">:</span>
+    <span class="n">vertical_contours</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">concat_obj</span><span class="p">(</span><span class="n">vertical_contours</span><span class="p">,</span> <span class="n">ha</span><span class="o">.</span><span class="n">select_obj</span><span class="p">(</span><span class="n">splitted_contours</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>With the two groups <code class="docutils literal notranslate"><span class="pre">horizontal_contours</span></code> and <code class="docutils literal notranslate"><span class="pre">vertical_contours</span></code> as a starting point, the contours center
+is calculated and a horizontal contour is selected. After that, the distance to all vertical contours is calculated
+and the one with the closest distance will be selected as its partner. For more detailed information on how the selection is performed,
+refer to the function description of <a class="reference internal" href="#image_processing_scripts.fitting_stone.find_corner_contour" title="image_processing_scripts.fitting_stone.find_corner_contour"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_corner_contour</span></code></a>.</p>
+<p>The selected corner from horizontal and vertical lines are shown in the images below.</p>
+<figure class="align-center" id="id5">
+<img alt="Horizontal and vertical contours and the selected stone corner" src="../_images/corner_contour_fs.png" />
+<figcaption>
+<p><span class="caption-text">Horizontal and vertical contours and the selected stone corner (source: own image)</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="step-4-calculate-fitting-stone-center">
+<h3>Step 4 - Calculate fitting stone center<a class="headerlink" href="#step-4-calculate-fitting-stone-center" title="Permalink to this headline"></a></h3>
+<p>The only thing left to do now is to calculate the stones center coordinates in millimeters and its orientation.
+To get the stones orientation we use the regression line of the longest found contour. To get the stones coordinates,
+the gray value in the stone corner is extracted using the function <code class="docutils literal notranslate"><span class="pre">get_grayval</span></code> and the corner coordinates in pixels.
+To get the stones center we can again use the dimensions from the xml file.</p>
+<p>The figure below shows the found stone corner. The length of the axis is just approximated and does not represent the
+actual length of the stone. For further information on how this step is done check the function description for
+<a class="reference internal" href="#image_processing_scripts.fitting_stone.calc_px_per_mm" title="image_processing_scripts.fitting_stone.calc_px_per_mm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">calc_px_per_mm</span></code></a> and
+<a class="reference internal" href="#image_processing_scripts.fitting_stone.calc_coordsys_for_visualization" title="image_processing_scripts.fitting_stone.calc_coordsys_for_visualization"><code class="xref py py-meth docutils literal notranslate"><span class="pre">calc_coordsys_for_visualization</span></code></a>.</p>
+<figure class="align-center" id="id6">
+<img alt="Result of fitting stone location" src="../_images/result_fs.png" />
+<figcaption>
+<p><span class="caption-text">Visualization of result of located fitting stone (source: own image)</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="module-image_processing_scripts.fitting_stone">
+<span id="fitting-stone-function-description-docstrings"></span><h2>Fitting stone function description (docstrings)<a class="headerlink" href="#module-image_processing_scripts.fitting_stone" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.fitting_stone.locate_fitting_stone">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.fitting_stone.</span></span><span class="sig-name descname"><span class="pre">locate_fitting_stone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.fitting_stone.locate_fitting_stone" title="Permalink to this definition"></a></dt>
+<dd><p>This is the main procedure to locate fitting stones on a pallet.
+Its nessecary, that the pallet is packed in the right order and at least two of the stones
+contours are visible (one corner)</p>
+<p>Idea: Extract the stones height from the xml file. Determine the upper left corner in
+the image (can be changed by adapting function “find_corner_contour”). This corner corresponds
+to the stone corner. By calculating the orientation of one of the found contours and the stones
+geometry from the xml, the stones center and orientation can be determined.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyz_image</strong> (<em>HObject</em><em> (</em><em>image</em><em>)</em>) – 3-Channel image [[x-data], [y-data], [z-data]]</p></li>
+<li><p><strong>intensity_image</strong> (<em>HObject</em><em> (</em><em>image</em><em>)</em>) – 1-Channel image [[intensity]]</p></li>
+<li><p><strong>config</strong> (<em>dict</em>) – Dictionary containing [pallet_id];[stone_id];[xml_path];[visualize];[camera_height]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>hom_mats</strong> (<em>list</em>) – Matrix 4x4 [float]
+Stone center location as homogenous matrix in millimeters/rad</p></li>
+<li><p><strong>stone_xyzz</strong> (<em>list</em>) – [float, float, float, float]
+Stone center location [x, y, z, rotz] in millimeters/rad</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.fitting_stone.get_stone_dimensions_from_xml">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.fitting_stone.</span></span><span class="sig-name descname"><span class="pre">get_stone_dimensions_from_xml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.fitting_stone.get_stone_dimensions_from_xml" title="Permalink to this definition"></a></dt>
+<dd><p>This funtion extracts a stones dimension and location on the pallet from
+the xml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>dict</em>) – Dictionary containing [pallet_id];[stone_id];[xml_path]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>stone_geometry</strong> (<em>list</em>) – [[float, float, float]]
+Realworld geometry of the stone in millimeters
+as stated in the pallets xml file. [[x, y, z]]</p></li>
+<li><p><em># Not in use yet.</em></p></li>
+<li><p><strong>stone_position</strong> (<em>list</em>) – [[float, float, float]]
+Realworld position of the stones center in millimeters
+as stated in the pallets xml file. [[x, y, z]]</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.fitting_stone.find_corner_contour">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.fitting_stone.</span></span><span class="sig-name descname"><span class="pre">find_corner_contour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stone_region</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.fitting_stone.find_corner_contour" title="Permalink to this definition"></a></dt>
+<dd><p>This function determines the most upper left corner of a region and returns both the horizontal and the vertical
+contour as haclon xld object, aswell as the pixel coordinates of the stone corner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stone_region</strong> (<em>HObject</em><em> (</em><em>regions</em><em>)</em>) – Input region that contains
+the stone of interest in the
+upper left corner of the image</p></li>
+<li><p><strong>config</strong> (<em>dict</em>) – Only needed for visualization purposes
+Assertion: conifg[“visualize”]=={‘no’, ‘result’, ‘step_by_step’, ‘debug’}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>corner_contour</strong> (<em>HObject (xld)</em>) – Contains xlds of the upper left contours in the input region</p></li>
+<li><p><strong>stone_corner_px</strong> (<em>list</em>) – [float, float]
+Pixel coordinate of the stone coordinates
+[row, column]</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.fitting_stone.calc_px_per_mm">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.fitting_stone.</span></span><span class="sig-name descname"><span class="pre">calc_px_per_mm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corner_contour</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.fitting_stone.calc_px_per_mm" title="Permalink to this definition"></a></dt>
+<dd><p>This funcition is only for visualization purposes. It approximates
+how many millimeters are in one pixel of the corner_contour. This
+value depends on the distance between the corner_contour and the
+cameras optical center. The value is calculated by dividing the millimeter
+values of the stone_contour by its corresponding lenght in pixels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyz_image</strong> (<em>HObject</em><em> (</em><em>image</em><em>)</em>) – 3-Channel image [[x-data], [y-data], [z-data]]</p></li>
+<li><p><strong>corner_contour</strong> (<em>HObject</em><em> (</em><em>xld</em><em>)</em>) – Contains xlds of the upper left contours in the input region</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>mm_per_pixel</strong> – Approximated value, of how many millimeters
+correspond to one pixel in the height of the
+stone corner.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.fitting_stone.calc_coordsys_for_visualization">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.fitting_stone.</span></span><span class="sig-name descname"><span class="pre">calc_coordsys_for_visualization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stone_geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mm_per_pixel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.fitting_stone.calc_coordsys_for_visualization" title="Permalink to this definition"></a></dt>
+<dd><p>This function is for visualization purposes only. It calculates a coordinate system
+with its origin in the stones corner and in orientation of the stone. The length of
+both axis are calculated by the stones geometry and the factor mm_per_pixels of the
+stone region. As the mm_per_pixel factor is only an approximation, the coordinate axis
+length may differ from the stones length in the image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>list</em>) – [float, float]
+Pixel value in image coordinates [row, column] of the
+coordinate system.</p></li>
+<li><p><strong>stone_geometry</strong> (<em>list</em>) – [[float, float, float]]
+Realworld geometry of the stone in millimeters
+as stated in the pallets xml file. [[x, y, z]]</p></li>
+<li><p><strong>orientation</strong> (<em>float</em>) – Radial measure of the stones rotation around its z_axis
+(reference axis image column (y-image of helios2)).
+Assertion: -pi/2 &lt; orientation &lt; pi/2</p></li>
+<li><p><strong>mm_per_pixel</strong> (<em>float</em>) – Approximated value, of how many millimeters
+correspond to one pixel in the height of the
+stone corner.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>coord_sys</strong> – Float sequenze in format required by halcon to visualize an arrow
+[[start_row_x_axis, start_col_x_axis, end_row_x_axis, end_col_x_axis],
+[start_row_y_axis, start_col_y_axis, end_row_y_axis, end_col_y_axis]]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.fitting_stone.get_orientation_longest_contour">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.fitting_stone.</span></span><span class="sig-name descname"><span class="pre">get_orientation_longest_contour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corner_contour</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.fitting_stone.get_orientation_longest_contour" title="Permalink to this definition"></a></dt>
+<dd><p>This function calculates the stones orientation around its z_axis. Reference axis is the images
+column (x-image of Helios2). It selects the longer of both corner_contours and fits a regression line
+to it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>corner_contour</strong> (<em>HObject</em><em> (</em><em>xld</em><em>)</em>) – Contains xlds of the upper left contours in the input region</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>orientation</strong> – Radial measure of the stones rotation around its z_axis
+(reference axis image column (y-image of helios2)).
+Assertion: -pi/2 &lt; orientation &lt; pi/2</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="standard_stone.html" class="btn btn-neutral float-left" title="Standard stone localization module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="image_aquisition.html" class="btn btn-neutral float-right" title="Image acquisition module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Max Körner, Jonathan Sautter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

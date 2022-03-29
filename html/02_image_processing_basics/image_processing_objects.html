@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image processing “objects” &mdash; Image Processing 03/2022 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Image processing operations" href="image_processing_operations.html" />
+    <link rel="prev" title="Project description" href="../01_project_introduction/project_introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Image processing “objects”</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#images">Images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gray-scale">Gray scale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-masks">Binary / Masks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multichannel">Multichannel</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pointclouds">Pointclouds</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="image_processing_operations.html">Image processing operations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/image_aquisition.html">Image acquisition module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Image processing “objects”</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/02_image_processing_basics/image_processing_objects.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>This part of the documentation is ment to give a brief overview of different types of “objects” in the image processing
+context like images or pointclouds. After that, some operations will be described and explained,
+how to utilize them using the halcon image processing api in python.</p>
+<section id="image-processing-objects">
+<h1>Image processing “objects”<a class="headerlink" href="#image-processing-objects" title="Permalink to this headline"></a></h1>
+<p>This section describes different objects you most likely will encounter when dealing with image processing.</p>
+<hr class="docutils" />
+<section id="images">
+<h2>Images<a class="headerlink" href="#images" title="Permalink to this headline"></a></h2>
+<p>One of the most fundamental things in image processing are obviously images.
+But what actually is an image or, to be more precise, a digital image.</p>
+<p>Digital images are composed of single elements, so called “pixels”. Most of the time those pixels are arranged in a rectangular raster.
+Each pixel has a unique x and y position along the images axis. This x,y-position is the pixels coordinate in the image.
+In halcon, the coordinates start in the upper left corner of an image with the x-axis going down (row) and the y-axis going right (column).
+A pixel can be addressed by calling its image coordinate.
+The image coordinate (5,20) would then refer to the pixel 6th from the top and 21st from the left (starting from zero).</p>
+<p>In addition to a pixel coordinate, each pixel has at least one value assigned to it. This value is is the basis for the
+appearance of the pixel when visualizing an image. Depending on the different values of the pixels in a image, you can split images into different “categories”.
+Theses categories of images will be described in the following paragraphs.</p>
+<section id="gray-scale">
+<h3>Gray scale<a class="headerlink" href="#gray-scale" title="Permalink to this headline"></a></h3>
+<p>A gray scale image pixel values usually range from 0 to 255 with 0 meaning the pixel appears black and 255 a pixel appears white.
+All values in between then range from a dark gray to a light gray. The range from 0 to 255 is not chosen randomly but because it can be stored in one byte.
+In some rare cases it can be useful to extend the range but more on that under the paragraph <a class="reference internal" href="#point-clouds"><span class="std std-ref">Pointclouds</span></a>.
+The image below shows a gray scale image of a pallet of fitting stones.</p>
+<figure class="align-center" id="id2">
+<img alt="gray scale image of fitting stones on a pallet" src="../_images/intensity_image.png" />
+<figcaption>
+<p><span class="caption-text">Gray scale image of fitting stones (<em>source:</em> own image)</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="binary-masks">
+<span id="id1"></span><h3>Binary / Masks<a class="headerlink" href="#binary-masks" title="Permalink to this headline"></a></h3>
+<p>A binary image pixel value only ranges from 0 to 1. Like in the gray scale image a value of 0 means the pixel is black, a value of 1 the pixel is white.
+There are no values in between. For this reason its also called a black and white image.
+Although a black and white image doesn’t hold much information in itself, it takes an important role in image processing tasks.
+They are often used like a mask for image segmentation, meaning isolating an object from its background.
+To better understand what this means, lets say we want to isolate the pallet of fitting stones shown in the figure above from the background.
+A mask or binary image for this task would look like this:</p>
+<figure class="align-center" id="id3">
+<span id="pallet-region"></span><img alt="mask to separate fitting stone pallet from background" src="../_images/pallet_region.png" />
+<figcaption>
+<p><span class="caption-text">Mask to separate pallet from background (<em>source:</em> own image)</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>This mask can be understood like a window put on top of an image. Everything below the white area will be visible
+(and thus be part of the object), everything below the black area will not be visible and is considered background.
+In halcon those masks have their own object type called <strong>regions</strong>. From now on everytime the term region is used it refers to said masks or binary images.</p>
+<p>So lets look through the window and see what our intensity image looks like after applying the mask to it:</p>
+<figure class="align-center" id="id4">
+<img alt="Masked fitting stone image" src="../_images/masked_intensity_image.png" />
+<figcaption>
+<p><span class="caption-text">Fitting stone pallet separated from background (<em>source:</em> own image)</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>To generate masks that do as intended can be tricky and is one of the most important aspects of image processing.
+How to generate a mask/region and what else they can be used for, other than separating an object from its background,
+will be shown in the section <a class="reference internal" href="image_processing_operations.html#image-processing-operations"><span class="std std-ref">Image processing operations</span></a></p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>In halcon, masks have their own object type called <strong>regions</strong></p>
+</div>
+</section>
+<section id="multichannel">
+<h3>Multichannel<a class="headerlink" href="#multichannel" title="Permalink to this headline"></a></h3>
+<p>Multichannel images contain multiple values for each pixel. Its most common use is in color images where each pixel holds 3 values.
+Like in gray scale images, these values most commonly range from 0 to 255. Each channel is representing one color
+(usually red, green and blue) with a value of 0 meaning the pixel is black. The value of 255 corresponds to the color of a channel.
+A pixel with the values (255, 0, 0) would then just be red. By overlaying all three channels you can display quite a big number of colors
+(16.777.216 to be exact). Because color images won’t play a significant role for this project, we won’t go any deeper in detail.</p>
+<p>Nonetheless, multichannel images can also be used for other purposes than displaying colorful images.
+The next paragraph shows how multichannel images can be used to represent geometrical data of a captured scene.</p>
+</section>
+</section>
+<section id="pointclouds">
+<span id="point-clouds"></span><h2>Pointclouds<a class="headerlink" href="#pointclouds" title="Permalink to this headline"></a></h2>
+<p>A Pointcloud is a sample of points used to represent data. Often pointclouds are used to represent geometrical data of a captured scene.
+The essence of a 3D image. To get a useful pointcloud for a 3D scene representation, you need at least 3 values,
+or to put it in context of a multichannel image, you need at least a 3-Channel image. The first value represents the x-coordinate of the point,
+the second the y-coordinate and the third the z-coordinate. In addition to that, a point can be assigned an arbitrary number of other attributes/values.
+If you add 1 more channel, you might assign each point an intensity value like a gray scale image. Add 2 more an you can
+combine a pointcloud with a colored image. But also data like temperature or a object class are possible.</p>
+<p>But lets focus on the basic case of a pointcloud only consisting of points without any additional values. The pointcloud for our scene
+from above, the fitting stone pallet, would look like this (color is only added for better visibility):</p>
+<figure class="align-center" id="id5">
+<img alt="Perspective pointcloud of fitting stone pallet" src="../_images/pointcloud_fitting_stones_perspective.png" />
+<figcaption>
+<p><span class="caption-text">Perspective view of a pointcloud of fitting stone pallet (<em>source</em>: own image)</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>To acquire a pointcloud, the camera must be able to retrieve an x-, y- and z-coordinate for a point in the scene.
+There are many techniques to get these coordinates. One of them is sending light out from the camera and measure the time
+the reflected light takes to travel back to the camera. This method is called <strong>Time of Flight</strong> or <strong>ToF</strong>. The Helios2,
+the camera used in this project to generate the pointcloud data, works with this principle. The developed algorithms though,
+are not depending on which device or with which technique the pointcloud is generated and should work with any pointcloud as long as the resolution is sufficient.</p>
+<p>When acquiring pointclouds it often makes sense to extend the “default” range of a channel from 8 bit (1 byte) to 16 bit.
+The problem is, that an 8 bit channel would only allow 256 different values for each coordinate, which isn’t sufficient for many applications.
+To clarify this, i’ll give a quick simplified example.</p>
+<p>Lets say we want to take an image of a pallet with the camera 2 meters above the ground. The z-values,
+stored in the third channel of the image, need to cover a range from 0 to 2 meters. If all values are evenly spread across
+the full range of the channel, a 8 bit channel would mean, that each step of the 256 possible steps corresponds to 0.0078 meters
+(or 7.8 mm). If a higher “resolution” is needed, the channel can be extended to 16 bit allowing 65536 possible values.
+This would lead to a “resolution” of 0.03 mm. Note that resolution in this context does not refer to the total amount of pixels in the image.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>In halcon, pointclouds are part of the object class <strong>object_model_3d</strong>. They share this object type with other 3d objects like for instance “.dxf”, “.obj” or “.stl”.</p>
+</div>
+<p>The next section gives a quick summary of important image processing operations and how to perform them in halcon (python).</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../01_project_introduction/project_introduction.html" class="btn btn-neutral float-left" title="Project description" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="image_processing_operations.html" class="btn btn-neutral float-right" title="Image processing operations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Max Körner, Jonathan Sautter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+This part of the documentation is ment to give a brief overview of different types of "objects" in the image processing
+context like images or pointclouds. After that, some operations will be described and explained,
+how to utilize them using the halcon image processing api in python.
+
+
+Image processing "objects"
+===========================
+This section describes different objects you most likely will encounter when dealing with image processing.
+
+------
+
+Images
+----------------
+One of the most fundamental things in image processing are obviously images.
+But what actually is an image or, to be more precise, a digital image.
+
+Digital images are composed of single elements, so called "pixels". Most of the time those pixels are arranged in a rectangular raster.
+Each pixel has a unique x and y position along the images axis. This x,y-position is the pixels coordinate in the image.
+In halcon, the coordinates start in the upper left corner of an image with the x-axis going down (row) and the y-axis going right (column).
+A pixel can be addressed by calling its image coordinate.
+The image coordinate (5,20) would then refer to the pixel 6th from the top and 21st from the left (starting from zero).
+
+In addition to a pixel coordinate, each pixel has at least one value assigned to it. This value is is the basis for the
+appearance of the pixel when visualizing an image. Depending on the different values of the pixels in a image, you can split images into different "categories".
+Theses categories of images will be described in the following paragraphs.
+
+Gray scale
+^^^^^^^^^^^
+A gray scale image pixel values usually range from 0 to 255 with 0 meaning the pixel appears black and 255 a pixel appears white.
+All values in between then range from a dark gray to a light gray. The range from 0 to 255 is not chosen randomly but because it can be stored in one byte.
+In some rare cases it can be useful to extend the range but more on that under the paragraph :ref:`Pointclouds <point-clouds>`.
+The image below shows a gray scale image of a pallet of fitting stones.
+
+.. figure:: images/intensity_image.png
+    :align: center
+    :alt: gray scale image of fitting stones on a pallet
+
+    Gray scale image of fitting stones (*source:* own image)
+
+.. _binary-masks:
+
+Binary / Masks
+^^^^^^^^^^^^^^^
+A binary image pixel value only ranges from 0 to 1. Like in the gray scale image a value of 0 means the pixel is black, a value of 1 the pixel is white.
+There are no values in between. For this reason its also called a black and white image.
+Although a black and white image doesn't hold much information in itself, it takes an important role in image processing tasks.
+They are often used like a mask for image segmentation, meaning isolating an object from its background.
+To better understand what this means, lets say we want to isolate the pallet of fitting stones shown in the figure above from the background.
+A mask or binary image for this task would look like this:
+
+.. _pallet-region:
+
+.. figure:: images/pallet_region.png
+    :align: center
+    :alt: mask to separate fitting stone pallet from background
+
+    Mask to separate pallet from background (*source:* own image)
+
+This mask can be understood like a window put on top of an image. Everything below the white area will be visible
+(and thus be part of the object), everything below the black area will not be visible and is considered background.
+In halcon those masks have their own object type called **regions**. From now on everytime the term region is used it refers to said masks or binary images.
+
+So lets look through the window and see what our intensity image looks like after applying the mask to it:
+
+.. figure:: images/masked_intensity_image.png
+    :align: center
+    :alt: Masked fitting stone image
+
+    Fitting stone pallet separated from background (*source:* own image)
+
+To generate masks that do as intended can be tricky and is one of the most important aspects of image processing.
+How to generate a mask/region and what else they can be used for, other than separating an object from its background,
+will be shown in the section :ref:`Image processing operations <image-processing-operations>`
+
+.. hint::
+    In halcon, masks have their own object type called **regions**
+
+Multichannel
+^^^^^^^^^^^^
+Multichannel images contain multiple values for each pixel. Its most common use is in color images where each pixel holds 3 values.
+Like in gray scale images, these values most commonly range from 0 to 255. Each channel is representing one color
+(usually red, green and blue) with a value of 0 meaning the pixel is black. The value of 255 corresponds to the color of a channel.
+A pixel with the values (255, 0, 0) would then just be red. By overlaying all three channels you can display quite a big number of colors
+(16.777.216 to be exact). Because color images won't play a significant role for this project, we won't go any deeper in detail.
+
+Nonetheless, multichannel images can also be used for other purposes than displaying colorful images.
+The next paragraph shows how multichannel images can be used to represent geometrical data of a captured scene.
+
+.. _point-clouds:
+
+Pointclouds
+-------------
+
+A Pointcloud is a sample of points used to represent data. Often pointclouds are used to represent geometrical data of a captured scene.
+The essence of a 3D image. To get a useful pointcloud for a 3D scene representation, you need at least 3 values,
+or to put it in context of a multichannel image, you need at least a 3-Channel image. The first value represents the x-coordinate of the point,
+the second the y-coordinate and the third the z-coordinate. In addition to that, a point can be assigned an arbitrary number of other attributes/values.
+If you add 1 more channel, you might assign each point an intensity value like a gray scale image. Add 2 more an you can
+combine a pointcloud with a colored image. But also data like temperature or a object class are possible.
+
+But lets focus on the basic case of a pointcloud only consisting of points without any additional values. The pointcloud for our scene
+from above, the fitting stone pallet, would look like this (color is only added for better visibility):
+
+.. figure:: images/pointcloud_fitting_stones_perspective.png
+    :align: center
+    :alt: Perspective pointcloud of fitting stone pallet
+
+    Perspective view of a pointcloud of fitting stone pallet (*source*: own image)
+
+
+To acquire a pointcloud, the camera must be able to retrieve an x-, y- and z-coordinate for a point in the scene.
+There are many techniques to get these coordinates. One of them is sending light out from the camera and measure the time
+the reflected light takes to travel back to the camera. This method is called **Time of Flight** or **ToF**. The Helios2,
+the camera used in this project to generate the pointcloud data, works with this principle. The developed algorithms though,
+are not depending on which device or with which technique the pointcloud is generated and should work with any pointcloud as long as the resolution is sufficient.
+
+When acquiring pointclouds it often makes sense to extend the "default" range of a channel from 8 bit (1 byte) to 16 bit.
+The problem is, that an 8 bit channel would only allow 256 different values for each coordinate, which isn't sufficient for many applications.
+To clarify this, i'll give a quick simplified example.
+
+Lets say we want to take an image of a pallet with the camera 2 meters above the ground. The z-values,
+stored in the third channel of the image, need to cover a range from 0 to 2 meters. If all values are evenly spread across
+the full range of the channel, a 8 bit channel would mean, that each step of the 256 possible steps corresponds to 0.0078 meters
+(or 7.8 mm). If a higher "resolution" is needed, the channel can be extended to 16 bit allowing 65536 possible values.
+This would lead to a "resolution" of 0.03 mm. Note that resolution in this context does not refer to the total amount of pixels in the image.
+
+.. hint::
+    In halcon, pointclouds are part of the object class **object_model_3d**. They share this object type with other 3d objects like for instance ".dxf", ".obj" or ".stl".
+
+The next section gives a quick summary of important image processing operations and how to perform them in halcon (python).
+

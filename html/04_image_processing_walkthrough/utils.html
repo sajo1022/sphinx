@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Utils function description (docstrings) &mdash; Image Processing 03/2022 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Evaluation" href="evaluation.html" />
+    <link rel="prev" title="ROS action modules" href="ros.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_operations.html">Image processing operations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_aquisition.html">Image acquisition module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS action modules</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Utils function description (docstrings)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/04_image_processing_walkthrough/utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="utils-function-description-docstrings">
+<h1>Utils function description (docstrings)<a class="headerlink" href="#utils-function-description-docstrings" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>Description of the functions in the utils module.</p>
+<span class="target" id="module-image_processing_scripts.utils"></span><dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.utils.create_config_dict">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.utils.</span></span><span class="sig-name descname"><span class="pre">create_config_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.utils.create_config_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Function to create the config dictionary from a string. Needed because ROS only
+supports strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config_string</strong> (<em>list</em>) – String array, that contains all necessary
+information for locating different types of stones
+[stone_type, stone_id, pallet_id, camera_height, xml_path, visualize, position_format, operation_mode, save_images]
+Assertion: All instance str</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>config_dict</strong> – Converted string as dictionary.
+Keys:
+{“stone_type”, “stone_id”, “pallet_id”, “camera_height”, “xml_path”,
+“visualize”, “position_format”, “operation_mode”, “save_images”}</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.utils.read_config_string_from_main">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.utils.</span></span><span class="sig-name descname"><span class="pre">read_config_string_from_main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.utils.read_config_string_from_main" title="Permalink to this definition"></a></dt>
+<dd><p>Function to create config string from global variables in main.
+Used for development purposes only. Config string has to be created
+dynamically by coordinator (robot).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>config_string</strong> – String array, that contains all necessary
+information for locating different types of stones
+[stone_type, stone_id, pallet_id, camera_height, xml_path, visualize, position_format, operation_mode, save_images]
+Assertion: All instance str</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.utils.encode_stone_location">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.utils.</span></span><span class="sig-name descname"><span class="pre">encode_stone_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.utils.encode_stone_location" title="Permalink to this definition"></a></dt>
+<dd><p>Function to flatten results in case multiple stones are located.
+ROS util because action server/client only support string[].
+An integer value to decode results later is appened to the
+end.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>array</strong> (<em>list</em>) – 2D array containing stone location either in format xyzz or homogenous</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>array_encoded</strong> – 1D array containing flattened input array and an int value
+to later decode.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.utils.decode_stone_location">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.utils.</span></span><span class="sig-name descname"><span class="pre">decode_stone_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array_encoded</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.utils.decode_stone_location" title="Permalink to this definition"></a></dt>
+<dd><p>Function to decode results in case multiple stones are located.
+ROS util because action server/client only support string[].
+An integer value to decode results ar input[-1]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>array_encoded</strong> (<em>list</em>) – 1D array containing an int value
+to decode.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>array_decoded</strong> – 2D array containing stone location either in format xyzz or homogenous</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.utils.get_homogeneous_coordinates_from_stone_location">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.utils.</span></span><span class="sig-name descname"><span class="pre">get_homogeneous_coordinates_from_stone_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stone_locations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.utils.get_homogeneous_coordinates_from_stone_location" title="Permalink to this definition"></a></dt>
+<dd><p>Function to convert from xyz, rotz stone location to homogenous coordinates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stone_locations</strong> (<em>list</em>) – [[float, float, float, float],[float, float, float, float], …]
+Sequence of stone coordinate [x, y, z, rot_Z] in millimeter/rad</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>homogeneous_coordinates</strong> – Matrix 4x4 [float]
+Stone center location as homogenous matrix in millimeters/rad</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ros.html" class="btn btn-neutral float-left" title="ROS action modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="evaluation.html" class="btn btn-neutral float-right" title="Evaluation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Max Körner, Jonathan Sautter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

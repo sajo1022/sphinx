@@ -1,0 +1,165 @@
+.. _fitting-stone-module:
+
+Fitting stone localization module
+====================================
+
+This section will give the same overview over the modules contents as the :ref:`previous section <standard-stone-module>`.
+It will start with a brief summary of the basic idea followed by a more detailed walkthrough.
+
+------
+
+.. _basic-idea-fitting-stones:
+
+Basic idea fitting stones
+---------------------------
+The starting situation when localizing fitting stones is different from dealing with standard stones.
+We have stones of different shapes and sizes on one pallet. In addition, the stones also don't have strong
+features like holes that can be used for localization. A different approach is needed.
+
+This approach starts in a similar way. We first need to isolate the pallet of interest from the background.
+We then use the xml file to read a stones geometry and apply a threshold to "cut" all stones that
+have a different height. It may be the case, that two stones of the same height are next to each other which would
+mean, we can distinguish them using only 3d data.
+
+Presuming the stones on a pallet are already in the right order they are needed, we dont need to be able to find the
+whole stone, it is enough to find the stones corner. It will always be visible as soon as the robot has taken the stone
+next to it. If the corner is successfully identified, we can calculate the stones orientation and also its center by using
+its dimensions from the xml file and the already calculated dimension.
+
+This method does not return multiple stones, just the next stone in the "lower left corner", close to the robot.
+
+Fitting stone module walkthrough
+----------------------------------
+As already described in the :ref:`standard stone walkthrough <standard-stone-walkthrough>`,
+the entrypoint is the method :py:meth:`locate_fitting_stone <image_processing_scripts.fitting_stones.locate_fitting_stone>`
+which also requires a 3-channel image with the pointcloud data and the users *config dict*.
+In addition to that, the intensity image of the scene is needed for visualization.
+
+The located stones pose will be returned in the same two formats as the standard stones.
+The example scene used for this walkthrough will look like the intensity image below.
+The goal is to locate the stone in the lower left corner which is the next stone required by the robot.
+
+.. figure:: images/intensity_image_fs.png
+    :align: center
+    :alt: Intensity image fitting stones
+
+    Intensity image of the example scene for fitting stones (source: own image)
+
+
+Step 1 - Isolate pallet
+^^^^^^^^^^^^^^^^^^^^^^^^
+The isolation of the pallet region works exactly the same as described in the :ref:`standard stone module <isolate-pallet>`.
+We will again receive a mask that looks like this:
+
+.. figure:: images/regions_above_ground_fs.png
+    :align: center
+    :alt: Regions above ground and pallet region.
+
+    Regions above the ground (left) and pallet region after selecting the biggest region (right)
+    (source:own image)
+
+Step 2 - Get stone contours
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Now that the pallet mask was successfully generated, we need to use the stone height from the xml file to find the top side
+of our stone of interest. To read the stones dimensions from the xml file, the function
+py:meth:`get_stone_dimension_from_xml <image_processing_scripts.fitting_stones.get_stone_dimension_from_xml>` was used.
+
+.. code-block:: python
+
+    stone_geometry, stone_position = get_stone_dimensions_from_xml(config)
+
+In addition to its geometry, also its position on the pallet is returned. The position on the pallet can't be used directly,
+since its very likely that the stones have moved during the transport.
+
+Using a simple threshold with the ``camera_height``, subtracting the ``pallet_height`` and the ``stone_dimension`` in
+z-direction, we should be able to exactly mask the stones top side. Since the hard coded pallet height of 150 mm might
+not be accurate enough and also tolerances in the ``stone_dimension`` and the ``camera_height`` add up, we use a threshold
+tolerance of +- 30 mm for segmentation. This found mask can then be converted to only its contours using halcon.
+The resulting contours will be a halcon object of type ``xld`` which stands for "eXtended Line Description".
+
+.. code-block:: python
+
+    # calculate pallet distance from camera
+    pallet_height = 150
+    pallet_distance = config["camera_height"] - pallet_height
+
+    # calculate and apply threshold
+    stone_threshold = [pallet_distance - stone_geometry[0][2]-30, pallet_distance - stone_geometry[0][2]+30]
+    stone_region = ha.threshold(z_image_pallet_reduced, stone_threshold[0], stone_threshold[1])
+
+    # generate contours of stone region and smooth contours
+    contours = ha.gen_contour_region_xld(stone_region, "border")
+
+The resulting stone region and its contours are shown in the figure below.
+
+.. figure:: images/stone_height_region_fs.png
+    :align: center
+    :alt: Stone region and contour
+
+    Stone region and its contours (source: own image)
+
+Step 3 - Find corner contour
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In the resulting contours, we now need to identify the corner contour of our stone. The contours are only
+one long connected line yet. For this reason we first need to split those lines at *dominant* points like corners or intersections.
+Since we are looking for exactly **1 horizontal** and **1 vertical line** we fit a regression line to the split contours
+and determine its orientation. Depending on this orientation the split contours are put into groups.
+These operations are performed by the following code:
+
+.. code-block:: python
+
+    # generate polygon string from contours and split at dominat points (corners)
+    _contour_polygon = ha.gen_polygons_xld(contours, 'ramer', 2)
+    splitted_contours = ha.split_contours_xld(_contour_polygon, 'dominant', 3.5, 8)
+
+    # fit line to calculate orientation
+    regression_lines = ha.fit_line_contour_xld(splitted_contours, "regression", -1, 1, 5, 1)
+    orientation = np.asarray([ha.line_orientation(regression_lines[0], regression_lines[1], regression_lines[2], regression_lines[3])])[0]
+    index_horizontal_lines = np.argwhere((orientation>-np.pi/4) & (orientation< np.pi/4)).flatten()
+    index_vertical_lines = np.asarray(list(set(np.arange(len(orientation))) - set(index_horizontal_lines)))
+
+    horizontal_contours = ha.gen_empty_obj()
+    vertical_contours = ha.gen_empty_obj()
+
+    for index in index_horizontal_lines:
+        horizontal_contours = ha.concat_obj(horizontal_contours, ha.select_obj(splitted_contours, int(index)+1))
+
+    for index in index_vertical_lines:
+        vertical_contours = ha.concat_obj(vertical_contours, ha.select_obj(splitted_contours, int(index)+1))
+
+With the two groups ``horizontal_contours`` and ``vertical_contours`` as a starting point, the contours center
+is calculated and a horizontal contour is selected. After that, the distance to all vertical contours is calculated
+and the one with the closest distance will be selected as its partner. For more detailed information on how the selection is performed,
+refer to the function description of :py:meth:`find_corner_contour <image_processing_scripts.fitting_stone.find_corner_contour>`.
+
+The selected corner from horizontal and vertical lines are shown in the images below.
+
+.. figure:: images/corner_contour_fs.png
+    :align: center
+    :alt: Horizontal and vertical contours and the selected stone corner
+
+    Horizontal and vertical contours and the selected stone corner (source: own image)
+
+Step 4 - Calculate fitting stone center
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The only thing left to do now is to calculate the stones center coordinates in millimeters and its orientation.
+To get the stones orientation we use the regression line of the longest found contour. To get the stones coordinates,
+the gray value in the stone corner is extracted using the function ``get_grayval`` and the corner coordinates in pixels.
+To get the stones center we can again use the dimensions from the xml file.
+
+The figure below shows the found stone corner. The length of the axis is just approximated and does not represent the
+actual length of the stone. For further information on how this step is done check the function description for
+:py:meth:`calc_px_per_mm <image_processing_scripts.fitting_stone.calc_px_per_mm>` and
+:py:meth:`calc_coordsys_for_visualization <image_processing_scripts.fitting_stone.calc_coordsys_for_visualization>`.
+
+.. figure:: images/result_fs.png
+    :align: center
+    :alt: Result of fitting stone location
+
+    Visualization of result of located fitting stone (source: own image)
+
+Fitting stone function description (docstrings)
+-------------------------------------------------
+
+.. automodule:: image_processing_scripts.fitting_stone
+   :members:

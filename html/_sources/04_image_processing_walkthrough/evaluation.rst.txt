@@ -1,0 +1,17 @@
+Evaluation
+===============
+This chapter will summarize some of the KPIs regarding the
+accuracy and runtime of the developed procedures.
+
+-----
+
+Accuracy
+------------
+This paragraph will show the absolute performance of the developed modules for the different stone types.
+We will first start with a comparison of the "old" procedure for standard stones and the performance
+after the changes implemented in this project.
+
+Standard stones
+^^^^^^^^^^^^^^^^^
+
+

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitLab &mdash; Image Processing 03/2022 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Project structure" href="../04_image_processing_walkthrough/project_structure.html" />
+    <link rel="prev" title="Image processing operations" href="../02_image_processing_basics/image_processing_operations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_operations.html">Image processing operations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pipenv">Pipenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-halcon">Setup Halcon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-arena-sdk">Setup Arena SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-ros2-foxy">Setup ROS2 Foxy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker">Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/image_aquisition.html">Image acquisition module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>GitLab</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/03_getting_started/getting_started.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gitlab">
+<h1>GitLab<a class="headerlink" href="#gitlab" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>In order to download and participate in the project, it is necessary to use GitLab.
+To clone the project repository, call the following command in your desired local directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone https://www.w.hs-karlsruhe.de/gitlab/iras/research-projects/maurob40/image_processing.git
+</pre></div>
+</div>
+<p>Remember to checkout a new branch when working on this project:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git checkout -b <span class="o">{</span>BRANCHNAME<span class="o">}</span>
+</pre></div>
+</div>
+<p>It is recommended to create a merge request when the work on a branch is completed.
+Additional information on how to use Gitlab can be found in the <a class="reference internal" href="../05_supplemental_material/supplemental_material.html#gitlab-documentation"><span class="std std-ref">official GitLab documentation</span></a>.</p>
+</section>
+<section id="prerequisites">
+<h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<section id="pipenv">
+<span id="id1"></span><h2>Pipenv<a class="headerlink" href="#pipenv" title="Permalink to this headline"></a></h2>
+<p>The dependency management is realized using pipenv. Pipenv automatically creates and manages a virtual environment, as
+well as adds/removes packages from your <code class="docutils literal notranslate"><span class="pre">Pipfile</span></code> as you install/uninstall packages. In addition, it generates the
+<code class="docutils literal notranslate"><span class="pre">Pipfile.lock</span></code>, which ensures a deterministic project flow by saving the specific package version for each installed
+package.</p>
+<p>To install pipenv use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install pipenv
+</pre></div>
+</div>
+<p>To install all dependencies saved in the <code class="docutils literal notranslate"><span class="pre">Pipfile</span></code> type:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pipenv install --dev
+</pre></div>
+</div>
+<p>Ensure to use pipenv when installing new packages:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pipenv install <span class="o">{</span>PACKAGENAME<span class="o">}</span>
+</pre></div>
+</div>
+<p>Additional information on how to use pipenv can be found in the <a class="reference internal" href="../05_supplemental_material/supplemental_material.html#pipenv-documentation"><span class="std std-ref">official pipenv documentation</span></a>.</p>
+</section>
+<section id="setup-halcon">
+<h2>Setup Halcon<a class="headerlink" href="#setup-halcon" title="Permalink to this headline"></a></h2>
+<p>The project utilises Mvtec-Halcon as the main software for the required imageprocessing methods. In order to use these methods
+in a python script, it is necessary to install Halcon first.
+Go to <a class="reference external" href="https://www.mvtec.com/downloads">https://www.mvtec.com/downloads</a> to download Halcon 21.05 and install it.</p>
+<p>When working on Linux, the following environment variables must be set:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>• HALCONROOT: directory you installed HALCON in.
+• HALCONEXAMPLES: directory the example programs are installed in ($HALCONROOT/examples).
+• HALCONIMAGES: directory the example images are installed in ($HALCONEXAMPLES/images).
+• HALCONARCH: select value corresponding to the used platform.
+• PATH: this system variable should include $HALCONROOT/bin/$HALCONARCH.
+• LD_LIBRARY_PATH: this system variable should include $HALCONROOT/lib/$HALCONARCH.
+</pre></div>
+</div>
+<p>This is an abstract from the official <a class="reference internal" href="../05_supplemental_material/supplemental_material.html#halcon-installation"><span class="std std-ref">installation guide</span></a>. Please visit this guide for a further,
+more detailed description on how to install and setup Halcon.</p>
+<p>In order to license Halcon, it is necessary to install the license management software <a class="reference internal" href="../05_supplemental_material/supplemental_material.html#codemeter-download"><span class="std std-ref">CodeMeter</span></a>.
+Go to <a class="reference external" href="https://license.mvtec.com/campus/">https://license.mvtec.com/campus/</a> to activate your personal 25 digit student ticket. During this process you can
+choose to activate Halcon using the CodeMeter API. This should automatically create a <code class="docutils literal notranslate"><span class="pre">MVTec</span> <span class="pre">SW</span> <span class="pre">Container</span></code> in your local
+CodeMeter control center. If that is the case, Halcon was successfully activated.
+If you need further information, visit the <a class="reference internal" href="../05_supplemental_material/supplemental_material.html#halcon-installation"><span class="std std-ref">Halcon installation guide</span></a>.</p>
+</section>
+<section id="setup-arena-sdk">
+<h2>Setup Arena SDK<a class="headerlink" href="#setup-arena-sdk" title="Permalink to this headline"></a></h2>
+<p>Arena SDK is the official software for the 3D ToF camera <code class="docutils literal notranslate"><span class="pre">Helios2</span></code>, which is currently used in this project.
+In order to communicate with this camera via ethernet, it is necessary to install the
+<a class="reference internal" href="../05_supplemental_material/supplemental_material.html#arenasdk-download"><span class="std std-ref">Arena SDK software package</span></a>. Make sure to download the suitable version for your operating
+system and install it.</p>
+</section>
+<section id="setup-ros2-foxy">
+<span id="setup-ros"></span><h2>Setup ROS2 Foxy<a class="headerlink" href="#setup-ros2-foxy" title="Permalink to this headline"></a></h2>
+<p>In order to be able to use and edit the implemented ROS action server and client, it is required to install ROS on your
+local machine. Since the installation is pretty extensive and very dependent on the used operating system, this guide will
+merely refer to the official <a class="reference internal" href="../05_supplemental_material/supplemental_material.html#ros2-documentation"><span class="std std-ref">ROS 2 Documentation</span></a>.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Since your command shell needs to be sourced on every startup when using ROS 2, it is recommended to add the sourcing
+command to your shell startup script.</p>
+<p>In order to do this type:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="s2">&quot;source /opt/ros/dashing/setup.bash&quot;</span> &gt;&gt; ~/.bashrc
+</pre></div>
+</div>
+</div>
+<p>To check if the installation and the setup of the environment variables was correct, use the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ printenv <span class="p">|</span> grep -i ROS
+</pre></div>
+</div>
+<p>The output should look similar to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ROS_VERSION</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">ROS_PYTHON_VERSION</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">ROS_DISTRO</span><span class="o">=</span><span class="n">dashing</span>
+</pre></div>
+</div>
+</section>
+<section id="docker">
+<h2>Docker<a class="headerlink" href="#docker" title="Permalink to this headline"></a></h2>
+<p>Since this image processing procedure needs to run in a Docker container when properly used in the “MauRob40” later on,
+it is necessary to install the Docker engine on your local machine.
+If you install the Docker Engine for the first time, it is required to set up the Docker repository first.
+To do this type:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update
+$ sudo apt-get install ca-certificates curl gnupg lsb-release
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+$ <span class="nb">echo</span> <span class="s2">&quot;deb [arch=</span><span class="k">$(</span>dpkg --print-architecture<span class="k">)</span><span class="s2"> signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> stable&quot;</span> <span class="p">|</span> sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</pre></div>
+</div>
+<p>To now install the latest version of the Docker Engine type:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>If you want to install a specific version of the Docker Engine, go to the official
+<a class="reference internal" href="../05_supplemental_material/supplemental_material.html#docker-installation"><span class="std std-ref">Docker installation guide</span></a> to find a list of the available versions.</p>
+</div>
+<p>To check whether the installation was successful type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo docker run hello-world
+</pre></div>
+</div>
+</section>
+</section>
+<section id="setup-the-helios2-camera-system">
+<span id="setup-helios2-system"></span><h1>Setup the Helios2 camera system<a class="headerlink" href="#setup-the-helios2-camera-system" title="Permalink to this headline"></a></h1>
+<p>In order to use the Helios2 camera system, connect the camera to a PoE (Power over Ethernet) capable ethernet switch
+and your local machine accordingly. When the camera is connected, go to the network settings in your operating system and
+change the IPv4 Method to <code class="docutils literal notranslate"><span class="pre">manual</span></code>. Now configure the addresses as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>• Address: 169.254.218.209
+• Netmask: 255.255.0.0
+• Gateway: 169.254.100.100
+</pre></div>
+</div>
+<p>You now should be able to connect and communicate with the camera system. For further information
+you can access the official technical reference manual under <a class="reference external" href="https://support.thinklucid.com/helios2-hlt003s/">https://support.thinklucid.com/helios2-hlt003s/</a> .</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../02_image_processing_basics/image_processing_operations.html" class="btn btn-neutral float-left" title="Image processing operations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../04_image_processing_walkthrough/project_structure.html" class="btn btn-neutral float-right" title="Project structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Max Körner, Jonathan Sautter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

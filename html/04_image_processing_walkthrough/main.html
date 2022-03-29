@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main module &mdash; Image Processing 03/2022 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Standard stone localization module" href="standard_stone.html" />
+    <link rel="prev" title="Project structure" href="project_structure.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_operations.html">Image processing operations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project structure</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Main module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general-parameters">General parameters:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stone-related-parameters">Stone related parameters:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_aquisition.html">Image acquisition module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Main module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/04_image_processing_walkthrough/main.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="main-module">
+<span id="main-script"></span><h1>Main module<a class="headerlink" href="#main-module" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>The main module in this project acts like a control panel for the whole image processing procedure. Every parameter which is
+or might be needed for a certain task can be set globally. The following gives a brief overview of the parameter and there
+potential values.</p>
+<section id="general-parameters">
+<h2>General parameters:<a class="headerlink" href="#general-parameters" title="Permalink to this headline"></a></h2>
+<p><strong>OPERATION_MODE:</strong></p>
+<p>This parameter controls whether the process should only acquire new images without processing them,
+acquire new images with processing or read local images and process them.</p>
+<p><code class="docutils literal notranslate"><span class="pre">'save_only',</span> <span class="pre">'acquire_images',</span> <span class="pre">'read_images'</span></code></p>
+<p><strong>SAVE_IMAGES and SAVE_PATH:</strong></p>
+<p>This parameter sets whether the acquired images should be saved in a specific directory.</p>
+<p><code class="docutils literal notranslate"><span class="pre">'True',</span> <span class="pre">'False',</span> <span class="pre">'{PATH}'</span></code></p>
+<p><strong>VISUALIZE:</strong></p>
+<p>Sets a visualization mode. If the parameter is set to ‘debug’, almost every step of the image processing is displayed to find potential errors.
+If set to ‘step_by_step’, major interim results are visualized. This mode is well suited to showcase the method of the image processing.
+If set to ‘result’, only the outcome is displayed. Parameter value ‘no’ does not display anything.</p>
+<p><code class="docutils literal notranslate"><span class="pre">'debug',</span> <span class="pre">'step_by_step',</span> <span class="pre">'result',</span> <span class="pre">'no'</span></code></p>
+<p><strong>POSITION_FORMAT:</strong></p>
+<p>This parameter defines the format of the returned stone pose. If set to ‘xyzz’ the pose is returned as the xyz coordinates
+and the rotation around the z-axis.
+The parameter value ‘homogenous’ causes the return to be in homogenous coordinates.</p>
+<p><code class="docutils literal notranslate"><span class="pre">'xyzz',</span> <span class="pre">'homogenous'</span></code></p>
+<p><strong>CAMERA_HEIGHT:</strong></p>
+<p>Sets the camera height from the ground to get a clean background segmentation of the pallet.</p>
+<p><code class="docutils literal notranslate"><span class="pre">{CAMERA_HEIGHT}</span></code></p>
+<p><strong>XML_PATH:</strong></p>
+<p>In order to process fitting stones, a xml file with the stones geometries is needed. The path determines where to find
+this xml file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">{PATH}</span></code></p>
+</section>
+<section id="stone-related-parameters">
+<h2>Stone related parameters:<a class="headerlink" href="#stone-related-parameters" title="Permalink to this headline"></a></h2>
+<p><strong>STONE_TYPE:</strong></p>
+<p>Determines the stone type that should be processed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">'standard_stone',</span> <span class="pre">'fitting_stone'</span></code></p>
+<p><strong>PALLET_ID:</strong></p>
+<p>Determines the id of the pallet on which the searched stone is positioned.</p>
+<p><code class="docutils literal notranslate"><span class="pre">{PALLET_ID}</span></code></p>
+<p><strong>STONE_ID:</strong></p>
+<p>Determines the id of the searched stone.</p>
+<p><code class="docutils literal notranslate"><span class="pre">{STONE_ID}</span></code></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="project_structure.html" class="btn btn-neutral float-left" title="Project structure" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="standard_stone.html" class="btn btn-neutral float-right" title="Standard stone localization module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Max Körner, Jonathan Sautter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

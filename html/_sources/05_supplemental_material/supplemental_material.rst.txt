@@ -1,0 +1,96 @@
+.. only:: html
+
+    Error codes
+    ===============
+
+Helpful links
+===============
+Here you find a collection of helpful links sorted by categories.
+
+Image processing
+------------------
+
+.. _halcon-documentation:
+
+Halcon documentation
+^^^^^^^^^^^^^^^^^^^^^
+| The official documentation of MVTec halcon (image processing) can be found here:
+| https://www.mvtec.com/de/produkte/halcon/dokumentation-1
+
+.. _halcon-installation:
+
+Halcon installation guide
+^^^^^^^^^^^^^^^^^^^^^^^^^
+| The official installation guide of Halcon can be found here:
+| https://www.mvtec.com/fileadmin/Redaktion/mvtec.com/products/halcon/documentation/manuals/installation_guide.pdf
+
+.. _codemeter-download:
+
+CodeMeter download
+^^^^^^^^^^^^^^^^^^^
+| The official download source for CodeMeter can be found here:
+| https://www.wibu.com/de/support/anwendersoftware/anwendersoftware.html
+
+.. _arenaSDK-download:
+
+Arena SDK download
+^^^^^^^^^^^^^^^^^^^^^
+| The official download source for Arena SDK can be found here:
+| https://thinklucid.com/downloads-hub/
+
+.. _helios2-tech-ref:
+
+Helios2 - technical reference manual
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| The offical technical reference manual for the Helios2 camera can be found here:
+| https://support.thinklucid.com/helios2-hlt003s/
+
+ROS
+-----
+
+.. _ros2-documentation:
+
+ROS2-foxy documentation
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+| The official documentation of ROS2-foxy can be found here:
+| https://docs.ros.org/en/foxy/index.html
+
+
+
+Other
+-------
+
+.. _gitLab-documentation:
+
+GitLab documentation
+^^^^^^^^^^^^^^^^^^^^^^^
+| The official documentation of GitLab can be found here:
+| https://docs.gitlab.com/ee/gitlab-basics/
+
+.. _pipenv-documentation:
+
+Pipenv documentation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| The official documentation of pipenv can be found here:
+| https://pypi.org/project/pipenv/
+
+.. _docker-installation:
+
+Docker Engine installation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| The official installation guide of the Docker Engine can be found here:
+| https://docs.docker.com/engine/install/ubuntu/
+
+Documentation
+------------------
+
+.. _sphinx-documentation:
+
+Sphinx documentation
+^^^^^^^^^^^^^^^^^^^^^
+| The official documentation of Sphinx (documentation) can be found here:
+| https://www.sphinx-doc.org/en/master/contents.html
+
+
+
+

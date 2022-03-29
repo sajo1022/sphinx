@@ -1,43 +1,64 @@
-.. Image Processing documentation master file, created by
-   sphinx-quickstart on Fri Mar 18 13:16:17 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to Image Processing's documentation!
+Image Processing for the project "MauRob40"
 ============================================
-Hello to the documentation of the imageprocessing project in the context of the development of the "MauRob40".
+Welcome to the documentation of the image processing for stone localization in the context of the development of the project "MauRob40".
+
+The main focus of this documentation is to give an overview of the image processing procedures
+for locating various stone types. Also the framework of the image processing and the general
+project structure and used tools will be described. This documentation is ment to provide
+users and developers with the required background information to utilize the developed
+application and contribute to it.
 
 .. figure:: images/kr210.png
 
 .. toctree::
    :maxdepth: 2
    :glob:
-   :caption: Environment:
+   :caption: Project "MauRob40"
 
-   environment
-
-
-.. toctree::
-   :maxdepth: 2
-   :glob:
-   :caption: Fitting stone:
-
-   fitting_stone
+   01_project_introduction/project_introduction
 
 .. toctree::
    :maxdepth: 2
    :glob:
-   :caption: Standard stone:
+   :caption: Image processing basics
 
-   standard_stone
+   02_image_processing_basics/image_processing_objects
+   02_image_processing_basics/image_processing_operations
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :caption: Getting started
+
+   03_getting_started/getting_started
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :caption: Image processing walkthrough
+
+   04_image_processing_walkthrough/project_structure
+   04_image_processing_walkthrough/main
+   04_image_processing_walkthrough/standard_stone
+   04_image_processing_walkthrough/fitting_stone
+   04_image_processing_walkthrough/image_aquisition
+   04_image_processing_walkthrough/ros
+   04_image_processing_walkthrough/utils
+   04_image_processing_walkthrough/evaluation
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :caption: Supplemental material
+
+   05_supplemental_material/supplemental_material
 
 
+.. only:: html
 
+   Indices and tables
+   ^^^^^^^^^^^^^^^^^^
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   * :ref:`genindex`
+   * :ref:`modindex`
+   * :ref:`search`

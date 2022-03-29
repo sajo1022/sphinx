@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image acquisition module &mdash; Image Processing 03/2022 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ROS action modules" href="ros.html" />
+    <link rel="prev" title="Fitting stone localization module" href="fitting_stone.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_operations.html">Image processing operations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Image acquisition module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#helios2-basics">Helios2 basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#helios2-configuration">Helios2 configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acquire-an-image">Acquire an image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#converting-gray-values-to-millimeters">Converting gray values to millimeters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-image_processing_scripts.image_aquisition">Image acquisition function description (docstrings)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Image acquisition module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/04_image_processing_walkthrough/image_aquisition.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="image-acquisition-module">
+<h1>Image acquisition module<a class="headerlink" href="#image-acquisition-module" title="Permalink to this headline"></a></h1>
+<p>This part of the documentation describes the module that is responsible for everything related
+with the image acquisition, respective the setup of the <strong>Helios2 ToF</strong> camera.</p>
+<hr class="docutils" />
+<section id="helios2-basics">
+<h2>Helios2 basics<a class="headerlink" href="#helios2-basics" title="Permalink to this headline"></a></h2>
+<p>The Helios2 is a Time of Flight camera by the manufacturer Lucid Vision Labs Inc. (<a class="reference external" href="https://thinklucid.com/de/">https://thinklucid.com/de/</a> ).</p>
+<p>The cameras diodes work on a wavelength of 850nm which is not suitable for outdoor operation. But as already mentioned,
+the developed algorithms are not depended on the sensor that acquires the data but on the pointcloud / xyz-data only.</p>
+<p>The camera communicates via the <strong>GiGE Vision</strong> protocol, which offers a vast variety of options to configure the camera.
+For a collection of all the nodes that are available to configure your camera, please refer to the official
+technical reference manual (<a class="reference external" href="https://support.thinklucid.com/helios2-hlt003s/#2352">https://support.thinklucid.com/helios2-hlt003s/#2352</a> )</p>
+</section>
+<section id="helios2-configuration">
+<h2>Helios2 configuration<a class="headerlink" href="#helios2-configuration" title="Permalink to this headline"></a></h2>
+<p>When the user wants to take an image with the Helios2, the first thing to do is to connect to the camera.
+If your camera and your network is setup correctly as described in the <a class="reference internal" href="../03_getting_started/getting_started.html#setup-helios2-system"><span class="std std-ref">getting started guide</span></a>
+this can be done by calling the function <a class="reference internal" href="#image_processing_scripts.image_aquisition.create_devices_with_tries" title="image_processing_scripts.image_aquisition.create_devices_with_tries"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_devices_with_tries</span></code></a>.</p>
+<p>We used a setup that writes the created device as a global variable so the connection does not have to be established before each image.</p>
+<p>After this, you can configure the device using nodes. The following code shows
+the configuration used for the project, but there are many more options as mentioned above.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enable stream auto negotiate packet size  -------------------------------</span>
+<span class="n">device</span><span class="o">.</span><span class="n">tl_stream_nodemap</span><span class="p">[</span><span class="s1">&#39;StreamAutoNegotiatePacketSize&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># Enable stream packet resend  --------------------------------------------</span>
+<span class="n">device</span><span class="o">.</span><span class="n">tl_stream_nodemap</span><span class="p">[</span><span class="s1">&#39;StreamPacketResendEnable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># Pixel format ------------------------------------------------------------</span>
+<span class="n">device</span><span class="o">.</span><span class="n">nodemap</span><span class="p">[</span><span class="s1">&#39;PixelFormat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;Coord3D_ABCY16&#39;</span>
+<span class="n">device</span><span class="o">.</span><span class="n">nodemap</span><span class="p">[</span><span class="s1">&#39;Scan3dConfidenceThresholdMin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">device</span><span class="o">.</span><span class="n">nodemap</span><span class="p">[</span><span class="s1">&#39;Scan3dConfidenceThresholdEnable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># Delay between each package ----------------------------------------------</span>
+<span class="n">device</span><span class="o">.</span><span class="n">nodemap</span><span class="p">[</span><span class="s1">&#39;GevSCPD&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">8000</span>
+
+<span class="c1"># Set Aquisition Framerate  -----------------------------------------------</span>
+<span class="n">device</span><span class="o">.</span><span class="n">nodemap</span><span class="p">[</span><span class="s1">&#39;AcquisitionFrameRateEnable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">device</span><span class="o">.</span><span class="n">nodemap</span><span class="p">[</span><span class="s1">&#39;AcquisitionFrameRate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mf">10.</span>
+
+<span class="c1">#setup trigger sources  ---------------------------------------------------</span>
+<span class="n">device</span><span class="o">.</span><span class="n">tl_device_nodemap</span><span class="p">[</span><span class="s1">&#39;ActionCommandDeviceKey&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">device</span><span class="o">.</span><span class="n">tl_device_nodemap</span><span class="p">[</span><span class="s1">&#39;ActionCommandGroupKey&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">device</span><span class="o">.</span><span class="n">tl_device_nodemap</span><span class="p">[</span><span class="s1">&#39;ActionCommandGroupMask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">device</span><span class="o">.</span><span class="n">tl_device_nodemap</span><span class="p">[</span><span class="s1">&#39;ActionCommandExecuteTime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Inter - Packet Delay  ---------------------------------------------------</span>
+<span class="n">device</span><span class="o">.</span><span class="n">nodemap</span><span class="p">[</span><span class="s1">&#39;GevSCFTD&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">device</span><span class="o">.</span><span class="n">nodemap</span><span class="p">[</span><span class="s1">&#39;GevSCPSPacketSize&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">9000</span>
+
+<span class="n">device</span><span class="o">.</span><span class="n">nodemap</span><span class="p">[</span><span class="s1">&#39;Scan3dOperatingMode&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;Distance3000mmSingleFreq&#39;</span>
+</pre></div>
+</div>
+<p>The most important setting to be taken here are the <code class="docutils literal notranslate"><span class="pre">PixelFormat</span></code> which defines the image format (here 4-channel image
+x-, y-, z-data and intensity),  the <code class="docutils literal notranslate"><span class="pre">Scan3dConfidenceThresholdMin</span></code> that works like a threshold that decides when to mark a
+point as valid and the <code class="docutils literal notranslate"><span class="pre">Scan3dOperatingMode</span></code>, which sets the operating distance for the camera. The camera is able to change operating
+distances between 1.5m and 8m.</p>
+</section>
+<section id="acquire-an-image">
+<h2>Acquire an image<a class="headerlink" href="#acquire-an-image" title="Permalink to this headline"></a></h2>
+<p>To acquire an image the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_helios_image</span> <span class="pre">&lt;image_processing_scripts.image_aquisition.get_helios_image&gt;`()</span></code> is used.
+For this, the function tries to to use an already initialized device. If this fails the device will be reconnected.
+Before reading an image (buffer) from the camera, <code class="docutils literal notranslate"><span class="pre">device.start_stream()</span></code> has to be called and used as context manager.
+After that, the image can be read from the camera by using <code class="docutils literal notranslate"><span class="pre">device.get_buffer()</span></code>. The <code class="docutils literal notranslate"><span class="pre">coordinate_axis_info</span></code> is needed to convert
+the buffer data to real world data. This process will be described in the <a class="reference internal" href="#converting-gray-values"><span class="std std-ref">next paragraph</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">DEVICES</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">read_coordinate_info</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">coordinate_axis_info</span> <span class="o">=</span> <span class="n">COORDINATE_INFO</span>  <span class="c1"># used for converting to xyz values in millimeters</span>
+
+<span class="k">with</span> <span class="n">device</span><span class="o">.</span><span class="n">start_stream</span><span class="p">():</span>
+    <span class="n">buffer</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">get_buffer</span><span class="p">()</span>
+    <span class="n">get_xyzi_image</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">axis_info</span><span class="o">=</span><span class="n">coordinate_axis_info</span><span class="p">)</span> <span class="c1"># conversion of gray values to millimeter values</span>
+</pre></div>
+</div>
+</section>
+<section id="converting-gray-values-to-millimeters">
+<span id="converting-gray-values"></span><h2>Converting gray values to millimeters<a class="headerlink" href="#converting-gray-values-to-millimeters" title="Permalink to this headline"></a></h2>
+<p>This paragraph will describe the purpose of the function <code class="docutils literal notranslate"><span class="pre">get_xyzi_image</span></code>.</p>
+<p>The “image” (buffer) of the Helios2 works with 16 bit grayscale values, meaning we have values between 0 and 65025.
+To convert these values in millimeters, we need some kind of scaling factor. To also allow negative values (meaning the object
+is left of the camera for x-values, or north of the camera for y-values), some kind of offset is needed. This will apply for both
+the first and the second channel, containing the x-, and the y-data. The z-data, that describes the position of a point orthogonal
+to the cameras optical axis, does not require an offset value, since the distance will always be positive. For better understanding,
+the figure below shows a sketch of the cameras coordinate system.</p>
+<figure class="align-center" id="id1">
+<img alt="Camera coordinate system" src="../_images/camera_coord_sys.png" />
+<figcaption>
+<p><span class="caption-text">Sketch of the camera coordinate system (source: own image)</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The offset and scaling values ćan be read from the camera by calling the function <code class="docutils literal notranslate"><span class="pre">read_coordinate_info</span></code>. To see what this
+function does, lookup the <a class="reference internal" href="#image_processing_scripts.image_aquisition.read_coordinate_info" title="image_processing_scripts.image_aquisition.read_coordinate_info"><code class="xref py py-meth docutils literal notranslate"><span class="pre">function</span> <span class="pre">description</span></code></a>.</p>
+<p>The conversion itself is performed by the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># restructure buffer data and apply conversion to millimeter values</span>
+<span class="n">pdata_16bit</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">pdata</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_uint16</span><span class="p">))</span>
+
+<span class="n">image_x</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_array</span><span class="p">(</span><span class="n">pdata_16bit</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">480</span> <span class="o">*</span> <span class="mi">640</span> <span class="o">*</span> <span class="mi">4</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">))</span>
+                          <span class="o">*</span> <span class="n">axis_info</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">axis_info</span><span class="p">[</span><span class="s1">&#39;axis_offset&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">image_y</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_array</span><span class="p">(</span><span class="n">pdata_16bit</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">480</span> <span class="o">*</span> <span class="mi">640</span> <span class="o">*</span> <span class="mi">4</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">))</span>
+                          <span class="o">*</span> <span class="n">axis_info</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">axis_info</span><span class="p">[</span><span class="s1">&#39;axis_offset&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">image_z</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_array</span><span class="p">(</span><span class="n">pdata_16bit</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">480</span> <span class="o">*</span> <span class="mi">640</span> <span class="o">*</span> <span class="mi">4</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">))</span>
+                          <span class="o">*</span> <span class="n">axis_info</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">axis_info</span><span class="p">[</span><span class="s1">&#39;axis_offset&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">image_intensity</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_array</span><span class="p">(</span><span class="n">pdata_16bit</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">480</span> <span class="o">*</span> <span class="mi">640</span> <span class="o">*</span> <span class="mi">4</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">)))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The images will then be saved to <code class="docutils literal notranslate"><span class="pre">.temp_images/</span></code> directory, where they will later be read from by the correct image processing
+procedure.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#save image to temp_image to read it in halcon later</span>
+<span class="n">image_x</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s1">/include/image_processing_scripts/.temp_images/HLT_X.tiff&#39;</span><span class="p">)</span>
+<span class="n">image_y</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s1">/include/image_processing_scripts/.temp_images/HLT_Y.tiff&#39;</span><span class="p">)</span>
+<span class="n">image_z</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s1">/include/image_processing_scripts/.temp_images/HLT_Z.tiff&#39;</span><span class="p">)</span>
+<span class="n">image_intensity</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s1">/include/image_processing_scripts/.temp_images/Intensity_Image.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="module-image_processing_scripts.image_aquisition">
+<span id="image-acquisition-function-description-docstrings"></span><h2>Image acquisition function description (docstrings)<a class="headerlink" href="#module-image_processing_scripts.image_aquisition" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.image_aquisition.create_devices_with_tries">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.image_aquisition.</span></span><span class="sig-name descname"><span class="pre">create_devices_with_tries</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.image_aquisition.create_devices_with_tries" title="Permalink to this definition"></a></dt>
+<dd><p>This function waits for the user to connect a device before raising
+an exception.
+Function does not return devices. Devices get saved in global variable
+DEVICES. The ROS server tries to use the saved devices to take an image.
+If this is not possible, it will reconnect and overwrite DEVICES.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.image_aquisition.read_coordinate_info">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.image_aquisition.</span></span><span class="sig-name descname"><span class="pre">read_coordinate_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.image_aquisition.read_coordinate_info" title="Permalink to this definition"></a></dt>
+<dd><p>Function to read info for scaling of signed data to millimeter. Info is
+saved to global variable dict() “COORDINATE_INFO” so it can be reused in ROS without reading
+info again.</p>
+<p>Available keys:
+[‘scale_factor’]: [x, y, z]
+[‘axis_offset’]: [x, y, z]
+[‘z_axis_max’]: z</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>device</strong> (<em>Device</em>) – Device from arena_api package to read the coordinate info from.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.image_aquisition.configure_some_nodes">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.image_aquisition.</span></span><span class="sig-name descname"><span class="pre">configure_some_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.image_aquisition.configure_some_nodes" title="Permalink to this definition"></a></dt>
+<dd><p>Function to setup different parameters for image aquisition with the camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>device</strong> (<em>Device</em>) – Device from arena_api package to read the coordinate info from.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.image_aquisition.get_helios_image">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.image_aquisition.</span></span><span class="sig-name descname"><span class="pre">get_helios_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.image_aquisition.get_helios_image" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to aquire an image (internally called buffer) with the Helios2 camera.
+If the camera is available in the current runtime, the function will use this camera.
+If not, a new device will be initialized and used for image aquisition.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing_scripts.image_aquisition.get_xyzi_image">
+<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.image_aquisition.</span></span><span class="sig-name descname"><span class="pre">get_xyzi_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.image_aquisition.get_xyzi_image" title="Permalink to this definition"></a></dt>
+<dd><p>Function to convert the cameras signed image (buffer) into a 4-Channel image [[x], [y], [z], [intensity]]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffer</strong> (<em>buffer</em>) – Helios2 image (buffer) from arena_api</p></li>
+<li><p><strong>axis_info</strong> (<em>dict</em>) – Retrieved from method “read_coordinate_info”.
+Used to calculate real x/y/z-values of the buffer.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="fitting_stone.html" class="btn btn-neutral float-left" title="Fitting stone localization module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ros.html" class="btn btn-neutral float-right" title="ROS action modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Max Körner, Jonathan Sautter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

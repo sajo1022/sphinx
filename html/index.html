@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to Image Processing’s documentation! &mdash; Image Processing 03/2022 documentation</title>
+  <title>Image Processing for the project “MauRob40” &mdash; Image Processing 03/2022 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Environment and necessary dependencies" href="environment.html" /> 
+    <link rel="next" title="Project description" href="01_project_introduction/project_introduction.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,17 +36,38 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Environment:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment and necessary dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Fitting stone:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Documentation of the fitting stone location algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_image_processing_basics/image_processing_operations.html">Image processing operations</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Standard stone:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Documentation of the standard stone location algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/image_aquisition.html">Image acquisition module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
 </ul>
 
         </div>
@@ -63,7 +84,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Welcome to Image Processing’s documentation!</li>
+      <li>Image Processing for the project “MauRob40”</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -73,45 +94,138 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="welcome-to-image-processing-s-documentation">
-<h1>Welcome to Image Processing’s documentation!<a class="headerlink" href="#welcome-to-image-processing-s-documentation" title="Permalink to this headline"></a></h1>
-<p>Hello to the documentation of the imageprocessing project in the context of the development of the “MauRob40”.</p>
+  <section id="image-processing-for-the-project-maurob40">
+<h1>Image Processing for the project “MauRob40”<a class="headerlink" href="#image-processing-for-the-project-maurob40" title="Permalink to this headline"></a></h1>
+<p>Welcome to the documentation of the image processing for stone localization in the context of the development of the project “MauRob40”.</p>
+<p>The main focus of this documentation is to give an overview of the image processing procedures
+for locating various stone types. Also the framework of the image processing and the general
+project structure and used tools will be described. This documentation is ment to provide
+users and developers with the required background information to utilize the developed
+application and contribute to it.</p>
 <figure class="align-default">
 <img alt="_images/kr210.png" src="_images/kr210.png" />
 </figure>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Environment:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment and necessary dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_project_introduction/project_introduction.html#environmental-conditions">Environmental conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_project_introduction/project_introduction.html#stone-types">Stone types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_project_introduction/project_introduction.html#so-what-are-the-requirements-for-the-image-processing">So what are the requirements for the image processing?</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Fitting stone:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Documentation of the fitting stone location algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_processing_basics/image_processing_objects.html#images">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_image_processing_basics/image_processing_objects.html#pointclouds">Pointclouds</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02_image_processing_basics/image_processing_operations.html">Image processing operations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_processing_basics/image_processing_operations.html#how-to-create-a-binary-image-mask">How to create a binary image (mask)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_image_processing_basics/image_processing_operations.html#how-to-work-with-binary-images-masks-regions">How to work with binary images / masks / regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_image_processing_basics/image_processing_operations.html#edge-detection-example-for-3d-data-by-utilizing-masks">Edge detection example for 3d data by utilizing masks</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Standard stone:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Documentation of the standard stone location algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_getting_started/getting_started.html#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03_getting_started/getting_started.html#pipenv">Pipenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_getting_started/getting_started.html#setup-halcon">Setup Halcon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_getting_started/getting_started.html#setup-arena-sdk">Setup Arena SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_getting_started/getting_started.html#setup-ros2-foxy">Setup ROS2 Foxy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_getting_started/getting_started.html#docker">Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
 </ul>
 </div>
-</section>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/project_structure.html">Project structure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/project_structure.html#ros-files">ROS files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/project_structure.html#git-files">Git files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/project_structure.html#pipenv-files">Pipenv files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/project_structure.html#docker-files">Docker files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/project_structure.html#docs-folder">Docs/ folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/project_structure.html#the-src-folder">The src folder</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/main.html">Main module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/main.html#general-parameters">General parameters:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/main.html#stone-related-parameters">Stone related parameters:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/standard_stone.html">Standard stone localization module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/standard_stone.html#basic-idea-standard-stones">Basic idea standard stones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/standard_stone.html#standard-stone-module-walkthrough">Standard stone module walkthrough</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/standard_stone.html#module-image_processing_scripts.standard_stone">Standard stone function description (docstrings)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/fitting_stone.html">Fitting stone localization module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/fitting_stone.html#basic-idea-fitting-stones">Basic idea fitting stones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/fitting_stone.html#fitting-stone-module-walkthrough">Fitting stone module walkthrough</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/fitting_stone.html#module-image_processing_scripts.fitting_stone">Fitting stone function description (docstrings)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/image_aquisition.html">Image acquisition module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/image_aquisition.html#helios2-basics">Helios2 basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/image_aquisition.html#helios2-configuration">Helios2 configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/image_aquisition.html#acquire-an-image">Acquire an image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/image_aquisition.html#converting-gray-values-to-millimeters">Converting gray values to millimeters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/image_aquisition.html#module-image_processing_scripts.image_aquisition">Image acquisition function description (docstrings)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/ros.html">ROS action modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/ros.html#action-server">Action server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/ros.html#action-client">Action client</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/evaluation.html">Evaluation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_image_processing_walkthrough/evaluation.html#accuracy">Accuracy</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05_supplemental_material/supplemental_material.html#image-processing">Image processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_supplemental_material/supplemental_material.html#ros">ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_supplemental_material/supplemental_material.html#other">Other</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_supplemental_material/supplemental_material.html#documentation">Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </section>
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="environment.html" class="btn btn-neutral float-right" title="Environment and necessary dependencies" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="01_project_introduction/project_introduction.html" class="btn btn-neutral float-right" title="Project description" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

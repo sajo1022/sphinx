@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project description &mdash; Image Processing 03/2022 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Image processing “objects”" href="../02_image_processing_basics/image_processing_objects.html" />
+    <link rel="prev" title="Image Processing for the project “MauRob40”" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#framework-requirements">Framework requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#environmental-conditions">Environmental conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stone-types">Stone types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quadro-stones">Quadro stones</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fitting-stones">Fitting stones</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#so-what-are-the-requirements-for-the-image-processing">So what are the requirements for the image processing?</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_operations.html">Image processing operations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/image_aquisition.html">Image acquisition module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_image_processing_walkthrough/evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Project description</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/01_project_introduction/project_introduction.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>Welcome to the introduction of the project “MauRob40”.
+In this chapter of the documentation a general overview of the entire project will be given.</p>
+<figure class="align-center">
+<img alt="MauRob40 logo" src="../_images/MauRob40_logo.png" />
+</figure>
+<p>In addition to the general overview, the project goal in respect to the
+image processing for stone localization as well as its framework requirements
+will be covered under <a class="reference internal" href="#image-processing-goal"><span class="std std-ref">Image processing goal</span></a>.</p>
+<section id="project-description">
+<h1>Project description<a class="headerlink" href="#project-description" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>The goal of the project “MauRob40”, is the development of a concept and the prototyping of a masonry robot for
+increasing efficiency and supplementing human labor force on construction sites.
+The project team, consisting of Dreßler Bau GmbH, AAT Automation GmbH and Karlsruhe University of Applied Sciences,
+is responsible for the development of this concept with rough and
+detailed planning in the first phase of the project. In addition, practical preliminary tests for the realization
+of a masonry robot are to be performed.
+The concept is to be realized by means of existing industrial robot systems as well as components
+available on the market.</p>
+</section>
+<section id="image-processing-goal">
+<span id="id1"></span><h1>Image processing goal<a class="headerlink" href="#image-processing-goal" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>The most general goal for the image processing part of the project is to localize stones, so they can automatically be picked by a robot.</p>
+<p>To better understand the challenges coming with this supposedly simple task, the projects framework
+requirements will be described in the following paragraph.</p>
+</section>
+<section id="framework-requirements">
+<h1>Framework requirements<a class="headerlink" href="#framework-requirements" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>This section gives a summary of points, that have to be taken into account in the development process for location stones under the harsh conditions of a construction site.</p>
+<section id="environmental-conditions">
+<span id="id2"></span><h2>Environmental conditions<a class="headerlink" href="#environmental-conditions" title="Permalink to this headline"></a></h2>
+<p>Since image processing usually is highly sensitive to its surroundings, developing a procedure that performs well under highly dynamic environmental conditions can be challenging. The following table provides an overview of the most
+important interfering factors given the projects conditions and the requirements that can be derived from it.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 34%" />
+<col style="width: 42%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Factor</p></td>
+<td><p>Conditions</p></td>
+<td><p>Requirements</p></td>
+</tr>
+<tr class="row-even"><td><p>Humidity</p></td>
+<td><p>fog; light rain; snow</p></td>
+<td><p>at least IPX4</p></td>
+</tr>
+<tr class="row-odd"><td><p>Air pollution</p></td>
+<td><p>e.g. dust</p></td>
+<td><p>at least IP6X</p></td>
+</tr>
+<tr class="row-even"><td><p>Vibration</p></td>
+<td><p>e.g due to drilling</p></td>
+<td><p>vibration resistance DIN EN 60068-2-64:2020-091</p></td>
+</tr>
+<tr class="row-odd"><td><p>Temperature</p></td>
+<td><p>approx. 0-40°C</p></td>
+<td><p>cold and heat resistance in the given temperature range and beyond. Direct exposure to sunlight can significantly increase the effective temperature resistance can be significantly higher.</p></td>
+</tr>
+<tr class="row-even"><td><p>Lighting</p></td>
+<td><p>dusk; midday; dawn</p></td>
+<td><p>functional at illumination levels from 80 - 100k Lux</p></td>
+</tr>
+<tr class="row-odd"><td><p>Light spectrum</p></td>
+<td><p>sun light; cloudy</p></td>
+<td><p>interference stable in the spectral range of sunlight</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="stone-types">
+<h2>Stone types<a class="headerlink" href="#stone-types" title="Permalink to this headline"></a></h2>
+<p>The types of stones to be localized can be divided into <strong>two groups</strong>. There are <strong>standardized stones</strong>,
+later also called <strong>standard stones</strong>, which have standardized geometry. Standard stones are used in most cases.</p>
+<p>The second type of stones that have to be localized are called <strong>fitting stones</strong>.
+They are only used in case no standardized stone in the correct format is available.
+This can happen at dominant points of the wall like windows or door frames.</p>
+<section id="quadro-stones">
+<h3>Quadro stones<a class="headerlink" href="#quadro-stones" title="Permalink to this headline"></a></h3>
+<p>The so called standard stones are actually stones of the type KS-Quadro. They are available in four different formats (1/1; 3/4; 1/2; 1/4)
+and in a variety of widths (115mm; 150mm; 175mm…). A comprehensive overview can be found at <a class="reference external" href="https://www.ks-quadro.de/de/ks-quadro-system/ks-quadro">https://www.ks-quadro.de/de/ks-quadro-system/ks-quadro</a>.</p>
+<figure class="align-center" id="id3">
+<img alt="KS-Quadro formats" src="../_images/ks_quadro_stones.png" />
+<figcaption>
+<p><span class="caption-text">KS-Quadro stone formats
+(<em>source:</em> <a class="reference external" href="https://www.ks-quadro.de/de/ks-quadro-system/ks-quadro">https://www.ks-quadro.de/de/ks-quadro-system/ks-quadro</a>)</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>KS-Quadro stones have two holes on top with exception of the small KS-Quadro 1/4 which sometimes only has one.
+These holes will later be used to localize standard stones.
+Standard stones are always delivered unmixed, which means that on one pallet of standard stones is always only one format with the same width.
+The stones can be delivered in multiple layers on the pallet.</p>
+</section>
+<section id="fitting-stones">
+<h3>Fitting stones<a class="headerlink" href="#fitting-stones" title="Permalink to this headline"></a></h3>
+<p>In contrary to the standardized KS-Quadro stones, the fitting stones can be found in every size.
+<strong>Fitting stones</strong> are individually cut and automatically palletized at the stone manufacturer.
+Due to the fact that this process is fully automated, a stones position and its geometry is known and can be accessed via a xml-file.</p>
+<p>Fitting stones are delivered on mixed pallets while only stones used in one wall are on one pallet.
+Multiple pallets per wall are possible. Fitting stone pallets always have one layer of stones.
+The image below shows the top down view of an example pallet of fitting stones.</p>
+<figure class="align-center" id="id4">
+<img alt="Example fitting stone pallet" src="../_images/example_fitting_stone_pallet.png" />
+<figcaption>
+<p><span class="caption-text">Example pallet of fitting stones
+(<em>source:</em> own image)</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="so-what-are-the-requirements-for-the-image-processing">
+<h2>So what are the requirements for the image processing?<a class="headerlink" href="#so-what-are-the-requirements-for-the-image-processing" title="Permalink to this headline"></a></h2>
+<p>The image processing in regard to stone localization must be able to correctly localize both standard stones as well as fitting stones
+and provide the robot with the localized stones x-, y- and z-coordinate in respect to some defined origin.
+In addition, the stones orientation must be found so it can be picked by the robot.
+For standard stones some method has to be found to identify the top layer of stones on a pallet.
+All this must be performed on a robust basis under the highly dynamic conditions of a construction site as mentioned in <a class="reference internal" href="#environmental-conditions"><span class="std std-ref">Environmental conditions</span></a></p>
+<p>The following part will focus on some image processing basics and how to perform different operations used in this project.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Image Processing for the project “MauRob40”" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../02_image_processing_basics/image_processing_objects.html" class="btn btn-neutral float-right" title="Image processing “objects”" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Max Körner, Jonathan Sautter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

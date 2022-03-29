@@ -34,17 +34,38 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Environment:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment and necessary dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Fitting stone:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Documentation of the fitting stone location algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_image_processing_basics/image_processing_operations.html">Image processing operations</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Standard stone:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Documentation of the standard stone location algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/image_aquisition.html">Image acquisition module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_image_processing_walkthrough/evaluation.html">Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="05_supplemental_material/supplemental_material.html">Error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
 </ul>
 
         </div>
@@ -75,20 +96,52 @@
 
 <div class="genindex-jumpbox">
  <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
+ | <a href="#R"><strong>R</strong></a>
  
 </div>
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="fitting_stone.html#image_processing_scripts.fitting_stone.calc_coordsys_for_visualization">calc_coordsys_for_visualization() (in module image_processing_scripts.fitting_stone)</a>
+      <li><a href="04_image_processing_walkthrough/fitting_stone.html#image_processing_scripts.fitting_stone.calc_coordsys_for_visualization">calc_coordsys_for_visualization() (in module image_processing_scripts.fitting_stone)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/fitting_stone.html#image_processing_scripts.fitting_stone.calc_px_per_mm">calc_px_per_mm() (in module image_processing_scripts.fitting_stone)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/standard_stone.html#image_processing_scripts.standard_stone.calculate_rot_z">calculate_rot_z() (in module image_processing_scripts.standard_stone)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/standard_stone.html#image_processing_scripts.standard_stone.calculate_stone_center">calculate_stone_center() (in module image_processing_scripts.standard_stone)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="fitting_stone.html#image_processing_scripts.fitting_stone.calc_px_per_mm">calc_px_per_mm() (in module image_processing_scripts.fitting_stone)</a>
+      <li><a href="04_image_processing_walkthrough/image_aquisition.html#image_processing_scripts.image_aquisition.configure_some_nodes">configure_some_nodes() (in module image_processing_scripts.image_aquisition)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/utils.html#image_processing_scripts.utils.create_config_dict">create_config_dict() (in module image_processing_scripts.utils)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/image_aquisition.html#image_processing_scripts.image_aquisition.create_devices_with_tries">create_devices_with_tries() (in module image_processing_scripts.image_aquisition)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/standard_stone.html#image_processing_scripts.standard_stone.create_top_layer">create_top_layer() (in module image_processing_scripts.standard_stone)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="04_image_processing_walkthrough/utils.html#image_processing_scripts.utils.decode_stone_location">decode_stone_location() (in module image_processing_scripts.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="04_image_processing_walkthrough/utils.html#image_processing_scripts.utils.encode_stone_location">encode_stone_location() (in module image_processing_scripts.utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -96,13 +149,11 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="fitting_stone.html#image_processing_scripts.fitting_stone.find_corner_contour">find_corner_contour() (in module image_processing_scripts.fitting_stone)</a>
+      <li><a href="04_image_processing_walkthrough/fitting_stone.html#image_processing_scripts.fitting_stone.find_corner_contour">find_corner_contour() (in module image_processing_scripts.fitting_stone)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="fitting_stone.html#image_processing_scripts.fitting_stone.find_fitting_stone">find_fitting_stone() (in module image_processing_scripts.fitting_stone)</a>
-</li>
-      <li><a href="standard_stone.html#image_processing_scripts.standard_stone.find_standard_stones">find_standard_stones() (in module image_processing_scripts.standard_stone)</a>
+      <li><a href="04_image_processing_walkthrough/standard_stone.html#image_processing_scripts.standard_stone.find_corner_element_from_data_list_2D">find_corner_element_from_data_list_2D() (in module image_processing_scripts.standard_stone)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -110,11 +161,19 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="fitting_stone.html#image_processing_scripts.fitting_stone.get_orientation_longest_contour">get_orientation_longest_contour() (in module image_processing_scripts.fitting_stone)</a>
+      <li><a href="04_image_processing_walkthrough/image_aquisition.html#image_processing_scripts.image_aquisition.get_helios_image">get_helios_image() (in module image_processing_scripts.image_aquisition)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/utils.html#image_processing_scripts.utils.get_homogeneous_coordinates_from_stone_location">get_homogeneous_coordinates_from_stone_location() (in module image_processing_scripts.utils)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/standard_stone.html#image_processing_scripts.standard_stone.get_intersection_contours">get_intersection_contours() (in module image_processing_scripts.standard_stone)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="fitting_stone.html#image_processing_scripts.fitting_stone.get_stone_dimensions_from_xml">get_stone_dimensions_from_xml() (in module image_processing_scripts.fitting_stone)</a>
+      <li><a href="04_image_processing_walkthrough/fitting_stone.html#image_processing_scripts.fitting_stone.get_orientation_longest_contour">get_orientation_longest_contour() (in module image_processing_scripts.fitting_stone)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/fitting_stone.html#image_processing_scripts.fitting_stone.get_stone_dimensions_from_xml">get_stone_dimensions_from_xml() (in module image_processing_scripts.fitting_stone)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/image_aquisition.html#image_processing_scripts.image_aquisition.get_xyzi_image">get_xyzi_image() (in module image_processing_scripts.image_aquisition)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -126,7 +185,14 @@
     image_processing_scripts.fitting_stone
 
       <ul>
-        <li><a href="fitting_stone.html#module-image_processing_scripts.fitting_stone">module</a>
+        <li><a href="04_image_processing_walkthrough/fitting_stone.html#module-image_processing_scripts.fitting_stone">module</a>
+</li>
+      </ul></li>
+      <li>
+    image_processing_scripts.image_aquisition
+
+      <ul>
+        <li><a href="04_image_processing_walkthrough/image_aquisition.html#module-image_processing_scripts.image_aquisition">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -135,24 +201,63 @@
     image_processing_scripts.standard_stone
 
       <ul>
-        <li><a href="standard_stone.html#module-image_processing_scripts.standard_stone">module</a>
+        <li><a href="04_image_processing_walkthrough/standard_stone.html#module-image_processing_scripts.standard_stone">module</a>
 </li>
       </ul></li>
+      <li>
+    image_processing_scripts.utils
+
+      <ul>
+        <li><a href="04_image_processing_walkthrough/utils.html#module-image_processing_scripts.utils">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="04_image_processing_walkthrough/fitting_stone.html#image_processing_scripts.fitting_stone.locate_fitting_stone">locate_fitting_stone() (in module image_processing_scripts.fitting_stone)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="04_image_processing_walkthrough/standard_stone.html#image_processing_scripts.standard_stone.locate_standard_stones">locate_standard_stones() (in module image_processing_scripts.standard_stone)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="04_image_processing_walkthrough/standard_stone.html#image_processing_scripts.standard_stone.match_holes_by_distance">match_holes_by_distance() (in module image_processing_scripts.standard_stone)</a>
+</li>
+      <li><a href="04_image_processing_walkthrough/standard_stone.html#image_processing_scripts.standard_stone.match_holes_by_distance_refined">match_holes_by_distance_refined() (in module image_processing_scripts.standard_stone)</a>
+</li>
       <li>
     module
 
       <ul>
-        <li><a href="fitting_stone.html#module-image_processing_scripts.fitting_stone">image_processing_scripts.fitting_stone</a>
+        <li><a href="04_image_processing_walkthrough/fitting_stone.html#module-image_processing_scripts.fitting_stone">image_processing_scripts.fitting_stone</a>
 </li>
-        <li><a href="standard_stone.html#module-image_processing_scripts.standard_stone">image_processing_scripts.standard_stone</a>
+        <li><a href="04_image_processing_walkthrough/image_aquisition.html#module-image_processing_scripts.image_aquisition">image_processing_scripts.image_aquisition</a>
+</li>
+        <li><a href="04_image_processing_walkthrough/standard_stone.html#module-image_processing_scripts.standard_stone">image_processing_scripts.standard_stone</a>
+</li>
+        <li><a href="04_image_processing_walkthrough/utils.html#module-image_processing_scripts.utils">image_processing_scripts.utils</a>
 </li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="04_image_processing_walkthrough/utils.html#image_processing_scripts.utils.read_config_string_from_main">read_config_string_from_main() (in module image_processing_scripts.utils)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="04_image_processing_walkthrough/image_aquisition.html#image_processing_scripts.image_aquisition.read_coordinate_info">read_coordinate_info() (in module image_processing_scripts.image_aquisition)</a>
+</li>
   </ul></td>
 </tr></table>
 

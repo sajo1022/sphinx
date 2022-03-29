@@ -1,0 +1,119 @@
+Welcome to the introduction of the project "MauRob40".
+In this chapter of the documentation a general overview of the entire project will be given.
+
+.. figure:: images/MauRob40_logo.png
+    :align: center
+    :alt: MauRob40 logo
+
+In addition to the general overview, the project goal in respect to the
+image processing for stone localization as well as its framework requirements
+will be covered under :ref:`Image processing goal<image-processing-goal>`.
+
+Project description
+======================
+
+------
+
+The goal of the project "MauRob40", is the development of a concept and the prototyping of a masonry robot for
+increasing efficiency and supplementing human labor force on construction sites.
+The project team, consisting of Dreßler Bau GmbH, AAT Automation GmbH and Karlsruhe University of Applied Sciences,
+is responsible for the development of this concept with rough and
+detailed planning in the first phase of the project. In addition, practical preliminary tests for the realization
+of a masonry robot are to be performed.
+The concept is to be realized by means of existing industrial robot systems as well as components
+available on the market.
+
+.. _image-processing-goal:
+
+Image processing goal
+===========================
+
+------
+
+The most general goal for the image processing part of the project is to localize stones, so they can automatically be picked by a robot.
+
+To better understand the challenges coming with this supposedly simple task, the projects framework
+requirements will be described in the following paragraph.
+
+
+Framework requirements
+========================
+
+------
+
+This section gives a summary of points, that have to be taken into account in the development process for location stones under the harsh conditions of a construction site.
+
+.. _environmental-conditions:
+
+Environmental conditions
+-------------------------
+Since image processing usually is highly sensitive to its surroundings, developing a procedure that performs well under highly dynamic environmental conditions can be challenging. The following table provides an overview of the most
+important interfering factors given the projects conditions and the requirements that can be derived from it.
+
+.. csv-table::
+    :widths: 70 100 125
+
+
+    Factor , Conditions , Requirements
+    Humidity , fog; light rain; snow, at least IPX4
+    Air pollution, e.g. dust, at least IP6X
+    Vibration, e.g due to drilling, vibration resistance DIN EN 60068-2-64:2020-091
+    Temperature, approx. 0-40°C, cold and heat resistance in the given temperature range and beyond. Direct exposure to sunlight can significantly increase the effective temperature resistance can be significantly higher.
+    Lighting, dusk; midday; dawn, functional at illumination levels from 80 - 100k Lux
+    Light spectrum, sun light; cloudy, interference stable in the spectral range of sunlight
+
+
+Stone types
+--------------
+The types of stones to be localized can be divided into **two groups**. There are **standardized stones**,
+later also called **standard stones**, which have standardized geometry. Standard stones are used in most cases.
+
+The second type of stones that have to be localized are called **fitting stones**.
+They are only used in case no standardized stone in the correct format is available.
+This can happen at dominant points of the wall like windows or door frames.
+
+Quadro stones
+^^^^^^^^^^^^^^^^^
+The so called standard stones are actually stones of the type KS-Quadro. They are available in four different formats (1/1; 3/4; 1/2; 1/4)
+and in a variety of widths (115mm; 150mm; 175mm...). A comprehensive overview can be found at https://www.ks-quadro.de/de/ks-quadro-system/ks-quadro.
+
+.. figure:: images/ks_quadro_stones.png
+    :align: center
+    :alt: KS-Quadro formats
+
+    KS-Quadro stone formats
+    (*source:* https://www.ks-quadro.de/de/ks-quadro-system/ks-quadro)
+
+KS-Quadro stones have two holes on top with exception of the small KS-Quadro 1/4 which sometimes only has one.
+These holes will later be used to localize standard stones.
+Standard stones are always delivered unmixed, which means that on one pallet of standard stones is always only one format with the same width.
+The stones can be delivered in multiple layers on the pallet.
+
+Fitting stones
+^^^^^^^^^^^^^^^^
+
+In contrary to the standardized KS-Quadro stones, the fitting stones can be found in every size.
+**Fitting stones** are individually cut and automatically palletized at the stone manufacturer.
+Due to the fact that this process is fully automated, a stones position and its geometry is known and can be accessed via a xml-file.
+
+Fitting stones are delivered on mixed pallets while only stones used in one wall are on one pallet.
+Multiple pallets per wall are possible. Fitting stone pallets always have one layer of stones.
+The image below shows the top down view of an example pallet of fitting stones.
+
+.. figure:: images/example_fitting_stone_pallet.png
+    :align: center
+    :alt: Example fitting stone pallet
+
+    Example pallet of fitting stones
+    (*source:* own image)
+
+So what are the requirements for the image processing?
+-------------------------------------------------------
+The image processing in regard to stone localization must be able to correctly localize both standard stones as well as fitting stones
+and provide the robot with the localized stones x-, y- and z-coordinate in respect to some defined origin.
+In addition, the stones orientation must be found so it can be picked by the robot.
+For standard stones some method has to be found to identify the top layer of stones on a pallet.
+All this must be performed on a robust basis under the highly dynamic conditions of a construction site as mentioned in :ref:`Environmental conditions <environmental-conditions>`
+
+
+The following part will focus on some image processing basics and how to perform different operations used in this project.

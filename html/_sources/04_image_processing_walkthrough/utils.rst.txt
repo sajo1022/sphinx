@@ -1,0 +1,9 @@
+Utils function description (docstrings)
+=======================================
+
+------
+
+Description of the functions in the utils module.
+
+.. automodule:: image_processing_scripts.utils
+   :members:

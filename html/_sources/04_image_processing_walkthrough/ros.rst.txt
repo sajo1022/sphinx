@@ -1,0 +1,145 @@
+ROS action modules
+==================
+
+------
+
+The communication between the different docker containers within the entire system of the "MauRob40" project is based on ROS actions.
+ROS actions are a form of asynchronous communication, where  ``action clients`` send goal requests to ``action servers``.
+The action servers will then send a goal feedback and the results to the action clients.
+
+Action server
+-------------
+
+To create an action server, you first need to define a class. Here we define the class ``LocateStonesServer`` as a subclass of ``Node``.
+In order to initialize the class, the ``Node constructor`` is called, naming our node ``locate_stone_server``.
+
+.. code-block:: python
+
+    class LocateStonesServer(Node):
+
+    def __init__(self):
+        super().__init__('locate_stone_server')
+
+Within the constructor, we also instantiate a new action server with the following 4 arguments:
+
+    1. A ROS 2 node to add the action client to: ``self``.
+    2. The type of the action: ``LocateStones``.
+    3. The action name: ``'locate_stones'``.
+    4. A callback function for executing accepted goals: self.execute_callback. This callback must return a result message for the action type.
+
+
+.. code-block:: python
+
+    self._action_server = ActionServer(
+            self,
+            LocateStones,
+            'locate_stones',
+            self.execute_callback)
+
+Now we also need an ``execute_callback`` method in our class to call the image processing procedure and return the corresponding result.
+
+.. code-block:: python
+
+        def execute_callback(self, goal_handle):
+        self.get_logger().info('Executing goal...')
+        goal_handle.succeed()
+        result = LocateStones.Result()
+        config_dict = utils.create_config_dict(goal_handle._goal_request.config)
+        result.stone_location = main_image_processing(config_dict)
+        return result
+
+Note that we create a ``config_dict`` using the given parameters when calling the action server, utilising the
+:py:meth:`create_config_dict method<image_processing_scripts.utils.create_config_dict>`.
+The ``config_dict`` is than handed over to the ``main_image_processing`` setting the global parameters described in the
+:ref:`main module<main-script>`.
+
+The main function initializes the ``rclpy`` (ROS Client Library for Python) and starts the action server using the ``.spin`` method.
+
+.. code-block:: python
+
+    def main(args=None):
+    rclpy.init(args=args)
+    locate_stone_server = LocateStonesServer()
+    rclpy.spin(locate_stone_server)
+
+
+Action client
+-------------
+
+Creating an action client also requires to define a class ``LocateStonesClient``, which is initialized calling the ``Node``
+constructor again.
+Within the constructor we define an action client, passing three arguments:
+
+    1. A ROS 2 node to add the action client to: ``self``
+    2. The type of the action: ``LocateStones``
+    3. The action name: ``'locate_stones'``
+
+.. code-block:: python
+
+    class LocateStonesClient(Node):
+
+    def __init__(self):
+        super().__init__('locate_stone_client')
+        self._action_client = ActionClient(self, LocateStones, 'locate_stones')
+
+We now need a ``send_goal`` method which waits for the server to be available, sends a goal and waits for the response.
+The response is than handed to and evaluated in the ``goal_response_callback`` method.
+
+.. code-block:: python
+
+        def send_goal(self, goal):
+
+        goal_msg = LocateStones.Goal()
+        goal_msg.config = goal
+        self._action_client.wait_for_server()
+
+        self._send_goal_future = self._action_client.send_goal_async(goal_msg)
+
+        self._send_goal_future.add_done_callback(self.goal_response_callback)
+
+        def goal_response_callback(self, future):
+            goal_handle = future.result()
+            if not goal_handle.accepted:
+                self.get_logger().info('Goal rejected :(')
+                return
+
+            self.get_logger().info('Goal accepted :)')
+
+            self._get_result_future = goal_handle.get_result_async()
+            self._get_result_future.add_done_callback(self.get_result_callback)
+
+If the goal was accepted, the response it than handed over to the ``get_result_callback`` method, to display the results
+of the image processing consisting of the requested stone pose.
+
+.. code-block:: python
+
+        def get_result_callback(self, future):
+        result = future.result().result
+
+        stone_location_decoded = decode_stone_location(result.stone_location)
+
+        self.get_logger().info('Result: {0}'.format(stone_location_decoded))
+        rclpy.shutdown()
+
+Note that the :py:meth:`decode_stone_location method<image_processing_scripts.utils.decode_stone_location>` method is called,
+in case the response contains multiple stone poses.
+
+The main function initializes and starts the action client.
+
+.. code-block:: python
+
+    def main(args=None):
+    rclpy.init(args=args)
+
+    action_client = LocateStonesClient()
+
+    config_string = read_config_string_from_main()
+
+    action_client.send_goal(config_string)
+
+    rclpy.spin(action_client)
+
+For development purposes, the ``config_string`` is created by
+:py:meth:`read_config_string_from_main method<image_processing_scripts.utils.read_config_string_from_main>`
+using the globally set parameters from the main method.
+Later on, this ``config_string`` has to be dynamically created and passed by the coordinator as a string array.

@@ -1,0 +1,182 @@
+.. _standard-stone-module:
+
+Standard stone localization module
+====================================
+In this section the basic idea behind the localization algorithm
+for standard stones will be described. After that, a step by step walkthrough will
+show the exact procedure. The last part is a summary of the used functions developed
+to structure the code. If the description of a function seems sufficient, the walkthrough will merely reference to it.
+
+
+------
+
+Basic idea standard stones
+---------------------------
+The basic idea of the algorithm aims on using the holes that are found on the top side of the stones to
+locate the stones on a pallet. After finding the region that fits the upper layer of stones on the pallet,
+we will triangulate the pointcloud to get a surface model. This surface model will be cut slightly below
+the stones surface so we get an intersection contour.
+
+In this intersection contour, we will search for contours with a high circularity (meaning we search for circles).
+Then the center of the found circles will be determined. By accessing the centers gray value, we will get the holes
+coordinates in x- and y- direction in millimeters.
+
+The distance of two holes on a stone will be the same for each stone of one format, being either (125mm or 250mm).
+By providing the searched stone type, the found holes can be matched with each other according to their euclidian
+distance. If two partners are found, we calculate the stone center and its orientation from the respective hole
+coordinates.
+
+The stones pose will be provided in two formats. The first being its x-, y- and z- position and an angle of rotation around
+its z-axis (directed into the image). The second format would be as homogenous coordinates in a 4x4 matrix.
+
+.. _standard-stone-walkthrough:
+
+Standard stone module walkthrough
+------------------------------------
+The entrypoint for the :ref:`main module <main-script>` is the function :py:meth:`locate_standard_stones <image_processing_scripts.standard_stone.locate_standard_stones>`.
+The function requires a 3-channel image with the pointclouds x-, y- and z-data and the *config dict* with the users
+configuration.
+
+Our example scene will look like this. The goal is to locate the 3 stones in the upper layer.
+Note that the intensity image is only used for visualization and is not required by the actual image processing procedure.
+
+.. figure:: images/intensity_image_ss.png
+    :align: center
+    :alt: Intensity image standard stones
+
+    Intensity image of the example scene for standard stones (source: own image)
+
+.. _isolate-pallet:
+
+Step 1 - Isolate pallet
+^^^^^^^^^^^^^^^^^^^^^^^^
+The first goal is to separate the pallet from the background. To do so, we apply a simple threshold using the *camera_height*
+defined by the user (or later automatically by the robot) and a small offset. Since there may be objects that are not of interest to
+us, we will use ``connection`` to split unconnected regions and select the biggest region, which will correspond to the mask
+of the pallet.
+
+.. code-block:: python
+
+    # Threshold image with camera_height and split unconnected components
+    regions_above_ground = ha.threshold(ha.access_channel(xyz_image, 3),'min', config["camera_height"]-100)
+    regions_above_ground = ha.erosion_circle(regions_above_ground, 2)
+    regions_above_ground= ha.opening(regions_above_ground, ha.gen_circle(0, 0, 5))
+    regions_above_ground = ha.fill_up(regions_above_ground)
+    regions_above_ground = ha.connection(regions_above_ground)
+
+    pallet_region = ha.select_shape_std(regions_above_ground, 'max_area', 0)
+
+
+The mask we receive from these steps looks like this:
+
+.. figure:: images/regions_above_ground_ss.png
+    :align: center
+    :alt: Regions above ground and pallet region.
+
+    Regions above the ground (left) and pallet region after selecting the biggest region (right)
+    (source:own image)
+
+Step 2 - Identify top layer of stones
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+After the pallet is successfully found, we need to check if there are multiple layers of stones on the pallet.
+For this we use a region growing method as described in the :ref:`basics section <region-growing-methods>`.
+From all the different height layer on the pallet, we select the one with the lowest median gray value which is the
+region closest to the camera.
+
+.. code-block:: python
+
+    #scale to 8 Bit for region growing function
+    z_image_8bit = ha.scale_image_max(z_image_reduced)
+    height_regions = ha.regiongrowing_mean(z_image_8bit, [], [], 10, 2000)
+
+    median_distance_regions = ha.gray_features(height_regions, ha.access_channel(xyz_image, 3), 'median')
+
+    top_layer_with_holes = create_top_layer(height_regions, median_distance_regions)
+
+Before using ``regiongrowing_mean``, the image has to be scaled to an 8 bit image. Since we are only working with masks and
+don't need the gray value yet, this does not effect our result. The function ``create_top_layer`` then returns the
+highest region found on the pallet.
+
+.. figure:: images/height_regions_ss.png
+    :align: center
+    :alt: Regions of different height and top layer region
+
+    Regions of different height and selected top layer (source: own image)
+
+Step 3 - Create surface model and intersect
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+With the identified top layer of stones, we can create a surface model to perform the intersection
+cut. For this we reduce the z-image to the found region and then create a pointcloud from it. This
+pointcloud will be smoothed and then triangulated. Since triangulation takes a relatively long time,
+we will invert the mask and only use the holes for triangulation. This is allowed because we are only
+looking for the holes contours. The following figure shows the full pointcloud of the top layer of stones.
+
+.. figure:: images/pointcloud_top_layer_ss.png
+    :align: center
+    :alt: Pointcloud of top layer
+
+    Pointcloud of the upper layer of stones (source: own)
+
+The described actions can performed with the following code:
+
+.. code-block:: python
+
+    top_layer_without_holes = ha.fill_up(top_layer_with_holes)
+    holes_region = ha.difference(top_layer_without_holes, top_layer_with_holes)
+
+    #reduce z_image
+    z_image_top_layer = ha.reduce_domain(ha.access_channel(xyz_image, 3), holes_region)
+
+    # create 3D pointcloud from top layer and smooth result
+    top_layer_3D = ha.xyz_to_object_model_3d(ha.access_channel(xyz_image, 1), ha.access_channel(xyz_image, 2), z_image_top_layer)
+    top_layer_3D = ha.smooth_object_model_3d(top_layer_3D, 'mls', 'mls_kNN', 20)
+
+    # triangulate model
+    triangulated_top_layer_3D, _ = ha.triangulate_object_model_3d(top_layer_3D, 'greedy', [],[])
+
+    # generate 2D intersection contours from triangulated 3D model and an intersection height
+    top_layer_median_z_value = ha.gray_features(top_layer_without_holes, z_image_top_layer, 'median')[0]
+    intersection_height = top_layer_median_z_value+15
+    intersection_contours_2D =  get_intersection_contours(triangulated_top_layer_3D, intersection_height)
+
+To better understand what happens in the function :py:meth:`get_intersection_contours <image_processing_scripts.standard_stone.get_intersection_contours>`
+refer to the function description.
+The result of the above functions are the contours of the stones holes.
+
+.. figure:: images/hole_contours_ss.png
+    :align: center
+    :alt: Hole contours
+
+    Hole contours of the top layer stones (source: own image)
+
+Step 4 - Find hole partners and calculate stone center and rotation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The next step would be to find the circles and its center. After this is done,
+the holes can be matched and the stones pose can be calculated. For more information on how the matching exactly works
+refer the the function description of :py:meth:`match_holes_by_distance_refined <image_processing_scripts.standard_stone.match_holes_by_distance_refined>`.
+
+.. code-block:: python
+
+    hole_contours = ha.select_shape_xld(intersection_contours_2D, 'circularity', 'and', 0.5, 1)
+    _, hole_center_row, hole_center_col, _ = ha.area_center_xld(hole_contours)
+    hole_partner =  match_holes_by_distance_refined(holes, orientation='auto') #valid orientation = {'auto', 'vertical', 'horizontal'}
+
+    stone_coordinates = calculate_stone_center(hole_partner, holes)
+    stone_rotations = calculate_rot_z(hole_partner, holes)
+
+The visualization of the result shows the stones poses in the format [x, y, z, rotation_z]:
+
+.. figure:: images/result_ss.png
+    :align: center
+    :alt: Result
+
+    Visualization of the locate_standard_stone function (source: own image)
+
+
+Standard stone function description (docstrings)
+-------------------------------------------------
+
+.. automodule:: image_processing_scripts.standard_stone
+   :members:
+
+The next section will deal with the module :ref:`fitting stone <fitting-stone-module>`

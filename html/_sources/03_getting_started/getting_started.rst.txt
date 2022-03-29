@@ -1,0 +1,178 @@
+GitLab
+================
+
+------
+
+In order to download and participate in the project, it is necessary to use GitLab.
+To clone the project repository, call the following command in your desired local directory:
+
+.. code-block:: bash
+
+    $ git clone https://www.w.hs-karlsruhe.de/gitlab/iras/research-projects/maurob40/image_processing.git
+
+Remember to checkout a new branch when working on this project:
+
+.. code-block:: bash
+
+    $ git checkout -b {BRANCHNAME}
+
+It is recommended to create a merge request when the work on a branch is completed.
+Additional information on how to use Gitlab can be found in the :ref:`official GitLab documentation <gitLab-documentation>`.
+
+Prerequisites
+================
+
+------
+
+.. _pipenv-:
+
+Pipenv
+-------------
+
+The dependency management is realized using pipenv. Pipenv automatically creates and manages a virtual environment, as
+well as adds/removes packages from your ``Pipfile`` as you install/uninstall packages. In addition, it generates the
+``Pipfile.lock``, which ensures a deterministic project flow by saving the specific package version for each installed
+package.
+
+To install pipenv use:
+
+.. code-block:: bash
+
+    $ pip install pipenv
+
+To install all dependencies saved in the ``Pipfile`` type:
+
+.. code-block:: bash
+
+    $ pipenv install --dev
+
+Ensure to use pipenv when installing new packages:
+
+.. code-block:: bash
+
+    $ pipenv install {PACKAGENAME}
+
+Additional information on how to use pipenv can be found in the :ref:`official pipenv documentation <pipenv-documentation>`.
+
+
+Setup Halcon
+------------
+
+The project utilises Mvtec-Halcon as the main software for the required imageprocessing methods. In order to use these methods
+in a python script, it is necessary to install Halcon first.
+Go to https://www.mvtec.com/downloads to download Halcon 21.05 and install it.
+
+When working on Linux, the following environment variables must be set:
+
+::
+
+    • HALCONROOT: directory you installed HALCON in.
+    • HALCONEXAMPLES: directory the example programs are installed in ($HALCONROOT/examples).
+    • HALCONIMAGES: directory the example images are installed in ($HALCONEXAMPLES/images).
+    • HALCONARCH: select value corresponding to the used platform.
+    • PATH: this system variable should include $HALCONROOT/bin/$HALCONARCH.
+    • LD_LIBRARY_PATH: this system variable should include $HALCONROOT/lib/$HALCONARCH.
+
+This is an abstract from the official :ref:`installation guide <halcon-installation>`. Please visit this guide for a further,
+more detailed description on how to install and setup Halcon.
+
+In order to license Halcon, it is necessary to install the license management software :ref:`CodeMeter <codemeter-download>`.
+Go to https://license.mvtec.com/campus/ to activate your personal 25 digit student ticket. During this process you can
+choose to activate Halcon using the CodeMeter API. This should automatically create a ``MVTec SW Container`` in your local
+CodeMeter control center. If that is the case, Halcon was successfully activated.
+If you need further information, visit the :ref:`Halcon installation guide <halcon-installation>`.
+
+Setup Arena SDK
+---------------
+
+Arena SDK is the official software for the 3D ToF camera ``Helios2``, which is currently used in this project.
+In order to communicate with this camera via ethernet, it is necessary to install the
+:ref:`Arena SDK software package <arenaSDK-download>`. Make sure to download the suitable version for your operating
+system and install it.
+
+.. _setup-ros:
+
+Setup ROS2 Foxy
+---------------
+
+In order to be able to use and edit the implemented ROS action server and client, it is required to install ROS on your
+local machine. Since the installation is pretty extensive and very dependent on the used operating system, this guide will
+merely refer to the official :ref:`ROS 2 Documentation <ros2-documentation>`.
+
+.. hint::
+    Since your command shell needs to be sourced on every startup when using ROS 2, it is recommended to add the sourcing
+    command to your shell startup script.
+
+    In order to do this type:
+
+    .. code-block:: bash
+
+        $ echo "source /opt/ros/dashing/setup.bash" >> ~/.bashrc
+
+To check if the installation and the setup of the environment variables was correct, use the following command:
+
+.. code-block:: bash
+
+    $ printenv | grep -i ROS
+
+The output should look similar to this:
+
+::
+
+    ROS_VERSION=2
+    ROS_PYTHON_VERSION=3
+    ROS_DISTRO=dashing
+
+
+Docker
+------
+
+Since this image processing procedure needs to run in a Docker container when properly used in the "MauRob40" later on,
+it is necessary to install the Docker engine on your local machine.
+If you install the Docker Engine for the first time, it is required to set up the Docker repository first.
+To do this type:
+
+.. code-block:: bash
+
+    $ sudo apt-get update
+    $ sudo apt-get install ca-certificates curl gnupg lsb-release
+    $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    $ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+To now install the latest version of the Docker Engine type:
+
+.. code-block:: bash
+
+    $ sudo apt-get update
+    $ sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+.. hint::
+
+    If you want to install a specific version of the Docker Engine, go to the official
+    :ref:`Docker installation guide<docker-installation>` to find a list of the available versions.
+
+To check whether the installation was successful type:
+
+.. code-block::
+
+    $ sudo docker run hello-world
+
+
+.. _setup-helios2-system:
+
+Setup the Helios2 camera system
+===================================
+
+In order to use the Helios2 camera system, connect the camera to a PoE (Power over Ethernet) capable ethernet switch
+and your local machine accordingly. When the camera is connected, go to the network settings in your operating system and
+change the IPv4 Method to ``manual``. Now configure the addresses as follows:
+
+::
+
+    • Address: 169.254.218.209
+    • Netmask: 255.255.0.0
+    • Gateway: 169.254.100.100
+
+You now should be able to connect and communicate with the camera system. For further information
+you can access the official technical reference manual under https://support.thinklucid.com/helios2-hlt003s/ .
+
