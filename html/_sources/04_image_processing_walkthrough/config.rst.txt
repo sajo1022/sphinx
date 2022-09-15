@@ -1,23 +1,26 @@
-.. _main-script:
+.. _config-script:
 
-Main module
+Config module
 ===================
 
 ------
 
-The main module in this project acts like a control panel for the whole image processing procedure. Every parameter which is
+The config module in this project acts like a control panel for the whole image processing procedure. Every parameter which is
 or might be needed for a certain task can be set globally. The following gives a brief overview of the parameter and there
 potential values.
 
-General parameters:
+.. warning::
+    This file will be deprecated in the further development of de Maurob40 system. All parameters will later on be set by the general
+    coordinator of the system.
+
+General parameters
 -------------------
 
-**OPERATION_MODE:**
+**CAMERA**
 
-This parameter controls whether the process should only acquire new images without processing them,
-acquire new images with processing or read local images and process them.
+This parameter sets which camera driver should be used in order to acquire an image.
 
-``'save_only', 'acquire_images', 'read_images'``
+``'helios', 'blaze'``
 
 **SAVE_IMAGES and SAVE_PATH:**
 
@@ -25,7 +28,14 @@ This parameter sets whether the acquired images should be saved in a specific di
 
 ``'True', 'False', '{PATH}'``
 
-**VISUALIZE:**
+**OPERATION_MODE**
+
+This parameter controls whether the process should only acquire new images without processing them,
+acquire new images with processing or read local images and process them.
+
+``'save_only', 'acquire_images', 'read_images'``
+
+**VISUALIZE**
 
 Sets a visualization mode. If the parameter is set to 'debug', almost every step of the image processing is displayed to find potential errors.
 If set to 'step_by_step', major interim results are visualized. This mode is well suited to showcase the method of the image processing.
@@ -33,7 +43,7 @@ If set to 'result', only the outcome is displayed. Parameter value 'no' does not
 
 ``'debug', 'step_by_step', 'result', 'no'``
 
-**POSITION_FORMAT:**
+**POSITION_FORMAT**
 
 This parameter defines the format of the returned stone pose. If set to 'xyzz' the pose is returned as the xyz coordinates
 and the rotation around the z-axis.
@@ -41,7 +51,7 @@ The parameter value 'homogenous' causes the return to be in homogenous coordinat
 
 ``'xyzz', 'homogenous'``
 
-**CAMERA_HEIGHT:**
+**CAMERA_HEIGHT**
 
 Sets the camera height from the ground to get a clean background segmentation of the pallet.
 
@@ -54,22 +64,22 @@ this xml file.
 
 ``{PATH}``
 
-Stone related parameters:
+Stone related parameters
 -------------------------
 
-**STONE_TYPE:**
+**STONE_TYPE**
 
 Determines the stone type that should be processed.
 
 ``'standard_stone', 'fitting_stone'``
 
-**PALLET_ID:**
+**PALLET_ID**
 
 Determines the id of the pallet on which the searched stone is positioned.
 
 ``{PALLET_ID}``
 
-**STONE_ID:**
+**STONE_ID**
 
 Determines the id of the searched stone.
 

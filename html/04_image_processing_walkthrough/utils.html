@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Utils function description (docstrings) &mdash; Image Processing 03/2022 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,12 +13,13 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Evaluation" href="evaluation.html" />
-    <link rel="prev" title="ROS action modules" href="ros.html" /> 
+    <link rel="next" title="Evaluation Basler Blaze 101" href="evaluation_blaze.html" />
+    <link rel="prev" title="ROS2" href="ros.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,23 +52,27 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project structure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Standard stone localization module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Fitting stone localization module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="image_aquisition.html">Image acquisition module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS2</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Utils function description (docstrings)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_blaze.html">Evaluation Basler Blaze 101</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot communication</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html">Required ROS2 Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html#start-the-image-processing-in-simulation-mode">Start the image processing in simulation mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html#start-the-image-processing-with-a-connected-robot">Start the image processing with a connected robot</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_supplemental_material/gitlab_submodules.html">Gitlab Submodules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_supplemental_material/supplemental_material.html">Helpful links</a></li>
 </ul>
 
         </div>
@@ -95,121 +99,139 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="utils-function-description-docstrings">
-<h1>Utils function description (docstrings)<a class="headerlink" href="#utils-function-description-docstrings" title="Permalink to this headline"></a></h1>
+  <div class="section" id="utils-function-description-docstrings">
+<h1>Utils function description (docstrings)<a class="headerlink" href="#utils-function-description-docstrings" title="Permalink to this heading"></a></h1>
 <hr class="docutils" />
 <p>Description of the functions in the utils module.</p>
-<span class="target" id="module-image_processing_scripts.utils"></span><dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.utils.create_config_dict">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.utils.</span></span><span class="sig-name descname"><span class="pre">create_config_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.utils.create_config_dict" title="Permalink to this definition"></a></dt>
-<dd><p>Function to create the config dictionary from a string. Needed because ROS only
-supports strings.</p>
+<span class="target" id="module-image_processing.ip_utils"></span><dl class="py function">
+<dt class="sig sig-object py" id="image_processing.ip_utils.find_pallet_region">
+<span class="sig-prename descclassname"><span class="pre">image_processing.ip_utils.</span></span><span class="sig-name descname"><span class="pre">find_pallet_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'camera':</span> <span class="pre">'blaze',</span> <span class="pre">'camera_height':</span> <span class="pre">2200.0,</span> <span class="pre">'operation_mode':</span> <span class="pre">'acquire_images',</span> <span class="pre">'pallet_id':</span> <span class="pre">'5',</span> <span class="pre">'position_format':</span> <span class="pre">'xyzz',</span> <span class="pre">'save_images':</span> <span class="pre">False,</span> <span class="pre">'stone_id':</span> <span class="pre">'C4',</span> <span class="pre">'stone_type':</span> <span class="pre">'standard_stone',</span> <span class="pre">'visualize':</span> <span class="pre">'result',</span> <span class="pre">'xml_path':</span> <span class="pre">'/home/robot/ros_ws/src/example_images/fitting_stones/pallet_2_1940'}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.ip_utils.find_pallet_region" title="Permalink to this definition"></a></dt>
+<dd><p>Function to determine pallet region from xyz_image and camera height.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>config_string</strong> (<em>list</em>) – String array, that contains all necessary
-information for locating different types of stones
-[stone_type, stone_id, pallet_id, camera_height, xml_path, visualize, position_format, operation_mode, save_images]
-Assertion: All instance str</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyz_image</strong> (<em>HObject</em><em> (</em><em>image</em><em>)</em>) – 3-Channel image [[x-data], [y-data], [z-data]]</p></li>
+<li><p><strong>config</strong> (<em>dict</em>) – Dictionary containing additional information required by image processing</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>config_dict</strong> – Converted string as dictionary.
-Keys:
-{“stone_type”, “stone_id”, “pallet_id”, “camera_height”, “xml_path”,
-“visualize”, “position_format”, “operation_mode”, “save_images”}</p>
+<dd class="field-even"><p><strong>pallet_region</strong> – Mask for pallet.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-odd"><p>HObject (regions)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.utils.read_config_string_from_main">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.utils.</span></span><span class="sig-name descname"><span class="pre">read_config_string_from_main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.utils.read_config_string_from_main" title="Permalink to this definition"></a></dt>
-<dd><p>Function to create config string from global variables in main.
-Used for development purposes only. Config string has to be created
-dynamically by coordinator (robot).</p>
+<dt class="sig sig-object py" id="image_processing.ip_utils.find_pallet_region_legacy">
+<span class="sig-prename descclassname"><span class="pre">image_processing.ip_utils.</span></span><span class="sig-name descname"><span class="pre">find_pallet_region_legacy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'camera':</span> <span class="pre">'blaze',</span> <span class="pre">'camera_height':</span> <span class="pre">2200.0,</span> <span class="pre">'operation_mode':</span> <span class="pre">'acquire_images',</span> <span class="pre">'pallet_id':</span> <span class="pre">'5',</span> <span class="pre">'position_format':</span> <span class="pre">'xyzz',</span> <span class="pre">'save_images':</span> <span class="pre">False,</span> <span class="pre">'stone_id':</span> <span class="pre">'C4',</span> <span class="pre">'stone_type':</span> <span class="pre">'standard_stone',</span> <span class="pre">'visualize':</span> <span class="pre">'result',</span> <span class="pre">'xml_path':</span> <span class="pre">'/home/robot/ros_ws/src/example_images/fitting_stones/pallet_2_1940'}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.ip_utils.find_pallet_region_legacy" title="Permalink to this definition"></a></dt>
+<dd><p>(OUTDATED) Function to determine pallet region from xyz_image and camera height.
+Usage not recommended, instead use fine_pallet_region().</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>config_string</strong> – String array, that contains all necessary
-information for locating different types of stones
-[stone_type, stone_id, pallet_id, camera_height, xml_path, visualize, position_format, operation_mode, save_images]
-Assertion: All instance str</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyz_image</strong> (<em>HObject</em><em> (</em><em>image</em><em>)</em>) – 3-Channel image [[x-data], [y-data], [z-data]]</p></li>
+<li><p><strong>config</strong> (<em>dict</em>) – Dictionary containing additional information required by image processing</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>list</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>pallet_region</strong> – Mask for pallet.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>HObject (regions)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.utils.encode_stone_location">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.utils.</span></span><span class="sig-name descname"><span class="pre">encode_stone_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.utils.encode_stone_location" title="Permalink to this definition"></a></dt>
-<dd><p>Function to flatten results in case multiple stones are located.
-ROS util because action server/client only support string[].
-An integer value to decode results later is appened to the
-end.</p>
+<dt class="sig sig-object py" id="image_processing.ip_utils.save_npy_as_images">
+<span class="sig-prename descclassname"><span class="pre">image_processing.ip_utils.</span></span><span class="sig-name descname"><span class="pre">save_npy_as_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyzi_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/robot/ros_ws/src/image_processing/image_processing/.temp_images'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.ip_utils.save_npy_as_images" title="Permalink to this definition"></a></dt>
+<dd><p>Creates and saves .tiff (for x/y/z_image) and .png (for intensity_image) file for to set save path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>array</strong> (<em>list</em>) – 2D array containing stone location either in format xyzz or homogenous</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>array_encoded</strong> – 1D array containing flattened input array and an int value
-to later decode.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyzi_image</strong> (<em>list</em>) – 4-D numpy array containing x, y, z and intensity values.</p></li>
+<li><p><strong>save_path</strong> (<em>str</em>) – Path images are saved to.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.utils.decode_stone_location">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.utils.</span></span><span class="sig-name descname"><span class="pre">decode_stone_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array_encoded</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.utils.decode_stone_location" title="Permalink to this definition"></a></dt>
-<dd><p>Function to decode results in case multiple stones are located.
-ROS util because action server/client only support string[].
-An integer value to decode results ar input[-1]</p>
+<dt class="sig sig-object py" id="image_processing.ip_utils.pointcloud_to_ros_style_pointcloud">
+<span class="sig-prename descclassname"><span class="pre">image_processing.ip_utils.</span></span><span class="sig-name descname"><span class="pre">pointcloud_to_ros_style_pointcloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pointcloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_intensity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.ip_utils.pointcloud_to_ros_style_pointcloud" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a request for the image processinge stone location services (fitting stones and standard stones)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>array_encoded</strong> (<em>list</em>) – 1D array containing an int value
-to decode.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pointcloud</strong> (<em>list</em>) – [[float, float, float], …]
+Pointcloud as a list of x,y,z coordinates.</p></li>
+<li><p><strong>include_intensity</strong> (<em>bool</em>) – True/False to state if intensity information is included.</p></li>
+<li><p><strong>intensity_values</strong> (<em>float</em>) – List of float values that correspond to the intensity of a
+pointcloud coordinate.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>array_decoded</strong> – 2D array containing stone location either in format xyzz or homogenous</p>
+<dd class="field-even"><p><strong>ros_pc</strong></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
+<dd class="field-odd"><p>Pointcloud (and intesity) as LocateStandardStoneSrv (LocateFittingStoneSrv).</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.utils.get_homogeneous_coordinates_from_stone_location">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.utils.</span></span><span class="sig-name descname"><span class="pre">get_homogeneous_coordinates_from_stone_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stone_locations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.utils.get_homogeneous_coordinates_from_stone_location" title="Permalink to this definition"></a></dt>
-<dd><p>Function to convert from xyz, rotz stone location to homogenous coordinates</p>
+<dt class="sig sig-object py" id="image_processing.ip_utils.save_ros_style_pointcloud_as_tiff">
+<span class="sig-prename descclassname"><span class="pre">image_processing.ip_utils.</span></span><span class="sig-name descname"><span class="pre">save_ros_style_pointcloud_as_tiff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ros_pc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(480,</span> <span class="pre">640)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.ip_utils.save_ros_style_pointcloud_as_tiff" title="Permalink to this definition"></a></dt>
+<dd><p>Saves ros style pointcloud as seperate .tiff-files for each channel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stone_locations</strong> (<em>list</em>) – [[float, float, float, float],[float, float, float, float], …]
-Sequence of stone coordinate [x, y, z, rot_Z] in millimeter/rad</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>homogeneous_coordinates</strong> – Matrix 4x4 [float]
-Stone center location as homogenous matrix in millimeters/rad</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ros_pc</strong> (<em>list</em>) – [ros2 Point, …]
+Pointcloud of stones.</p></li>
+<li><p><strong>shape</strong> (<em>tuple</em>) – (height, width)
+Shape of the output image.</p></li>
+<li><p><strong>save_path</strong> (<em>str</em>) – Path where images are saved to</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
-</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing.ip_utils.save_ros_style_pointcloud_as_ply">
+<span class="sig-prename descclassname"><span class="pre">image_processing.ip_utils.</span></span><span class="sig-name descname"><span class="pre">save_ros_style_pointcloud_as_ply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ros_pc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visualize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.ip_utils.save_ros_style_pointcloud_as_ply" title="Permalink to this definition"></a></dt>
+<dd><p>Saves ros style pointcloud as .ply file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ros_pc</strong> (<em>list</em>) – [ros2 Point, …]
+Pointcloud of stones.</p></li>
+<li><p><strong>save_path</strong> (<em>str</em>) – Path where images are saved to</p></li>
+<li><p><strong>visualize</strong> (<em>bool</em>) – Enables/Disables visualization of pointcloud.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing.ip_utils.convert_xyz_tiff_to_pointcloud">
+<span class="sig-prename descclassname"><span class="pre">image_processing.ip_utils.</span></span><span class="sig-name descname"><span class="pre">convert_xyz_tiff_to_pointcloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('./x_image',</span> <span class="pre">'./y_image',</span> <span class="pre">'./z_image')</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.ip_utils.convert_xyz_tiff_to_pointcloud" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>tuple</em>) – (“x_image_path”, “y_image_path”, “z_image_path”)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="ros.html" class="btn btn-neutral float-left" title="ROS action modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="evaluation.html" class="btn btn-neutral float-right" title="Evaluation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ros.html" class="btn btn-neutral float-left" title="ROS2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="evaluation_blaze.html" class="btn btn-neutral float-right" title="Evaluation Basler Blaze 101" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

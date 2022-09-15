@@ -9,53 +9,21 @@ Project structure
 
 ------
 
-In the projects source directory ``image_processing/`` you will find the following structure:
+In the projects source directory ``image_processing/`` you will find the following high level structure:
 
 .. code::
 
     ├── .git/                   # git
-    ├── .venv/                  # pipenv
-    ├── build/                  # ros workspace file
-    ├── docs/                   # sphinx project documentation
-    ├── example_images/
-    ├── install/                # ros workspace file
-    │ ├── image_processing/
-    │ ├── ...
-    │ ├── setup.bash
-    │ └── ...
-    ├── log/                    # ros workspace file
-    ├── src/                    # actual project
-    │ ├── image_processing/
-    │ ├── utils/
-    │ └── __init__.py
-    ├── .gitignore              # git
+    ├── docs                    # sphinx project documentation
+    ├── example_images
+    ├── otherFiles
+    ├── src                     # actual project
     ├── Dockerfile              # docker
-    ├── Pipfile                 # pipenv
-    ├── Pipfile.lock            # pipenv
     ├── README.md
-    └── start_docker.sh         # docker
-
-
-ROS files
----------
-
-The projects source directory is setup as a ROS workspace. The subdirectories ``build/``, ``install/`` and ``log/``
-are required directories of a ROS workspace. For most parts they can be ignored. They are only need to be touched
-when either:
-
-1. building the ros package by calling the following command in DIR image_processing
-
-.. code-block:: bash
-
-    $ colcon build
-
-2. sourcing your ROS instance
-
-.. code-block:: bash
-
-    $ . install/setup.bash
-
-3. setting up ros dependencies as described in the section :ref:`getting started <setup-ros>`
+    ├── .gitignore              # git
+    ├── .gitmodules             # git
+    ├── start_docker.sh         # docker
+    └── access_container.sh     # docker
 
 
 Git files
@@ -64,22 +32,9 @@ Git files
 In case you cloned this project from gitLab, you will also find the ``.git/`` directory. While .git/ is managed by gitLab
 on its own and does not have to be changed at any time, the ``.gitignore`` file might be important when contributing to the project.
 There you can indicate which files should not be tracked and later pushed from your local machine to gitLab.
-
-
-Pipenv files
-------------
-
-To simplify the dependency management, this project uses pipenv to setup the interpreter. All installed dependencies will be installed to the
-``.venv/`` directory. Since it's part of the the .gitignore, the directory will be automatically created when setting up your virtual environment
-as described in the :ref:`previous section <pipenv->`.
-In the ``Pipfile``, all the necessary dependencies can be put and installed by the command:
-
-.. code-block:: bash
-
-    pipenv install
-
-For further explanation refer the the :ref:`getting started guide <pipenv->`
-
+In order to increase the modularity of the development, developed software packages are now independent git repositories.
+To use these repositories within the repository of this project, they have to be implemented as submodules.
+The configuration of these submodules is done in the ``.gitmodules`` file.
 
 Docker files
 ------------
@@ -98,6 +53,11 @@ when in the same directory or by executing
 
 to automatically build the image and start the container with the correct settings. This option is recommended.
 
+If the container is already built, you can access it without building again by executing
+
+.. code-block:: bash
+
+    . access_container.sh
 
 Docs/ folder
 ------------
@@ -137,17 +97,54 @@ For further information refer to the official :ref:`sphinx documentation <sphinx
 The src folder
 --------------
 
-The ``src/`` directory contains the actual project. The package contains two sub
-directories. Everything in this folder will also be available in the docker container.
+The ``src/`` directory contains the actual project. Everything in this folder will also be available in the docker container.
 
 .. code::
 
     .../src/
-        ├── image_processing/       # ros package and code
-        ├── utils/                  # setup files
-        │ ├── arenaSDK/
-        │ └── halcon/
-        └── __init__.py
+        ├── blaze101_driver                 # camera driver
+        ├── eval_images                     # evaluation images
+        ├── helios2_driver                  # camera driver
+        ├── image_processing                # ros client/node and code
+        └── image_processing_interfaces     # ros service descriptions
+
+Camera drivers
+--------------
+
+The camera drivers ``blaze101_driver`` and ``helios2_driver`` are specific ros packages which allow to communicate and trigger
+the used cameras "Basler Blaze 101" and "LucidVision Helios2". The corresponding driver is used to acquire images.
+
+Ros service descriptions
+------------------------
+
+The ``image_processing_interfaces`` directory represents another ros package. It contains the definitions of all services used in the
+process.
+
+.. code::
+
+    .../image_processing_interfaces/
+        ├── CMakeLists.txt
+        ├── package.xml
+        └── srv
+            ├── LocateFittingStone.srv
+            ├── LocateStandardStone.srv
+            ├── PointcloudIntensity.srv
+            └── Pointcloud.srv
+
+The image_processing folder
+---------------------------
+
+The ``image_processing`` directory is a ros package, which contains the actual image_processing scripts and necessary utils.
+
+.. code::
+
+    ../image_processing/
+        ├── image_processing
+        ├── utils
+        ├── resource
+        ├── setup.cfg
+        ├── setup.py
+        └── package.xml
 
 In the ``utils/`` directory you can find different files for setting up dependencies as well as packages that need
 to be installed in docker, that can't be installed any other way. There is a folder for each package, containing the
@@ -155,46 +152,30 @@ packages and some configurations that will be automatically executed when starti
 deal with environment variables for the used api. If there are problems when executing the scripts in docker, this
 would be the first location to check.
 
-The ``image_processing/`` is actually setup as an ROS package, containing the necessary action server and client to trigger
-the stone localization using ROS. This also means that the package has all the files required by a ROS package in it.
+The ``image_processing`` folder contains the actual scripts of the image processing. Furthermore, it contains a ros image_processing_node
+which provides the services ``LocateFittingStone`` and ``LocateStandardStone``.
 
 .. code::
 
-    .../image_processing/
-        ├── action/                             # ros actions
-        ├── include/
-        │ ├── image_processing_scripts/
-        │ └── __init__.py
-        ├── src/                                # unused but created by ROS
-        ├── __init__.py
-        ├── action_client_locate_stones.py
-        ├── action_server_locate_stones.py
-        ├── CMakeLists.txt                      # required by ROS
-        ├── main.py                             # main script responsible for coordination
-        └── package.xml                         # required by ROS
-
-The directory ``action/`` contains all actions, defined by the user. These actions are used when working with a
-action server/client in ROS. To learn more about how to work with ROS, refer to the :ref:`official documentation <ros2-documentation>`.
-
-The ``main.py`` file, takes the role of a "user interface" when setting up the stone localization. Here you can
-configure for example which type of stone you are looking for, if you want to acquire images or read them from a disk or if the result should be visualized.
-The application will then automatically coordinate through the code according to the users settings. More on the ``main.py`` script :ref:`later <main-script>`.
-
-All the image processing scripts can be found under ``include/image_processing_scripts/``:
-
-.. code::
-
-    .../image_processing_scripts/
-        ├── .temp_images/                       # temporary saving location of acquired images
-        ├── __init__.py
+    ../image_processing/
+        ├── config.py
         ├── fitting_stone.py
-        ├── image_acquisition.py
+        ├── image_processing_dummy_client.py
+        ├── image_processing_node.py
+        ├── __init__.py
+        ├── ip_utils.py
+        ├── main.py
         ├── standard_stone.py
-        ├── utils.py
         └── visualization.py
 
+The ``image_processing_dummy_client`` is used for development purposes only and will later be replaced by the general coordinator of the Maurob40 system.
+
 There is one module for each stone type (standard and fitting), a module that contains everything camera related
-and another module that is only needed when visualizing different steps of the program. The module ``utils.py`` contains functions which do not
+and another module that is only needed when visualizing different steps of the program. The module ``ip_utils.py`` contains functions which do not
 belong to a specific module.
+
+The ``config.py`` file, takes the role of a "user interface" when setting up the stone localization. Here you can
+configure for example which type of stone you are looking for, if you want to acquire images or read them from a disk or if the result should be visualized.
+The application will then automatically coordinate through the code according to the users settings.
 
 In the next section we will go through each module and see how the stone localization actually works.

@@ -33,9 +33,6 @@ its z-axis (directed into the image). The second format would be as homogenous c
 
 Standard stone module walkthrough
 ------------------------------------
-The entrypoint for the :ref:`main module <main-script>` is the function :py:meth:`locate_standard_stones <image_processing_scripts.standard_stone.locate_standard_stones>`.
-The function requires a 3-channel image with the pointclouds x-, y- and z-data and the *config dict* with the users
-configuration.
 
 Our example scene will look like this. The goal is to locate the 3 stones in the upper layer.
 Note that the intensity image is only used for visualization and is not required by the actual image processing procedure.
@@ -139,7 +136,7 @@ The described actions can performed with the following code:
     intersection_height = top_layer_median_z_value+15
     intersection_contours_2D =  get_intersection_contours(triangulated_top_layer_3D, intersection_height)
 
-To better understand what happens in the function :py:meth:`get_intersection_contours <image_processing_scripts.standard_stone.get_intersection_contours>`
+To better understand what happens in the function :py:meth:`get_intersection_contours <image_processing.standard_stone.get_intersection_contours>`
 refer to the function description.
 The result of the above functions are the contours of the stones holes.
 
@@ -153,7 +150,7 @@ Step 4 - Find hole partners and calculate stone center and rotation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The next step would be to find the circles and its center. After this is done,
 the holes can be matched and the stones pose can be calculated. For more information on how the matching exactly works
-refer the the function description of :py:meth:`match_holes_by_distance_refined <image_processing_scripts.standard_stone.match_holes_by_distance_refined>`.
+refer the the function description of :py:meth:`match_holes_by_distance_refined <image_processing.standard_stone.match_holes_by_distance_refined>`.
 
 .. code-block:: python
 
@@ -176,7 +173,7 @@ The visualization of the result shows the stones poses in the format [x, y, z, r
 Standard stone function description (docstrings)
 -------------------------------------------------
 
-.. automodule:: image_processing_scripts.standard_stone
+.. automodule:: image_processing.standard_stone
    :members:
 
 The next section will deal with the module :ref:`fitting stone <fitting-stone-module>`

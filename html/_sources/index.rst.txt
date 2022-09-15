@@ -38,20 +38,28 @@ application and contribute to it.
    :caption: Image processing walkthrough
 
    04_image_processing_walkthrough/project_structure
-   04_image_processing_walkthrough/main
+   04_image_processing_walkthrough/config
    04_image_processing_walkthrough/standard_stone
    04_image_processing_walkthrough/fitting_stone
-   04_image_processing_walkthrough/image_aquisition
    04_image_processing_walkthrough/ros
    04_image_processing_walkthrough/utils
-   04_image_processing_walkthrough/evaluation
+   04_image_processing_walkthrough/evaluation_blaze
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :caption: Robot communication
+
+   05_robot_communication/robot_communication
 
 .. toctree::
    :maxdepth: 2
    :glob:
    :caption: Supplemental material
 
-   05_supplemental_material/supplemental_material
+   06_supplemental_material/gitlab_submodules
+   06_supplemental_material/supplemental_material
+
 
 
 .. only:: html

@@ -26,34 +26,6 @@ Prerequisites
 
 .. _pipenv-:
 
-Pipenv
--------------
-
-The dependency management is realized using pipenv. Pipenv automatically creates and manages a virtual environment, as
-well as adds/removes packages from your ``Pipfile`` as you install/uninstall packages. In addition, it generates the
-``Pipfile.lock``, which ensures a deterministic project flow by saving the specific package version for each installed
-package.
-
-To install pipenv use:
-
-.. code-block:: bash
-
-    $ pip install pipenv
-
-To install all dependencies saved in the ``Pipfile`` type:
-
-.. code-block:: bash
-
-    $ pipenv install --dev
-
-Ensure to use pipenv when installing new packages:
-
-.. code-block:: bash
-
-    $ pipenv install {PACKAGENAME}
-
-Additional information on how to use pipenv can be found in the :ref:`official pipenv documentation <pipenv-documentation>`.
-
 
 Setup Halcon
 ------------
@@ -90,40 +62,6 @@ In order to communicate with this camera via ethernet, it is necessary to instal
 :ref:`Arena SDK software package <arenaSDK-download>`. Make sure to download the suitable version for your operating
 system and install it.
 
-.. _setup-ros:
-
-Setup ROS2 Foxy
----------------
-
-In order to be able to use and edit the implemented ROS action server and client, it is required to install ROS on your
-local machine. Since the installation is pretty extensive and very dependent on the used operating system, this guide will
-merely refer to the official :ref:`ROS 2 Documentation <ros2-documentation>`.
-
-.. hint::
-    Since your command shell needs to be sourced on every startup when using ROS 2, it is recommended to add the sourcing
-    command to your shell startup script.
-
-    In order to do this type:
-
-    .. code-block:: bash
-
-        $ echo "source /opt/ros/dashing/setup.bash" >> ~/.bashrc
-
-To check if the installation and the setup of the environment variables was correct, use the following command:
-
-.. code-block:: bash
-
-    $ printenv | grep -i ROS
-
-The output should look similar to this:
-
-::
-
-    ROS_VERSION=2
-    ROS_PYTHON_VERSION=3
-    ROS_DISTRO=dashing
-
-
 Docker
 ------
 
@@ -156,23 +94,4 @@ To check whether the installation was successful type:
 .. code-block::
 
     $ sudo docker run hello-world
-
-
-.. _setup-helios2-system:
-
-Setup the Helios2 camera system
-===================================
-
-In order to use the Helios2 camera system, connect the camera to a PoE (Power over Ethernet) capable ethernet switch
-and your local machine accordingly. When the camera is connected, go to the network settings in your operating system and
-change the IPv4 Method to ``manual``. Now configure the addresses as follows:
-
-::
-
-    • Address: 169.254.218.209
-    • Netmask: 255.255.0.0
-    • Gateway: 169.254.100.100
-
-You now should be able to connect and communicate with the camera system. For further information
-you can access the official technical reference manual under https://support.thinklucid.com/helios2-hlt003s/ .
 

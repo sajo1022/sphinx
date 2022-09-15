@@ -31,7 +31,7 @@ This method does not return multiple stones, just the next stone in the "lower l
 Fitting stone module walkthrough
 ----------------------------------
 As already described in the :ref:`standard stone walkthrough <standard-stone-walkthrough>`,
-the entrypoint is the method :py:meth:`locate_fitting_stone <image_processing_scripts.fitting_stones.locate_fitting_stone>`
+the entrypoint is the method :py:meth:`locate_fitting_stone <image_processing.fitting_stones.locate_fitting_stone>`
 which also requires a 3-channel image with the pointcloud data and the users *config dict*.
 In addition to that, the intensity image of the scene is needed for visualization.
 
@@ -62,7 +62,7 @@ Step 2 - Get stone contours
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Now that the pallet mask was successfully generated, we need to use the stone height from the xml file to find the top side
 of our stone of interest. To read the stones dimensions from the xml file, the function
-py:meth:`get_stone_dimension_from_xml <image_processing_scripts.fitting_stones.get_stone_dimension_from_xml>` was used.
+py:meth:`get_stone_dimension_from_xml <image_processing.fitting_stones.get_stone_dimension_from_xml>` was used.
 
 .. code-block:: python
 
@@ -130,7 +130,7 @@ These operations are performed by the following code:
 With the two groups ``horizontal_contours`` and ``vertical_contours`` as a starting point, the contours center
 is calculated and a horizontal contour is selected. After that, the distance to all vertical contours is calculated
 and the one with the closest distance will be selected as its partner. For more detailed information on how the selection is performed,
-refer to the function description of :py:meth:`find_corner_contour <image_processing_scripts.fitting_stone.find_corner_contour>`.
+refer to the function description of :py:meth:`find_corner_contour <image_processing.fitting_stone.find_corner_contour>`.
 
 The selected corner from horizontal and vertical lines are shown in the images below.
 
@@ -149,8 +149,8 @@ To get the stones center we can again use the dimensions from the xml file.
 
 The figure below shows the found stone corner. The length of the axis is just approximated and does not represent the
 actual length of the stone. For further information on how this step is done check the function description for
-:py:meth:`calc_px_per_mm <image_processing_scripts.fitting_stone.calc_px_per_mm>` and
-:py:meth:`calc_coordsys_for_visualization <image_processing_scripts.fitting_stone.calc_coordsys_for_visualization>`.
+:py:meth:`calc_px_per_mm <image_processing.fitting_stone.calc_px_per_mm>` and
+:py:meth:`calc_coordsys_for_visualization <image_processing.fitting_stone.calc_coordsys_for_visualization>`.
 
 .. figure:: images/result_fs.png
     :align: center
@@ -161,5 +161,5 @@ actual length of the stone. For further information on how this step is done che
 Fitting stone function description (docstrings)
 -------------------------------------------------
 
-.. automodule:: image_processing_scripts.fitting_stone
+.. automodule:: image_processing.fitting_stone
    :members:

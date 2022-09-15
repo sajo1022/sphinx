@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Standard stone localization module &mdash; Image Processing 03/2022 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,12 +13,13 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Fitting stone localization module" href="fitting_stone.html" />
-    <link rel="prev" title="Main module" href="main.html" /> 
+    <link rel="prev" title="Config module" href="config.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,12 +52,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project structure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config module</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Standard stone localization module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#basic-idea-standard-stones">Basic idea standard stones</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#standard-stone-module-walkthrough">Standard stone module walkthrough</a><ul>
@@ -67,19 +66,24 @@
 <li class="toctree-l3"><a class="reference internal" href="#step-4-find-hole-partners-and-calculate-stone-center-and-rotation">Step 4 - Find hole partners and calculate stone center and rotation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-image_processing_scripts.standard_stone">Standard stone function description (docstrings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-image_processing.standard_stone">Standard stone function description (docstrings)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Fitting stone localization module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="image_aquisition.html">Image acquisition module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils function description (docstrings)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_blaze.html">Evaluation Basler Blaze 101</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot communication</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html">Required ROS2 Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html#start-the-image-processing-in-simulation-mode">Start the image processing in simulation mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html#start-the-image-processing-with-a-connected-robot">Start the image processing with a connected robot</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_supplemental_material/gitlab_submodules.html">Gitlab Submodules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_supplemental_material/supplemental_material.html">Helpful links</a></li>
 </ul>
 
         </div>
@@ -106,15 +110,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="standard-stone-localization-module">
-<span id="standard-stone-module"></span><h1>Standard stone localization module<a class="headerlink" href="#standard-stone-localization-module" title="Permalink to this headline"></a></h1>
+  <div class="section" id="standard-stone-localization-module">
+<span id="standard-stone-module"></span><h1>Standard stone localization module<a class="headerlink" href="#standard-stone-localization-module" title="Permalink to this heading"></a></h1>
 <p>In this section the basic idea behind the localization algorithm
 for standard stones will be described. After that, a step by step walkthrough will
 show the exact procedure. The last part is a summary of the used functions developed
 to structure the code. If the description of a function seems sufficient, the walkthrough will merely reference to it.</p>
 <hr class="docutils" />
-<section id="basic-idea-standard-stones">
-<h2>Basic idea standard stones<a class="headerlink" href="#basic-idea-standard-stones" title="Permalink to this headline"></a></h2>
+<div class="section" id="basic-idea-standard-stones">
+<h2>Basic idea standard stones<a class="headerlink" href="#basic-idea-standard-stones" title="Permalink to this heading"></a></h2>
 <p>The basic idea of the algorithm aims on using the holes that are found on the top side of the stones to
 locate the stones on a pallet. After finding the region that fits the upper layer of stones on the pallet,
 we will triangulate the pointcloud to get a surface model. This surface model will be cut slightly below
@@ -128,22 +132,17 @@ distance. If two partners are found, we calculate the stone center and its orien
 coordinates.</p>
 <p>The stones pose will be provided in two formats. The first being its x-, y- and z- position and an angle of rotation around
 its z-axis (directed into the image). The second format would be as homogenous coordinates in a 4x4 matrix.</p>
-</section>
-<section id="standard-stone-module-walkthrough">
-<span id="standard-stone-walkthrough"></span><h2>Standard stone module walkthrough<a class="headerlink" href="#standard-stone-module-walkthrough" title="Permalink to this headline"></a></h2>
-<p>The entrypoint for the <a class="reference internal" href="main.html#main-script"><span class="std std-ref">main module</span></a> is the function <a class="reference internal" href="#image_processing_scripts.standard_stone.locate_standard_stones" title="image_processing_scripts.standard_stone.locate_standard_stones"><code class="xref py py-meth docutils literal notranslate"><span class="pre">locate_standard_stones</span></code></a>.
-The function requires a 3-channel image with the pointclouds x-, y- and z-data and the <em>config dict</em> with the users
-configuration.</p>
+</div>
+<div class="section" id="standard-stone-module-walkthrough">
+<span id="standard-stone-walkthrough"></span><h2>Standard stone module walkthrough<a class="headerlink" href="#standard-stone-module-walkthrough" title="Permalink to this heading"></a></h2>
 <p>Our example scene will look like this. The goal is to locate the 3 stones in the upper layer.
 Note that the intensity image is only used for visualization and is not required by the actual image processing procedure.</p>
-<figure class="align-center" id="id1">
+<div class="figure align-center" id="id1">
 <img alt="Intensity image standard stones" src="../_images/intensity_image_ss.png" />
-<figcaption>
-<p><span class="caption-text">Intensity image of the example scene for standard stones (source: own image)</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-<section id="step-1-isolate-pallet">
-<span id="isolate-pallet"></span><h3>Step 1 - Isolate pallet<a class="headerlink" href="#step-1-isolate-pallet" title="Permalink to this headline"></a></h3>
+<p class="caption"><span class="caption-text">Intensity image of the example scene for standard stones (source: own image)</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</div>
+<div class="section" id="step-1-isolate-pallet">
+<span id="isolate-pallet"></span><h3>Step 1 - Isolate pallet<a class="headerlink" href="#step-1-isolate-pallet" title="Permalink to this heading"></a></h3>
 <p>The first goal is to separate the pallet from the background. To do so, we apply a simple threshold using the <em>camera_height</em>
 defined by the user (or later automatically by the robot) and a small offset. Since there may be objects that are not of interest to
 us, we will use <code class="docutils literal notranslate"><span class="pre">connection</span></code> to split unconnected regions and select the biggest region, which will correspond to the mask
@@ -159,16 +158,14 @@ of the pallet.</p>
 </pre></div>
 </div>
 <p>The mask we receive from these steps looks like this:</p>
-<figure class="align-center" id="id2">
+<div class="figure align-center" id="id2">
 <img alt="Regions above ground and pallet region." src="../_images/regions_above_ground_ss.png" />
-<figcaption>
-<p><span class="caption-text">Regions above the ground (left) and pallet region after selecting the biggest region (right)
+<p class="caption"><span class="caption-text">Regions above the ground (left) and pallet region after selecting the biggest region (right)
 (source:own image)</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-<section id="step-2-identify-top-layer-of-stones">
-<h3>Step 2 - Identify top layer of stones<a class="headerlink" href="#step-2-identify-top-layer-of-stones" title="Permalink to this headline"></a></h3>
+</div>
+</div>
+<div class="section" id="step-2-identify-top-layer-of-stones">
+<h3>Step 2 - Identify top layer of stones<a class="headerlink" href="#step-2-identify-top-layer-of-stones" title="Permalink to this heading"></a></h3>
 <p>After the pallet is successfully found, we need to check if there are multiple layers of stones on the pallet.
 For this we use a region growing method as described in the <a class="reference internal" href="../02_image_processing_basics/image_processing_operations.html#region-growing-methods"><span class="std std-ref">basics section</span></a>.
 From all the different height layer on the pallet, we select the one with the lowest median gray value which is the
@@ -185,26 +182,22 @@ region closest to the camera.</p>
 <p>Before using <code class="docutils literal notranslate"><span class="pre">regiongrowing_mean</span></code>, the image has to be scaled to an 8 bit image. Since we are only working with masks and
 don’t need the gray value yet, this does not effect our result. The function <code class="docutils literal notranslate"><span class="pre">create_top_layer</span></code> then returns the
 highest region found on the pallet.</p>
-<figure class="align-center" id="id3">
+<div class="figure align-center" id="id3">
 <img alt="Regions of different height and top layer region" src="../_images/height_regions_ss.png" />
-<figcaption>
-<p><span class="caption-text">Regions of different height and selected top layer (source: own image)</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-<section id="step-3-create-surface-model-and-intersect">
-<h3>Step 3 - Create surface model and intersect<a class="headerlink" href="#step-3-create-surface-model-and-intersect" title="Permalink to this headline"></a></h3>
+<p class="caption"><span class="caption-text">Regions of different height and selected top layer (source: own image)</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</div>
+</div>
+<div class="section" id="step-3-create-surface-model-and-intersect">
+<h3>Step 3 - Create surface model and intersect<a class="headerlink" href="#step-3-create-surface-model-and-intersect" title="Permalink to this heading"></a></h3>
 <p>With the identified top layer of stones, we can create a surface model to perform the intersection
 cut. For this we reduce the z-image to the found region and then create a pointcloud from it. This
 pointcloud will be smoothed and then triangulated. Since triangulation takes a relatively long time,
 we will invert the mask and only use the holes for triangulation. This is allowed because we are only
 looking for the holes contours. The following figure shows the full pointcloud of the top layer of stones.</p>
-<figure class="align-center" id="id4">
+<div class="figure align-center" id="id4">
 <img alt="Pointcloud of top layer" src="../_images/pointcloud_top_layer_ss.png" />
-<figcaption>
-<p><span class="caption-text">Pointcloud of the upper layer of stones (source: own)</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
+<p class="caption"><span class="caption-text">Pointcloud of the upper layer of stones (source: own)</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</div>
 <p>The described actions can performed with the following code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">top_layer_without_holes</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">fill_up</span><span class="p">(</span><span class="n">top_layer_with_holes</span><span class="p">)</span>
 <span class="n">holes_region</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">top_layer_without_holes</span><span class="p">,</span> <span class="n">top_layer_with_holes</span><span class="p">)</span>
@@ -225,21 +218,19 @@ looking for the holes contours. The following figure shows the full pointcloud o
 <span class="n">intersection_contours_2D</span> <span class="o">=</span>  <span class="n">get_intersection_contours</span><span class="p">(</span><span class="n">triangulated_top_layer_3D</span><span class="p">,</span> <span class="n">intersection_height</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>To better understand what happens in the function <a class="reference internal" href="#image_processing_scripts.standard_stone.get_intersection_contours" title="image_processing_scripts.standard_stone.get_intersection_contours"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_intersection_contours</span></code></a>
+<p>To better understand what happens in the function <a class="reference internal" href="#image_processing.standard_stone.get_intersection_contours" title="image_processing.standard_stone.get_intersection_contours"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_intersection_contours</span></code></a>
 refer to the function description.
 The result of the above functions are the contours of the stones holes.</p>
-<figure class="align-center" id="id5">
+<div class="figure align-center" id="id5">
 <img alt="Hole contours" src="../_images/hole_contours_ss.png" />
-<figcaption>
-<p><span class="caption-text">Hole contours of the top layer stones (source: own image)</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-<section id="step-4-find-hole-partners-and-calculate-stone-center-and-rotation">
-<h3>Step 4 - Find hole partners and calculate stone center and rotation<a class="headerlink" href="#step-4-find-hole-partners-and-calculate-stone-center-and-rotation" title="Permalink to this headline"></a></h3>
+<p class="caption"><span class="caption-text">Hole contours of the top layer stones (source: own image)</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</div>
+</div>
+<div class="section" id="step-4-find-hole-partners-and-calculate-stone-center-and-rotation">
+<h3>Step 4 - Find hole partners and calculate stone center and rotation<a class="headerlink" href="#step-4-find-hole-partners-and-calculate-stone-center-and-rotation" title="Permalink to this heading"></a></h3>
 <p>The next step would be to find the circles and its center. After this is done,
 the holes can be matched and the stones pose can be calculated. For more information on how the matching exactly works
-refer the the function description of <a class="reference internal" href="#image_processing_scripts.standard_stone.match_holes_by_distance_refined" title="image_processing_scripts.standard_stone.match_holes_by_distance_refined"><code class="xref py py-meth docutils literal notranslate"><span class="pre">match_holes_by_distance_refined</span></code></a>.</p>
+refer the the function description of <a class="reference internal" href="#image_processing.standard_stone.match_holes_by_distance_refined" title="image_processing.standard_stone.match_holes_by_distance_refined"><code class="xref py py-meth docutils literal notranslate"><span class="pre">match_holes_by_distance_refined</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hole_contours</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">select_shape_xld</span><span class="p">(</span><span class="n">intersection_contours_2D</span><span class="p">,</span> <span class="s1">&#39;circularity&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">hole_center_row</span><span class="p">,</span> <span class="n">hole_center_col</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">ha</span><span class="o">.</span><span class="n">area_center_xld</span><span class="p">(</span><span class="n">hole_contours</span><span class="p">)</span>
 <span class="n">hole_partner</span> <span class="o">=</span>  <span class="n">match_holes_by_distance_refined</span><span class="p">(</span><span class="n">holes</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span> <span class="c1">#valid orientation = {&#39;auto&#39;, &#39;vertical&#39;, &#39;horizontal&#39;}</span>
@@ -249,19 +240,17 @@ refer the the function description of <a class="reference internal" href="#image
 </pre></div>
 </div>
 <p>The visualization of the result shows the stones poses in the format [x, y, z, rotation_z]:</p>
-<figure class="align-center" id="id6">
+<div class="figure align-center" id="id6">
 <img alt="Result" src="../_images/result_ss.png" />
-<figcaption>
-<p><span class="caption-text">Visualization of the locate_standard_stone function (source: own image)</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-</section>
-<section id="module-image_processing_scripts.standard_stone">
-<span id="standard-stone-function-description-docstrings"></span><h2>Standard stone function description (docstrings)<a class="headerlink" href="#module-image_processing_scripts.standard_stone" title="Permalink to this headline"></a></h2>
+<p class="caption"><span class="caption-text">Visualization of the locate_standard_stone function (source: own image)</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</div>
+</div>
+</div>
+<div class="section" id="module-image_processing.standard_stone">
+<span id="standard-stone-function-description-docstrings"></span><h2>Standard stone function description (docstrings)<a class="headerlink" href="#module-image_processing.standard_stone" title="Permalink to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.standard_stone.locate_standard_stones">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.standard_stone.</span></span><span class="sig-name descname"><span class="pre">locate_standard_stones</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.standard_stone.locate_standard_stones" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="image_processing.standard_stone.locate_standard_stones">
+<span class="sig-prename descclassname"><span class="pre">image_processing.standard_stone.</span></span><span class="sig-name descname"><span class="pre">locate_standard_stones</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pointcloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.standard_stone.locate_standard_stones" title="Permalink to this definition"></a></dt>
 <dd><p>This is the main procedure to locate quadro stones.</p>
 <p>Idea: Split image in regions of similar height. Select the highest region
 which corresponds to the top layer of stones on a pallet.
@@ -271,13 +260,16 @@ only 125mm  but can be expanded in function “match_holes_by_distance” (e.g. 
 stone id in config[“stone_id”].</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>xyz_image</strong> (<em>HObject</em><em> (</em><em>image</em><em>)</em>) – 3-Channel image [[x-data], [y-data], [z-data]]</p></li>
-<li><p><strong>config</strong> (<em>dict</em>) – Dictionary containing [stone_id];[visualize];[camera_height]</p></li>
-</ul>
+<dd class="field-odd"><p><strong>pointcloud</strong> (<em>HObject</em><em> (</em><em>image</em><em>)</em>) – 3-Channel image [[x-data], [y-data], [z-data]]</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
+</dl>
+<dl class="simple">
+<dt>config<span class="classifier">dict</span></dt><dd><p>Dictionary containing additional information required by image processing</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
 <li><p><strong>hom_mats</strong> (<em>list</em>) – Matrix 4x4 [float]
 Stone center location as homogenous matrix in millimeters/rad</p></li>
 <li><p><strong>stone_xyzz</strong> (<em>list</em>) – [[float, float, float, float], []]
@@ -289,8 +281,8 @@ Stone center location [x, y, z, rotz] in millimeters/rad</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.standard_stone.create_top_layer">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.standard_stone.</span></span><span class="sig-name descname"><span class="pre">create_top_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regions_gray_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.standard_stone.create_top_layer" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="image_processing.standard_stone.create_top_layer">
+<span class="sig-prename descclassname"><span class="pre">image_processing.standard_stone.</span></span><span class="sig-name descname"><span class="pre">create_top_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regions_gray_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.standard_stone.create_top_layer" title="Permalink to this definition"></a></dt>
 <dd><p>Function to determine top layer of stones on a pallet. Select
 layer of minimum distance to camera. Union with all areas with a similar
 hight in case stones are not next to each other.</p>
@@ -311,8 +303,8 @@ hight in case stones are not next to each other.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.standard_stone.get_intersection_contours">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.standard_stone.</span></span><span class="sig-name descname"><span class="pre">get_intersection_contours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triangulated_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersection_height</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.standard_stone.get_intersection_contours" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="image_processing.standard_stone.get_intersection_contours">
+<span class="sig-prename descclassname"><span class="pre">image_processing.standard_stone.</span></span><span class="sig-name descname"><span class="pre">get_intersection_contours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triangulated_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersection_height</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.standard_stone.get_intersection_contours" title="Permalink to this definition"></a></dt>
 <dd><p>Function to intersect the triangulated pointcloud at a specific height and return
 the intersection conotours.</p>
 <dl class="field-list simple">
@@ -332,8 +324,8 @@ the intersection conotours.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.standard_stone.match_holes_by_distance">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.standard_stone.</span></span><span class="sig-name descname"><span class="pre">match_holes_by_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hole_coordinates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matching_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.standard_stone.match_holes_by_distance" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="image_processing.standard_stone.match_holes_by_distance">
+<span class="sig-prename descclassname"><span class="pre">image_processing.standard_stone.</span></span><span class="sig-name descname"><span class="pre">match_holes_by_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hole_coordinates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matching_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.standard_stone.match_holes_by_distance" title="Permalink to this definition"></a></dt>
 <dd><p>Out of date! Not recommended
 Function to match holes, soley by their distance</p>
 <dl class="field-list simple">
@@ -355,8 +347,8 @@ Index of hole partners</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.standard_stone.match_holes_by_distance_refined">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.standard_stone.</span></span><span class="sig-name descname"><span class="pre">match_holes_by_distance_refined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hole_coordinates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matching_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.standard_stone.match_holes_by_distance_refined" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="image_processing.standard_stone.match_holes_by_distance_refined">
+<span class="sig-prename descclassname"><span class="pre">image_processing.standard_stone.</span></span><span class="sig-name descname"><span class="pre">match_holes_by_distance_refined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hole_coordinates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matching_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.standard_stone.match_holes_by_distance_refined" title="Permalink to this definition"></a></dt>
 <dd><p>Function to match holes. Starting hole to match somewhere at the edge. Also
 more than one partner can be found (e.g. one partner to the left and one above). Function
 saves protential partners for all holes. In the end only partners of the same orientation are
@@ -384,8 +376,8 @@ Index of hole partners</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.standard_stone.find_corner_element_from_data_list_2D">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.standard_stone.</span></span><span class="sig-name descname"><span class="pre">find_corner_element_from_data_list_2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_list_2D</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.standard_stone.find_corner_element_from_data_list_2D" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="image_processing.standard_stone.find_corner_element_from_data_list_2D">
+<span class="sig-prename descclassname"><span class="pre">image_processing.standard_stone.</span></span><span class="sig-name descname"><span class="pre">find_corner_element_from_data_list_2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_list_2D</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.standard_stone.find_corner_element_from_data_list_2D" title="Permalink to this definition"></a></dt>
 <dd><p>Function finds corner element of a 2d list (e.g. [[row, col]]). It can be used
 for example to determine a hole at the edge. It first finds the highest row value.
 After that, elements of similar row values are determined. To find a corner element,
@@ -406,8 +398,8 @@ Element of data_list_2D that was determined as “lower left corner”</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.standard_stone.calculate_rot_z">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.standard_stone.</span></span><span class="sig-name descname"><span class="pre">calculate_rot_z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hole_partners</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hole_coordinates</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.standard_stone.calculate_rot_z" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="image_processing.standard_stone.calculate_rot_z">
+<span class="sig-prename descclassname"><span class="pre">image_processing.standard_stone.</span></span><span class="sig-name descname"><span class="pre">calculate_rot_z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hole_partners</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hole_coordinates</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.standard_stone.calculate_rot_z" title="Permalink to this definition"></a></dt>
 <dd><p>Function calculates a stones orientation around its z-axis by comparing
 the stones holes coordinates</p>
 <dl class="field-list simple">
@@ -429,8 +421,8 @@ Sequence of hole coordinates [hole_row, hole_col]…</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="image_processing_scripts.standard_stone.calculate_stone_center">
-<span class="sig-prename descclassname"><span class="pre">image_processing_scripts.standard_stone.</span></span><span class="sig-name descname"><span class="pre">calculate_stone_center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hole_partners</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hole_coordinates</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing_scripts.standard_stone.calculate_stone_center" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="image_processing.standard_stone.calculate_stone_center">
+<span class="sig-prename descclassname"><span class="pre">image_processing.standard_stone.</span></span><span class="sig-name descname"><span class="pre">calculate_stone_center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hole_partners</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hole_coordinates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_layer_median_z_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.standard_stone.calculate_stone_center" title="Permalink to this definition"></a></dt>
 <dd><p>Function calculates a stones center by comparing
 the stones holes coordinates</p>
 <dl class="field-list simple">
@@ -452,15 +444,34 @@ Stone center in [x, y] coordinates in millimeters</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="image_processing.standard_stone.get_homogeneous_coordinates_from_stone_location">
+<span class="sig-prename descclassname"><span class="pre">image_processing.standard_stone.</span></span><span class="sig-name descname"><span class="pre">get_homogeneous_coordinates_from_stone_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stone_locations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#image_processing.standard_stone.get_homogeneous_coordinates_from_stone_location" title="Permalink to this definition"></a></dt>
+<dd><p>Function to convert from xyz, rotz stone location to homogenous coordinates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stone_locations</strong> (<em>list</em>) – [[float, float, float, float],[float, float, float, float], …]
+Sequence of stone coordinate [x, y, z, rot_Z] in millimeter/rad</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>homogeneous_coordinates</strong> – Matrix 4x4 [float]
+Stone center location as homogenous matrix in millimeters/rad</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
 <p>The next section will deal with the module <a class="reference internal" href="fitting_stone.html#fitting-stone-module"><span class="std std-ref">fitting stone</span></a></p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="main.html" class="btn btn-neutral float-left" title="Main module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="config.html" class="btn btn-neutral float-left" title="Config module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="fitting_stone.html" class="btn btn-neutral float-right" title="Fitting stone localization module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

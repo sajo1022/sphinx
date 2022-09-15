@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evaluation Basler Blaze 101 &mdash; Image Processing 03/2022 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Required ROS2 Packages" href="../05_robot_communication/robot_communication.html" />
+    <link rel="prev" title="Utils function description (docstrings)" href="utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Project &quot;MauRob40&quot;</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html">Project description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#image-processing-goal">Image processing goal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_project_introduction/project_introduction.html#framework-requirements">Framework requirements</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_objects.html">Image processing “objects”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_image_processing_basics/image_processing_operations.html">Image processing operations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Standard stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Fitting stone localization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils function description (docstrings)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Evaluation Basler Blaze 101</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#test-setup">Test setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#outdoor-capabilities-with-varying-conditions">Outdoor capabilities with varying conditions</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot communication</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html">Required ROS2 Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html#start-the-image-processing-in-simulation-mode">Start the image processing in simulation mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html#start-the-image-processing-with-a-connected-robot">Start the image processing with a connected robot</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06_supplemental_material/gitlab_submodules.html">Gitlab Submodules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_supplemental_material/supplemental_material.html">Helpful links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Evaluation Basler Blaze 101</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/04_image_processing_walkthrough/evaluation_blaze.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="evaluation-basler-blaze-101">
+<h1>Evaluation Basler Blaze 101<a class="headerlink" href="#evaluation-basler-blaze-101" title="Permalink to this heading"></a></h1>
+<p>Since the <a class="reference internal" href="../01_project_introduction/project_introduction.html#environmental-conditions"><span class="std std-ref">environmental conditions</span></a> outdoor are highly dynamic, we need a suitable camera
+which can deal with the necessary requirements.
+As the camera which was used to develop the image processing is not usable outdoor, we needed to evaluate one that is claimed to be.</p>
+<p>Therefore, this chapter will summarize some of the KPIs regarding the accuracy and the outdoor capability of the Basler Blaze 101.</p>
+<hr class="docutils" />
+<div class="section" id="test-setup">
+<h2>Test setup<a class="headerlink" href="#test-setup" title="Permalink to this heading"></a></h2>
+<p>To evaluate and compare the capabilities of the Basler Blaze 101 side by side to the LucidVision Helios2, we 3D printed a custom camera holder.</p>
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/camera_holder.jpg"><img alt="Camera holder." src="../_images/camera_holder.jpg" style="width: 512.0px; height: 384.0px;" /></a>
+<p class="caption"><span class="caption-text">Basler Blaze 101 (left) and LucidVision Helios2 (right)
+(source: own image)</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</div>
+<p>The camera holder was then mounted to a stand in order to be able to acquire images of pallets outdoor.</p>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/test_setup_outdoor.jpg"><img alt="Test setup outdoor." src="../_images/test_setup_outdoor.jpg" style="width: 384.0px; height: 512.0px;" /></a>
+<p class="caption"><span class="caption-text">Test setup outdoor
+(source: own image)</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</div>
+</div>
+<div class="section" id="outdoor-capabilities-with-varying-conditions">
+<h2>Outdoor capabilities with varying conditions<a class="headerlink" href="#outdoor-capabilities-with-varying-conditions" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>The camera was tested in varying conditions outdoor:</dt><dd><ul class="simple">
+<li><p>sun (65 kLux)</p></li>
+<li><p>shadow ( 12,5 kLux)</p></li>
+<li><p>sun with wet stones</p></li>
+</ul>
+</dd>
+</dl>
+<p>The following images show the results in full sunshine with varying exposure times.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="figure align-default" id="id3">
+<img alt="../_images/pointclouds_sun_100.png" src="../_images/pointclouds_sun_100.png" />
+<p class="caption"><span class="caption-text">Sun - Exposure time: 100µs</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</div>
+</td>
+<td><div class="figure align-default" id="id4">
+<img alt="../_images/pointclouds_sun_200.png" src="../_images/pointclouds_sun_200.png" />
+<p class="caption"><span class="caption-text">Sun - Exposure time: 250µs</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="figure align-default" id="id5">
+<img alt="../_images/pointclouds_sun_400.png" src="../_images/pointclouds_sun_400.png" />
+<p class="caption"><span class="caption-text">Sun - Exposure time: 400µs</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</div>
+</td>
+<td><div class="figure align-default" id="id6">
+<img alt="../_images/pointclouds_sun_500.png" src="../_images/pointclouds_sun_500.png" />
+<p class="caption"><span class="caption-text">Sun - Exposure time: 500µs</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The results show, that a appropriate exposure time is needed in order to get usable images. But apart from that, it is surprising how well
+the camera works in full sunshine when operated correctly. Since we did not find a auto exposure feature on the camera itself, it might be needed to integrate that feature
+in the image processing scripts in the future.</p>
+<p>The evaluation of the detection rate for differing stone types shows following results:</p>
+<table class="docutils align-center" id="id7">
+<caption><span class="caption-text">Basler101 - Lux: 65k, Height: 2200mm</span><a class="headerlink" href="#id7" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>KS Quadro 115</p></td>
+<td><p>KS Quadro 115 (wet)</p></td>
+<td><p>KS Quadro 175</p></td>
+</tr>
+<tr class="row-even"><td><p>100%</p></td>
+<td><p>97%</p></td>
+<td><p>100%</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-center" id="id8">
+<caption><span class="caption-text">Basler101 - Lux: 275, Height: 2200mm</span><a class="headerlink" href="#id8" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>KS Quadro 115</p></td>
+<td><p>KS Quadro 175</p></td>
+</tr>
+<tr class="row-even"><td><p>100%</p></td>
+<td><p>100%</p></td>
+</tr>
+</tbody>
+</table>
+<p>The absolute detection rate is 318/319 stones.
+Additionally, we tested how and if the camera noise would affect the localization of the stones when taking the same image 10 times in a row.
+The following chart shows the mean standard deviation at different exposure times.</p>
+<div class="figure align-default" id="id9">
+<img alt="../_images/mean_std.png" src="../_images/mean_std.png" />
+<p class="caption"><span class="caption-text">Mean standard deviation of stone localization in x and y coordinates. (source: own image)</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</div>
+<p>Is the camera operated at a suitable exposure time, the cameras noise and thereby the deviation of the stone localization is negligible.</p>
+<p>Furthermore we tested the close focus limit at which a stone can still be located. The test showed, that a reasonable limit is at approx. 37cm.</p>
+<div class="figure align-center" id="id10">
+<a class="reference internal image-reference" href="../_images/close_limit.png"><img alt="../_images/close_limit.png" src="../_images/close_limit.png" style="width: 564.5px; height: 450.5px;" /></a>
+<p class="caption"><span class="caption-text">Close focus limit at 37cm (source: own image)</span><a class="headerlink" href="#id10" title="Permalink to this image"></a></p>
+</div>
+<p>With this very acceptable results, we come to the conclusion, that the Basler 101 could be
+usable in the highly dynamic environmental conditions of a construction site.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="utils.html" class="btn btn-neutral float-left" title="Utils function description (docstrings)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../05_robot_communication/robot_communication.html" class="btn btn-neutral float-right" title="Required ROS2 Packages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Max Körner, Jonathan Sautter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

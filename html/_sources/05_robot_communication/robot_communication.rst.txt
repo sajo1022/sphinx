@@ -1,0 +1,115 @@
+.. only::html
+
+Required ROS2 Packages
+======================
+
+------
+
+In order to connect and control the KUKA KR210 robot, you need the following ROS2 packages:
+
+    - kuka-eki https://www.w.hs-karlsruhe.de/gitlab/iras/research-projects/ki5grob/kuka-eki.git
+    - cell description of the KR210
+    - moveit
+    - robot manipulation
+    - robot manipulation py
+    - pnp interfaces
+    - iras common interfaces
+
+Start the image processing in simulation mode
+=============================================
+
+------
+
+To start the image processing along with the simulation of the robots movements, you need to run the following:
+
+Maurob40 launch file
+^^^^^^^^^^^^^^^^^^^^
+
+.. _maurob40_launch:
+
+The maurob40 launch file can be found in the ``kuka_kr210r3100_cell_description`` which is located within the ``kuka-eki`` repository on branch ``MauRob40``.
+Running the launch file starts a series of ROS2 packages with specified initial arguments in order to simply the startup process:
+
+    - moveit_launch
+    - moveit_wrapper_launch
+    - robot_manipulation_py_node
+
+When inside the kuka-eki docker container type the following command to run the launch file in simulation mode:
+
+.. code-block:: bash
+
+    ros2 launch kuka_kr210r3100_cell_description maurob40.launch.py
+
+To adjust the default values of the existing launch arguments
+
+    - robot_ip
+    - use_fake_hardware
+    - eki_robot_port
+    - robot_description_package
+    - robot_description_file
+    - semantic_description_file
+
+type:
+
+.. code-block:: bash
+
+    ros2 launch kuka_kr210r3100_cell_description maurob40.launch.py launch_argument:=value
+
+Image processing
+^^^^^^^^^^^^^^^^
+
+In a new command window, access the images processing docker container.
+To start the image processing for either the standard or fitting stone application type:
+
+.. code-block:: bash
+
+    ros2 run image_processing locate_standard_stone
+
+respectively:
+
+.. code-block:: bash
+
+    ros2 run image_processing locate_fitting_stone
+
+Camera driver
+^^^^^^^^^^^^^
+
+There are two ROS2 camera drivers available at the moment
+
+    - blaze101_driver
+    - helios2_driver
+
+To start the desired driver, access the image processing docker container an type:
+
+.. code-block:: bash
+
+    ros2 run blaze101_driver blaze101
+
+respectively:
+
+.. code-block:: bash
+
+    ros2 run helios2_driver helios2
+
+Start the image processing with a connected robot
+=================================================
+
+------
+
+The steps to run the process with a actual robot connected to the system are very similar.
+First, turn on the robot, log into admin mode with the password ``kuka`` and run the ``ros_test`` file.
+Proceed by executing the previous described steps, except for adding the following prefix when running the
+:ref:`maurob40 launch file <maurob40_launch>`.
+
+.. code-block:: bash
+
+    ros2 launch kuka_kr210r3100_cell_description maurob40.launch.py use_fake_hardware:=false
+
+
+
+
+
+
+
+
+

@@ -1,8 +1,5 @@
 .. only:: html
 
-    Error codes
-    ===============
-
 Helpful links
 ===============
 Here you find a collection of helpful links sorted by categories.

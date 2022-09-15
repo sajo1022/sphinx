@@ -1,0 +1,30 @@
+Gitlab Submodules
+=========================
+
+The idea behind using submodules is to modulate projects as much as possible to simplify the development of new projects.
+Everything that's not project specific and could be used in other projects as well should has its own gitlab repository.
+So all changes made to the submodule are automatically accessible in all projects. This also means, there must not be any project specific code in the submodules. Everything has to be written as general as possible.
+
+In this project, three submodules have been used. The first submodule **image_processing_interfaces** is a cmake ros2 node
+that provides custom services used by the cameras.
+
+The second and third submodules are the camera drivers for the helios2 camera, respectively the blaze101.
+To use the cameras in a different projects you just have to add the respective camera driver and the **image_processing_interfaces**.
+
+In case you want to commit and push changes to a submodule just navigate to the submodules directory using the terminal. From there you are basically 
+using a standard git repo and you can add, commit and push changes as you usually would do. 
+
+After first cloning a project that uses submodules you need to initialze the submodules first.
+
+.. code-block:: bash
+
+    $ git submodule update --init --recursive
+
+
+For pulling the latest changes of all submodules use the following command:
+
+.. code-block:: bash
+
+    $ git submodule update --recursive --remote
+
+For further information on submodules refer to: https://git-scm.com/book/en/v2/Git-Tools-Submodules

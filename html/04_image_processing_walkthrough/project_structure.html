@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project structure &mdash; Image Processing 03/2022 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,11 +13,12 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Main module" href="main.html" />
+    <link rel="next" title="Config module" href="config.html" />
     <link rel="prev" title="GitLab" href="../03_getting_started/getting_started.html" /> 
 </head>
 
@@ -52,31 +52,36 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html">GitLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../03_getting_started/getting_started.html#setup-the-helios2-camera-system">Setup the Helios2 camera system</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Image processing walkthrough</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Project structure</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ros-files">ROS files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#git-files">Git files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pipenv-files">Pipenv files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docker-files">Docker files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docs-folder">Docs/ folder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-src-folder">The src folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#camera-drivers">Camera drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ros-service-descriptions">Ros service descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-image-processing-folder">The image_processing folder</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="standard_stone.html">Standard stone localization module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fitting_stone.html">Fitting stone localization module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="image_aquisition.html">Image acquisition module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS action modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros.html">ROS2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils function description (docstrings)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_blaze.html">Evaluation Basler Blaze 101</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot communication</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html">Required ROS2 Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html#start-the-image-processing-in-simulation-mode">Start the image processing in simulation mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_robot_communication/robot_communication.html#start-the-image-processing-with-a-connected-robot">Start the image processing with a connected robot</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Supplemental material</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html">Error codes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../05_supplemental_material/supplemental_material.html#helpful-links">Helpful links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_supplemental_material/gitlab_submodules.html">Gitlab Submodules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_supplemental_material/supplemental_material.html">Helpful links</a></li>
 </ul>
 
         </div>
@@ -107,73 +112,34 @@
 through the different parts. It will start by explaining the projects
 structure and some thoughts behind it.</p>
 <p>Also the project was developed on Ubuntu 20.04 LTS so all commands are for linux users and can differ from windows commands.</p>
-<section id="project-structure">
-<h1>Project structure<a class="headerlink" href="#project-structure" title="Permalink to this headline"></a></h1>
+<div class="section" id="project-structure">
+<h1>Project structure<a class="headerlink" href="#project-structure" title="Permalink to this heading"></a></h1>
 <hr class="docutils" />
-<p>In the projects source directory <code class="docutils literal notranslate"><span class="pre">image_processing/</span></code> you will find the following structure:</p>
+<p>In the projects source directory <code class="docutils literal notranslate"><span class="pre">image_processing/</span></code> you will find the following high level structure:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── .git/                   # git
-├── .venv/                  # pipenv
-├── build/                  # ros workspace file
-├── docs/                   # sphinx project documentation
-├── example_images/
-├── install/                # ros workspace file
-│ ├── image_processing/
-│ ├── ...
-│ ├── setup.bash
-│ └── ...
-├── log/                    # ros workspace file
-├── src/                    # actual project
-│ ├── image_processing/
-│ ├── utils/
-│ └── __init__.py
-├── .gitignore              # git
+├── docs                    # sphinx project documentation
+├── example_images
+├── otherFiles
+├── src                     # actual project
 ├── Dockerfile              # docker
-├── Pipfile                 # pipenv
-├── Pipfile.lock            # pipenv
 ├── README.md
-└── start_docker.sh         # docker
+├── .gitignore              # git
+├── .gitmodules             # git
+├── start_docker.sh         # docker
+└── access_container.sh     # docker
 </pre></div>
 </div>
-<section id="ros-files">
-<h2>ROS files<a class="headerlink" href="#ros-files" title="Permalink to this headline"></a></h2>
-<p>The projects source directory is setup as a ROS workspace. The subdirectories <code class="docutils literal notranslate"><span class="pre">build/</span></code>, <code class="docutils literal notranslate"><span class="pre">install/</span></code> and <code class="docutils literal notranslate"><span class="pre">log/</span></code>
-are required directories of a ROS workspace. For most parts they can be ignored. They are only need to be touched
-when either:</p>
-<ol class="arabic simple">
-<li><p>building the ros package by calling the following command in DIR image_processing</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build
-</pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>sourcing your ROS instance</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ . install/setup.bash
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>setting up ros dependencies as described in the section <a class="reference internal" href="../03_getting_started/getting_started.html#setup-ros"><span class="std std-ref">getting started</span></a></p></li>
-</ol>
-</section>
-<section id="git-files">
-<h2>Git files<a class="headerlink" href="#git-files" title="Permalink to this headline"></a></h2>
+<div class="section" id="git-files">
+<h2>Git files<a class="headerlink" href="#git-files" title="Permalink to this heading"></a></h2>
 <p>In case you cloned this project from gitLab, you will also find the <code class="docutils literal notranslate"><span class="pre">.git/</span></code> directory. While .git/ is managed by gitLab
 on its own and does not have to be changed at any time, the <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file might be important when contributing to the project.
-There you can indicate which files should not be tracked and later pushed from your local machine to gitLab.</p>
-</section>
-<section id="pipenv-files">
-<h2>Pipenv files<a class="headerlink" href="#pipenv-files" title="Permalink to this headline"></a></h2>
-<p>To simplify the dependency management, this project uses pipenv to setup the interpreter. All installed dependencies will be installed to the
-<code class="docutils literal notranslate"><span class="pre">.venv/</span></code> directory. Since it’s part of the the .gitignore, the directory will be automatically created when setting up your virtual environment
-as described in the <a class="reference internal" href="../03_getting_started/getting_started.html#pipenv"><span class="std std-ref">previous section</span></a>.
-In the <code class="docutils literal notranslate"><span class="pre">Pipfile</span></code>, all the necessary dependencies can be put and installed by the command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pipenv install
-</pre></div>
+There you can indicate which files should not be tracked and later pushed from your local machine to gitLab.
+In order to increase the modularity of the development, developed software packages are now independent git repositories.
+To use these repositories within the repository of this project, they have to be implemented as submodules.
+The configuration of these submodules is done in the <code class="docutils literal notranslate"><span class="pre">.gitmodules</span></code> file.</p>
 </div>
-<p>For further explanation refer the the <a class="reference internal" href="../03_getting_started/getting_started.html#pipenv"><span class="std std-ref">getting started guide</span></a></p>
-</section>
-<section id="docker-files">
-<h2>Docker files<a class="headerlink" href="#docker-files" title="Permalink to this headline"></a></h2>
+<div class="section" id="docker-files">
+<h2>Docker files<a class="headerlink" href="#docker-files" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code> is used to build the docker image. The building process can be manually called by typing</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker build
 </pre></div>
@@ -183,9 +149,13 @@ In the <code class="docutils literal notranslate"><span class="pre">Pipfile</spa
 </pre></div>
 </div>
 <p>to automatically build the image and start the container with the correct settings. This option is recommended.</p>
-</section>
-<section id="docs-folder">
-<h2>Docs/ folder<a class="headerlink" href="#docs-folder" title="Permalink to this headline"></a></h2>
+<p>If the container is already built, you can access it without building again by executing</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>. access_container.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="docs-folder">
+<h2>Docs/ folder<a class="headerlink" href="#docs-folder" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory holds all the necessary files to build this documentation using <em>sphinx</em>.
 The basic structure is the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── ...
@@ -212,18 +182,50 @@ After you added your content you can call:</p>
 </pre></div>
 </div>
 <p>in the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory. The html file created can be found under <code class="docutils literal notranslate"><span class="pre">docs/_build/html/index.html</span></code>.
-For further information refer to the official <a class="reference internal" href="../05_supplemental_material/supplemental_material.html#sphinx-documentation"><span class="std std-ref">sphinx documentation</span></a>.</p>
-</section>
-<section id="the-src-folder">
-<h2>The src folder<a class="headerlink" href="#the-src-folder" title="Permalink to this headline"></a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">src/</span></code> directory contains the actual project. The package contains two sub
-directories. Everything in this folder will also be available in the docker container.</p>
+For further information refer to the official <a class="reference internal" href="../06_supplemental_material/supplemental_material.html#sphinx-documentation"><span class="std std-ref">sphinx documentation</span></a>.</p>
+</div>
+<div class="section" id="the-src-folder">
+<h2>The src folder<a class="headerlink" href="#the-src-folder" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">src/</span></code> directory contains the actual project. Everything in this folder will also be available in the docker container.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.../src/
-    ├── image_processing/       # ros package and code
-    ├── utils/                  # setup files
-    │ ├── arenaSDK/
-    │ └── halcon/
-    └── __init__.py
+    ├── blaze101_driver                 # camera driver
+    ├── eval_images                     # evaluation images
+    ├── helios2_driver                  # camera driver
+    ├── image_processing                # ros client/node and code
+    └── image_processing_interfaces     # ros service descriptions
+</pre></div>
+</div>
+</div>
+<div class="section" id="camera-drivers">
+<h2>Camera drivers<a class="headerlink" href="#camera-drivers" title="Permalink to this heading"></a></h2>
+<p>The camera drivers <code class="docutils literal notranslate"><span class="pre">blaze101_driver</span></code> and <code class="docutils literal notranslate"><span class="pre">helios2_driver</span></code> are specific ros packages which allow to communicate and trigger
+the used cameras “Basler Blaze 101” and “LucidVision Helios2”. The corresponding driver is used to acquire images.</p>
+</div>
+<div class="section" id="ros-service-descriptions">
+<h2>Ros service descriptions<a class="headerlink" href="#ros-service-descriptions" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">image_processing_interfaces</span></code> directory represents another ros package. It contains the definitions of all services used in the
+process.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.../image_processing_interfaces/
+    ├── CMakeLists.txt
+    ├── package.xml
+    └── srv
+        ├── LocateFittingStone.srv
+        ├── LocateStandardStone.srv
+        ├── PointcloudIntensity.srv
+        └── Pointcloud.srv
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-image-processing-folder">
+<h2>The image_processing folder<a class="headerlink" href="#the-image-processing-folder" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">image_processing</span></code> directory is a ros package, which contains the actual image_processing scripts and necessary utils.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>../image_processing/
+    ├── image_processing
+    ├── utils
+    ├── resource
+    ├── setup.cfg
+    ├── setup.py
+    └── package.xml
 </pre></div>
 </div>
 <p>In the <code class="docutils literal notranslate"><span class="pre">utils/</span></code> directory you can find different files for setting up dependencies as well as packages that need
@@ -231,51 +233,37 @@ to be installed in docker, that can’t be installed any other way. There is a f
 packages and some configurations that will be automatically executed when starting docker. These configurations mainly
 deal with environment variables for the used api. If there are problems when executing the scripts in docker, this
 would be the first location to check.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">image_processing/</span></code> is actually setup as an ROS package, containing the necessary action server and client to trigger
-the stone localization using ROS. This also means that the package has all the files required by a ROS package in it.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.../image_processing/
-    ├── action/                             # ros actions
-    ├── include/
-    │ ├── image_processing_scripts/
-    │ └── __init__.py
-    ├── src/                                # unused but created by ROS
-    ├── __init__.py
-    ├── action_client_locate_stones.py
-    ├── action_server_locate_stones.py
-    ├── CMakeLists.txt                      # required by ROS
-    ├── main.py                             # main script responsible for coordination
-    └── package.xml                         # required by ROS
-</pre></div>
-</div>
-<p>The directory <code class="docutils literal notranslate"><span class="pre">action/</span></code> contains all actions, defined by the user. These actions are used when working with a
-action server/client in ROS. To learn more about how to work with ROS, refer to the <a class="reference internal" href="../05_supplemental_material/supplemental_material.html#ros2-documentation"><span class="std std-ref">official documentation</span></a>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">main.py</span></code> file, takes the role of a “user interface” when setting up the stone localization. Here you can
-configure for example which type of stone you are looking for, if you want to acquire images or read them from a disk or if the result should be visualized.
-The application will then automatically coordinate through the code according to the users settings. More on the <code class="docutils literal notranslate"><span class="pre">main.py</span></code> script <a class="reference internal" href="main.html#main-script"><span class="std std-ref">later</span></a>.</p>
-<p>All the image processing scripts can be found under <code class="docutils literal notranslate"><span class="pre">include/image_processing_scripts/</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.../image_processing_scripts/
-    ├── .temp_images/                       # temporary saving location of acquired images
-    ├── __init__.py
+<p>The <code class="docutils literal notranslate"><span class="pre">image_processing</span></code> folder contains the actual scripts of the image processing. Furthermore, it contains a ros image_processing_node
+which provides the services <code class="docutils literal notranslate"><span class="pre">LocateFittingStone</span></code> and <code class="docutils literal notranslate"><span class="pre">LocateStandardStone</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>../image_processing/
+    ├── config.py
     ├── fitting_stone.py
-    ├── image_acquisition.py
+    ├── image_processing_dummy_client.py
+    ├── image_processing_node.py
+    ├── __init__.py
+    ├── ip_utils.py
+    ├── main.py
     ├── standard_stone.py
-    ├── utils.py
     └── visualization.py
 </pre></div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">image_processing_dummy_client</span></code> is used for development purposes only and will later be replaced by the general coordinator of the Maurob40 system.</p>
 <p>There is one module for each stone type (standard and fitting), a module that contains everything camera related
-and another module that is only needed when visualizing different steps of the program. The module <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> contains functions which do not
+and another module that is only needed when visualizing different steps of the program. The module <code class="docutils literal notranslate"><span class="pre">ip_utils.py</span></code> contains functions which do not
 belong to a specific module.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">config.py</span></code> file, takes the role of a “user interface” when setting up the stone localization. Here you can
+configure for example which type of stone you are looking for, if you want to acquire images or read them from a disk or if the result should be visualized.
+The application will then automatically coordinate through the code according to the users settings.</p>
 <p>In the next section we will go through each module and see how the stone localization actually works.</p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../03_getting_started/getting_started.html" class="btn btn-neutral float-left" title="GitLab" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="main.html" class="btn btn-neutral float-right" title="Main module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="config.html" class="btn btn-neutral float-right" title="Config module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
